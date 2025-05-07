@@ -1,4 +1,6 @@
 import Navbar from "./components/topnavbar";
+import GalleryContainer from "./components/GalleryContainer";
+
 
 export default function App() {
   return (
@@ -6,6 +8,8 @@ export default function App() {
       <Navbar />
       <main className="p-4 space-y-8">
         <h2 className="text-2xl">Scroll down to test the sticky navbar 👇</h2>
+
+        <GalleryContainer />
 
         {/* Dummy content */}
         {Array.from({ length: 30 }).map((_, i) => (
