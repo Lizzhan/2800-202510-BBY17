@@ -1,10 +1,11 @@
 import Navbar from "./components/topnavbar";
+import Footbar from "./components/footbar";
 
 export default function App() {
   return (
     <>
       <Navbar />
-      <main className="p-4 space-y-8">
+      <main className="p-4 pb-24">
         <h2 className="text-2xl">Scroll down to test the sticky navbar 👇</h2>
 
         {/* Dummy content */}
@@ -14,6 +15,7 @@ export default function App() {
           </p>
         ))}
       </main>
+      <Footbar />
     </>
   );
 }
