@@ -1,35 +1,65 @@
 import React, { useState } from "react";
 import Navbar from "./components/topnavbar";
-import SearchBarSearchBarWithDropdown from "./components/search_bar_w_dropdown"; // your main search bar
-import SearchList from "./components/ScrollablePantry"; // renamed for clarity
 import SearchBarWithDropdown from "./components/search_bar_w_dropdown";
+import SearchList from "./components/ScrollablePantry";
+import IngredientModal from "./components/IngredientModal"; // ← new modal component
 
-const allItems = ['Apple', 'Banana', 'Cherry', 'Date', 'Elderberry', 'Fig', 'Grape', 'Honeydew', 'Kiwi', 'Lemon'];
+const allItems = [
+  "Apple", "Banana", "Cherry", "Date", "Elderberry",
+  "Fig", "Grape", "Honeydew", "Kiwi", "Lemon"
+];
 
 export default function App() {
-  const [selectedItems, setSelectedItems] = useState([]);
-  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedPantryItems, setSelectedPantryItems] = useState([]);
+  const [selectedFridgeItems, setSelectedFridgeItems] = useState([]);
+  const [modalIngredient, setModalIngredient] = useState(null);
 
-  const handleAddItem = (item) => {
-    if (!selectedItems.includes(item)) {
-      setSelectedItems([...selectedItems, item]);
-    }
+  // Triggered when user selects an ingredient
+  const openModalForItem = (item) => {
+    setModalIngredient(item);
   };
 
-  const filteredItems = allItems.filter(item =>
-    item.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  // Close modal without action
+  const closeModal = () => {
+    setModalIngredient(null);
+  };
+
+  // Add to pantry
+  const handleAddToPantry = (item) => {
+    if (!selectedPantryItems.includes(item)) {
+      setSelectedPantryItems([...selectedPantryItems, item]);
+    }
+    closeModal();
+  };
+
+  // Add to fridge
+  const handleAddToFridge = (item) => {
+    if (!selectedFridgeItems.includes(item)) {
+      setSelectedFridgeItems([...selectedFridgeItems, item]);
+    }
+    closeModal();
+  };
 
   return (
     <>
       <Navbar />
-    <main className="p-4 space-y-8 max-w-2xl mx-auto">
-      <SearchBarWithDropdown onSearch={(value) => handleAddItem(value)} />
+      <main className="p-4 space-y-8 max-w-2xl mx-auto">
+        <SearchBarWithDropdown onSearch={openModalForItem} />
 
-      <h2 className="text-xl font-semibold">Selected Ingredients:</h2>
-      <SearchList items={selectedItems} />
-    </main>
+        <h2 className="text-xl font-semibold">Pantry</h2>
+        <SearchList items={selectedPantryItems} />
 
+        <h2 className="text-xl font-semibold">Fridge</h2>
+        <SearchList items={selectedFridgeItems} />
+      </main>
+
+      {/* Modal rendered last for z-index layering */}
+      <IngredientModal
+        ingredient={modalIngredient}
+        onClose={closeModal}
+        onAddToPantry={handleAddToPantry}
+        onAddToFridge={handleAddToFridge}
+      />
     </>
   );
 }
