@@ -1,5 +1,10 @@
 import Navbar from "./components/topnavbar";
+<<<<<<< HEAD
 import Footbar from "./components/footbar";
+=======
+import GalleryContainer from "./components/GalleryContainer";
+
+>>>>>>> lucas_liu_scrollable_gallery
 
 export default function App() {
   return (
@@ -7,6 +12,10 @@ export default function App() {
       <Navbar />
       <main className="p-4 pb-24">
         <h2 className="text-2xl">Scroll down to test the sticky navbar 👇</h2>
+
+        <GalleryContainer />
+
+        <GalleryContainer />
 
         {/* Dummy content */}
         {Array.from({ length: 30 }).map((_, i) => (
