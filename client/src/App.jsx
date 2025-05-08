@@ -1,25 +1,40 @@
-import Navbar from "./components/topnavbar";
-import GalleryContainer from "./components/GalleryContainer";
-
+import { useState } from 'react';
+import TopNavbar from './components/TopNavbar';
+import GalleryContainer from './components/GalleryContainer';
+import Footbar from './components/Footbar';
 
 export default function App() {
+  const [pageStack, setPageStack] = useState(['home']);
+  const currentPage = pageStack[pageStack.length - 1];
+
+  const navigateTo = (page) => {
+    setPageStack((prev) => [...prev, page]);
+  };
+
+  const goBack = () => {
+    if (pageStack.length > 1) {
+      setPageStack((prev) => prev.slice(0, -1));
+    }
+  };
+
   return (
-    <>
-      <Navbar />
-      <main className="p-4 space-y-8">
-        <h2 className="text-2xl">Scroll down to test the sticky navbar 👇</h2>
+    <div className="flex flex-col min-h-screen">
+      <TopNavbar onNavigate={navigateTo} onBack={goBack} />
 
-        <GalleryContainer />
+      <main className="flex flex-col gap-6 flex-grow p-4">
+        {currentPage === 'home' && (
+          <>
+            <GalleryContainer />
+            <GalleryContainer />
+          </>
+        )}
 
-        <GalleryContainer />
-
-        {/* Dummy content */}
-        {Array.from({ length: 30 }).map((_, i) => (
-          <p key={i} className="text-gray-700">
-            This is paragraph #{i + 1}. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-          </p>
-        ))}
+        {currentPage === 'profile' && (
+          <div className="text-center text-lg">This is the Profile Page</div>
+        )}
       </main>
-    </>
+
+      <Footbar />
+    </div>
   );
 }
