@@ -1,35 +1,35 @@
 import React, { useState } from "react";
 import Navbar from "./components/topnavbar";
-import SearchBar from "./components/search_bar";
+import SearchBarSearchBarWithDropdown from "./components/search_bar_w_dropdown"; // your main search bar
+import SearchList from "./components/ScrollablePantry"; // renamed for clarity
 import SearchBarWithDropdown from "./components/search_bar_w_dropdown";
 
-import SearchList from './components/scrollable_pantry';
+const allItems = ['Apple', 'Banana', 'Cherry', 'Date', 'Elderberry', 'Fig', 'Grape', 'Honeydew', 'Kiwi', 'Lemon'];
 
 export default function App() {
+  const [selectedItems, setSelectedItems] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+
+  const handleAddItem = (item) => {
+    if (!selectedItems.includes(item)) {
+      setSelectedItems([...selectedItems, item]);
+    }
+  };
+
+  const filteredItems = allItems.filter(item =>
+    item.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   return (
     <>
       <Navbar />
-      <main className="p-4 space-y-8">
-        <div className="max-w-md mx-auto">
-          <SearchBar onSearch={(val) => console.log("Searching for:", val)} />
-        </div>
-        <div className="max-w-md mx-auto">
-          <SearchBarWithDropdown onSearch={(val) => console.log("Searching for:", val)} />
-        </div>
+    <main className="p-4 space-y-8 max-w-2xl mx-auto">
+      <SearchBarWithDropdown onSearch={(value) => handleAddItem(value)} />
 
-        <h2 className="text-2xl">Scroll down to test the sticky navbar 👇</h2>
+      <h2 className="text-xl font-semibold">Selected Ingredients:</h2>
+      <SearchList items={selectedItems} />
+    </main>
 
-        <scrollable_pantry />
-
-        {/* Dummy content */}
-        {Array.from({ length: 30 }).map((_, i) => (
-          <p key={i} className="text-gray-700">
-            This is paragraph #{i + 1}. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-          </p>
-        ))}
-      </main>
     </>
   );
 }
