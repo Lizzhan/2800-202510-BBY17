@@ -11,6 +11,8 @@ export default function App() {
 
         <GalleryContainer />
 
+        <GalleryContainer />
+
         {/* Dummy content */}
         {Array.from({ length: 30 }).map((_, i) => (
           <p key={i} className="text-gray-700">
