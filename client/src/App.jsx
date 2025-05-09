@@ -4,6 +4,8 @@ import SearchBarWithDropdown from "./components/search_bar_w_dropdown";
 import SearchList from "./components/ScrollablePantry";
 import IngredientModal from "./components/IngredientModal";
 import PrimaryButton from "./components/button";
+import FilterTagSection from "./components/FilterTagSection";
+
 
 const allItems = [
   "Apple", "Banana", "Cherry", "Date", "Elderberry",
@@ -67,6 +69,9 @@ export default function App() {
 
         <h2 className="text-xl font-semibold">Fridge</h2>
         <SearchList items={selectedFridgeItems} onRemove={handleRemoveFridgeItem} />
+
+        <FilterTagSection onFilterChange={(tags) => console.log("Selected filters:", tags)} />
+
 
         <div className="flex justify-center pt-4">
           <PrimaryButton onClick={handleSuggestRecipe}>
