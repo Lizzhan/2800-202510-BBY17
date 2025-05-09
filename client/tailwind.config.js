@@ -5,6 +5,12 @@ module.exports = {
       extend: {
          colors: {
             kaidCream:        '#FDF6EC',
+            kaidGreen:        '#6BCA50',
+            buttonPeach:      '#FF9A6C',
+            buttonPeachHover: '#f89168',
+            sunshineYellow:   '#FDD848',
+            kaidBrown:        '#A52A2A',
+
             paynesGray:       '#696D7D',
             verdigris:        '#7EBDC3',
             atomicTangerine:  '#FAA381',
