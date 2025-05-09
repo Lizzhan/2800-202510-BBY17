@@ -1,4 +1,4 @@
-import { HomeIcon, UserIcon, PlusIcon } from '@heroicons/react/24/solid';
+import { Refrigerator,ChefHat,CookingPot } from 'lucide-react';
 
 export default function Footbar({onNavigate}) {
   return (
@@ -10,8 +10,8 @@ export default function Footbar({onNavigate}) {
           onClick={() => onNavigate('fridge')}
           className="flex flex-col items-center justify-center hover:bg-gray-100 dark:hover:bg-gray-800 p-2 rounded-full"
         >
-          <HomeIcon className="w-6 h-6 text-gray-600 group-hover:text-blue-600 dark:text-gray-300" />
-          <span className="sr-only">Home</span>
+          <Refrigerator className="w-6 h-6 text-gray-600 hover:text-blue-600 dark:text-gray-300" />
+          <span className="sr-only">Fridge</span>
         </button>
 
         {/* Center: Add New */}
@@ -20,7 +20,7 @@ export default function Footbar({onNavigate}) {
             type="button"
             className="w-10 h-10 bg-blue-600 text-white rounded-full flex items-center justify-center shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-300"
           >
-            <PlusIcon className="w-5 h-5" />
+            <ChefHat className="w-5 h-5" />
             <span className="sr-only">New item</span>
           </button>
         </div>
@@ -31,7 +31,7 @@ export default function Footbar({onNavigate}) {
           onClick={() => onNavigate('cookbook')}
           className="flex flex-col items-center justify-center hover:bg-gray-100 dark:hover:bg-gray-800 p-2 rounded-full"
         >
-          <UserIcon className="w-6 h-6 text-gray-600 group-hover:text-blue-600 dark:text-gray-300" />
+          <CookingPot className="w-6 h-6 text-gray-600 group-hover:text-blue-600 dark:text-gray-300" />
           <span className="sr-only">Profile</span>
         </button>
       </div>
