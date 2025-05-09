@@ -2,6 +2,7 @@ import { useState } from 'react';
 import TopNavbar from './components/TopNavbar';
 import Cookbook from './pages/cookbook';
 import Footbar from './components/Footbar';
+import Home from './pages/home';
 
 export default function App() {
   const [pageStack, setPageStack] = useState(['home']);
@@ -21,7 +22,9 @@ export default function App() {
     <div className="flex flex-col min-h-screen">
       <TopNavbar onNavigate={navigateTo} onBack={goBack} />
 
-      <main className="flex flex-col gap-6 flex-grow p-4">
+      <main className="flex flex-col gap-6 flex-grow p-4 pb-24">
+        {currentPage === 'home' && <Home />}
+
         {currentPage === 'cookbook' && (
           <>
             <Cookbook />

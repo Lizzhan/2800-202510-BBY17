@@ -1,29 +1,6 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
-const initialRecipes = [
-  {
-    image: 'https://source.unsplash.com/featured/?basil,chicken',
-    title: 'Crispy Basil Chicken',
-  },
-  {
-    image: 'https://source.unsplash.com/featured/?sweet-potato,stew',
-    title: 'Sweet Potato Stew',
-  },
-  {
-    image: 'https://source.unsplash.com/featured/?shrimp,skewers',
-    title: 'Zesty Shrimp Skewers',
-  },
-  {
-    image: 'https://source.unsplash.com/featured/?lemon,tart',
-    title: 'Lemon Tartlets',
-  },
-  {
-    image: 'https://source.unsplash.com/featured/?pasta,vegetables',
-    title: 'Pasta Primavera',
-  },
-];
-
-function RecipeCard({ title, image }) {
+export default function RecipeCard({ title, image }) {
   const [liked, setLiked] = useState(false);
 
   return (
@@ -46,33 +23,6 @@ function RecipeCard({ title, image }) {
           </svg>
         </button>
       </div>
-    </div>
-  );
-}
-
-export default function RecipeCards() {
-  const [recipes] = useState(initialRecipes);
-
-  const rows = [];
-  for (let i = 0; i < recipes.length; i += 2) {
-    const row = recipes.slice(i, i + 2);
-    rows.push(row);
-  }
-
-  return (
-    <div className="bg-gray-100 p-6 space-y-6">
-      {rows.map((row, index) => (
-        <div
-          key={index}
-          className={`flex ${
-            row.length === 1 ? 'justify-center' : 'justify-center'
-          } flex-wrap gap-6`}
-        >
-          {row.map((recipe, idx) => (
-            <RecipeCard key={`${index}-${idx}`} {...recipe} />
-          ))}
-        </div>
-      ))}
     </div>
   );
 }
