@@ -1,10 +1,6 @@
 import Navbar from "./components/topnavbar";
-<<<<<<< HEAD
 import Footbar from "./components/footbar";
-=======
 import GalleryContainer from "./components/GalleryContainer";
-
->>>>>>> lucas_liu_scrollable_gallery
 
 export default function App() {
   return (

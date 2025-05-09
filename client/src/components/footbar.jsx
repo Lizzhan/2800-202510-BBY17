@@ -9,11 +9,7 @@ export default function Footbar() {
           type="button"
           className="flex flex-col items-center justify-center hover:bg-gray-100 dark:hover:bg-gray-800 p-2 rounded-full"
         >
-<<<<<<< HEAD
-          <HomeIcon className="w-5 h-6 text-gray-600 group-hover:text-blue-600 dark:text-gray-300" />
-=======
           <HomeIcon className="w-6 h-6 text-gray-600 group-hover:text-blue-600 dark:text-gray-300" />
->>>>>>> lucas_liu_scrollable_gallery
           <span className="sr-only">Home</span>
         </button>
 
