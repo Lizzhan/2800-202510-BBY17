@@ -26,7 +26,7 @@ export default function App() {
     <div className="flex flex-col min-h-screen bg-[#FDF6EC]">
       <Navbar onNavigate={navigateTo} onBack={goBack} />
 
-      <main className="flex-grow p-4 pb-24 max-w-3xl mx-auto">
+      <main className="flex-grow p-4 pb-24 max-w-3xl mx-auto bg-tiledLight">
         {currentPage === 'home' && <Home />}
         {currentPage === 'cookbook' && <Cookbook />}
         {currentPage === 'fridge' && <Fridge onNavigate={navigateTo} />}
