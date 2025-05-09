@@ -1,0 +1,76 @@
+import { useState } from 'react';
+import SearchBarWithDropdown from '../components/SearchBarWithDropdown';
+import SearchList from '../components/SearchList';
+import FilterTagSection from '../components/FilterTagSection';
+import PrimaryButton from '../components/PrimaryButton';
+import IngredientModal from '../components/IngredientModal';
+
+export default function fridge({ onNavigate }) {
+  const [selectedPantryItems, setSelectedPantryItems] = useState([]);
+  const [selectedFridgeItems, setSelectedFridgeItems] = useState([]);
+  const [modalIngredient, setModalIngredient] = useState(null);
+
+  const openModalForItem = (item) => setModalIngredient(item);
+  const closeModal = () => setModalIngredient(null);
+
+  const handleAddToPantry = (item) => {
+    if (!selectedPantryItems.includes(item)) {
+      setSelectedPantryItems([...selectedPantryItems, item]);
+    }
+    closeModal();
+  };
+
+  const handleAddToFridge = (item) => {
+    if (!selectedFridgeItems.includes(item)) {
+      setSelectedFridgeItems([...selectedFridgeItems, item]);
+    }
+    closeModal();
+  };
+
+  const handleRemovePantryItem = (index) => {
+    const newItems = [...selectedPantryItems];
+    newItems.splice(index, 1);
+    setSelectedPantryItems(newItems);
+  };
+
+  const handleRemoveFridgeItem = (index) => {
+    const newItems = [...selectedFridgeItems];
+    newItems.splice(index, 1);
+    setSelectedFridgeItems(newItems);
+  };
+
+  const handleSuggestRecipe = () => {
+    console.log('Pantry:', selectedPantryItems);
+    console.log('Fridge:', selectedFridgeItems);
+    alert('Suggesting a recipe...');
+    // You can navigate to suggest page here if needed
+    // onNavigate('suggest');
+  };
+
+  return (
+    <div className="min-h-screen bg-[#FDF6EC]">
+      <main className="p-4 space-y-8 max-w-2xl mx-auto">
+        <SearchBarWithDropdown onSearch={openModalForItem} />
+
+        <h2 className="text-xl font-semibold">Pantry</h2>
+        <SearchList items={selectedPantryItems} onRemove={handleRemovePantryItem} />
+
+        <h2 className="text-xl font-semibold">Fridge</h2>
+        <SearchList items={selectedFridgeItems} onRemove={handleRemoveFridgeItem} />
+
+        <FilterTagSection onFilterChange={(tags) => console.log('Filters:', tags)} />
+
+        <div className="flex justify-center pt-4">
+          <PrimaryButton onClick={handleSuggestRecipe}>Suggest Recipe</PrimaryButton>
+        </div>
+      </main>
+
+      <IngredientModal
+        ingredient={modalIngredient}
+        onClose={closeModal}
+        onAddToPantry={handleAddToPantry}
+        onAddToFridge={handleAddToFridge}
+      />
+    </div>
+  );
+}
