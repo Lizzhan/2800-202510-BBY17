@@ -13,22 +13,14 @@ export default function Navbar({onNavigate, onBack}) {
 
       <button
         onClick={() => onNavigate('home')}
-<<<<<<< HEAD
-        className="text-xl font-semibold text-white hover:text-blue-600"
-=======
         className="text-xl font-semibold text-castIron hover:text-blue-600"
->>>>>>> JamesS_Visuals
       >
         Recipedia
       </button>
 
       <button
         onClick={() => onNavigate('profile')}
-<<<<<<< HEAD
-        className="text-white hover:text-blue-600"
-=======
         className="text-castIron hover:text-blue-600"
->>>>>>> JamesS_Visuals
         aria-label="Profile"
       >
         <UserIcon className="h-6 w-6" />
