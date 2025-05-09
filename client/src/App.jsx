@@ -4,6 +4,7 @@ import Cookbook from './pages/cookbook';
 import Home from './pages/home';
 import Fridge from './pages/fridge'
 import Footbar from "./components/footbar";
+import Profile from './pages/UserProfile';
 
 
 
@@ -30,9 +31,7 @@ export default function App() {
         {currentPage === 'cookbook' && <Cookbook />}
         {currentPage === 'fridge' && <Fridge onNavigate={navigateTo} />}
         {currentPage === 'suggest' && <Suggest />}
-        {currentPage === 'profile' && (
-          <div className="text-center text-lg">This is the Profile Page</div>
-        )}
+        {currentPage === 'profile' && <Profile />}
       </main>
 
       <Footbar onNavigate={navigateTo} />
