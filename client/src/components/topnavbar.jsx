@@ -1,7 +1,6 @@
 import { ArrowLeftIcon, UserIcon } from '@heroicons/react/24/solid';
 
-
-export default function Navbar({ onNavigate, onBack }) {
+export default function Navbar({onNavigate, onBack}) {
   return (
     <nav className="sticky top-0 z-50 bg-white shadow-md p-4 flex items-center justify-between">
       <button

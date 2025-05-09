@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import TopNavbar from './components/TopNavbar';
-import GalleryContainer from './components/GalleryContainer';
+import Cookbook from './pages/cookbook';
 import Footbar from './components/Footbar';
 
 export default function App() {
@@ -22,10 +22,9 @@ export default function App() {
       <TopNavbar onNavigate={navigateTo} onBack={goBack} />
 
       <main className="flex flex-col gap-6 flex-grow p-4">
-        {currentPage === 'home' && (
+        {currentPage === 'cookbook' && (
           <>
-            <GalleryContainer />
-            <GalleryContainer />
+            <Cookbook />
           </>
         )}
 
@@ -34,7 +33,7 @@ export default function App() {
         )}
       </main>
 
-      <Footbar />
+      <Footbar onNavigate={navigateTo} />
     </div>
   );
 }
