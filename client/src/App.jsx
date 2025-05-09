@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import Navbar from "./components/topnavbar";
 import SearchBarWithDropdown from "./components/search_bar_w_dropdown";
 import SearchList from "./components/ScrollablePantry";
-import IngredientModal from "./components/IngredientModal"; // ← new modal component
+import IngredientModal from "./components/IngredientModal";
+import PrimaryButton from "./components/button";
 
 const allItems = [
   "Apple", "Banana", "Cherry", "Date", "Elderberry",
@@ -14,17 +15,14 @@ export default function App() {
   const [selectedFridgeItems, setSelectedFridgeItems] = useState([]);
   const [modalIngredient, setModalIngredient] = useState(null);
 
-  // Triggered when user selects an ingredient
   const openModalForItem = (item) => {
     setModalIngredient(item);
   };
 
-  // Close modal without action
   const closeModal = () => {
     setModalIngredient(null);
   };
 
-  // Add to pantry
   const handleAddToPantry = (item) => {
     if (!selectedPantryItems.includes(item)) {
       setSelectedPantryItems([...selectedPantryItems, item]);
@@ -32,7 +30,6 @@ export default function App() {
     closeModal();
   };
 
-  // Add to fridge
   const handleAddToFridge = (item) => {
     if (!selectedFridgeItems.includes(item)) {
       setSelectedFridgeItems([...selectedFridgeItems, item]);
@@ -40,20 +37,45 @@ export default function App() {
     closeModal();
   };
 
+  const handleRemovePantryItem = (index) => {
+    const newItems = [...selectedPantryItems];
+    newItems.splice(index, 1);
+    setSelectedPantryItems(newItems);
+  };
+
+  const handleRemoveFridgeItem = (index) => {
+    const newItems = [...selectedFridgeItems];
+    newItems.splice(index, 1);
+    setSelectedFridgeItems(newItems);
+  };
+
+  const handleSuggestRecipe = () => {
+    console.log("Pantry ingredients:", selectedPantryItems);
+    console.log("Fridge ingredients:", selectedFridgeItems);
+    alert("Suggesting a recipe based on your ingredients...");
+  };
+
   return (
     <>
+    <div className="min-h-screen bg-[#FDF6EC]">
       <Navbar />
       <main className="p-4 space-y-8 max-w-2xl mx-auto">
         <SearchBarWithDropdown onSearch={openModalForItem} />
 
         <h2 className="text-xl font-semibold">Pantry</h2>
-        <SearchList items={selectedPantryItems} />
+        <SearchList items={selectedPantryItems} onRemove={handleRemovePantryItem} />
 
         <h2 className="text-xl font-semibold">Fridge</h2>
-        <SearchList items={selectedFridgeItems} />
-      </main>
+        <SearchList items={selectedFridgeItems} onRemove={handleRemoveFridgeItem} />
 
-      {/* Modal rendered last for z-index layering */}
+        <div className="flex justify-center pt-4">
+          <PrimaryButton onClick={handleSuggestRecipe}>
+            Suggest Recipe
+          </PrimaryButton>
+        </div>
+      </main>
+    </div>
+
       <IngredientModal
         ingredient={modalIngredient}
         onClose={closeModal}
