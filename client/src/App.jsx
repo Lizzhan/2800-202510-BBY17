@@ -23,10 +23,10 @@ export default function App() {
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-[#FDF6EC]">
+    <div className="flex flex-col min-h-screen bg-kaidCream">
       <Navbar onNavigate={navigateTo} onBack={goBack} />
 
-      <main className="flex-grow p-4 pb-24 max-w-3xl mx-auto">
+      <main className="flex-grow p-4 pb-24 max-w-3xl mx-auto bg-kaidCream">
         {currentPage === 'home' && <Home />}
         {currentPage === 'cookbook' && <Cookbook />}
         {currentPage === 'fridge' && <Fridge onNavigate={navigateTo} />}

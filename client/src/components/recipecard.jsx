@@ -4,14 +4,14 @@ export default function RecipeCard({ title, image }) {
   const [liked, setLiked] = useState(false);
 
   return (
-    <div className="max-w-xs w-full overflow-hidden bg-white rounded-lg shadow-lg dark:bg-gray-800">
+    <div className="max-w-xs w-full overflow-hidden bg-white rounded-lg shadow-lg dark:bg-gray-800 border-2 border-kaidBrown border-gray-200 dark:border-gray-700">
       <img className="object-cover w-full h-48" src={image} alt={title} />
-      <div className="flex items-center justify-between px-4 py-2 bg-gray-900">
-        <h1 className="text-lg font-bold text-white">{title}</h1>
+      <div className="flex items-center justify-between px-4 py-2 bg-sunshineYellow border-2 border-sunshineYellow dark:bg-gray-700 dark:border-gray-600">
+        <h1 className="text-lg font-bold text-grey-800">{title}</h1>
         <button
           onClick={() => setLiked(!liked)}
           className={`transition-colors duration-300 focus:outline-none ${
-            liked ? 'text-red-500' : 'text-white hover:text-red-500'
+            liked ? 'text-buttonPeach' : 'text-kaidCream hover:text-buttonPeach'
           }`}
         >
           <svg className="w-6 h-6 fill-current" viewBox="0 0 24 24">
