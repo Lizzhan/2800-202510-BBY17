@@ -19,7 +19,7 @@ export default function SearchList({ items, onRemove }) {
   };
 
   return (
-    <div className="max-h-60 overflow-y-auto border rounded p-2 bg-white">
+    <div className="max-h-60 overflow-y-auto border rounded p-2 bg-[#FDF6EC] border-2 border-[#65350f]">
       {items.length === 0 ? (
         <div className="text-gray-500 italic">No ingredients selected.</div>
       ) : (
@@ -28,7 +28,7 @@ export default function SearchList({ items, onRemove }) {
             key={index}
             onClick={() => toggleSelection(item)}
             className={`flex justify-between items-center p-2 border-b last:border-b-0 cursor-pointer transition
-              ${selectedItems.has(item) ? "bg-[#6BCA50] font-medium" : "hover:bg-gray-100"}`}
+              ${selectedItems.has(item) ? "bg-[#FDD848] font-medium" : "hover:bg-gray-100"}`}
           >
             <span>{item}</span>
             <button
