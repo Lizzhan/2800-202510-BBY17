@@ -1,35 +1,40 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React, { useState } from "react";
+import Navbar from "./components/topnavbar";
+import Cookbook from './pages/cookbook';
+import Home from './pages/home';
+import Fridge from './pages/fridge'
+import Footbar from "./components/footbar";
+import Profile from './pages/UserProfile';
 
-function App() {
-  const [count, setCount] = useState(0)
+
+
+export default function App() {
+  const [pageStack, setPageStack] = useState(['home']);
+  const currentPage = pageStack[pageStack.length - 1];
+
+  const navigateTo = (page) => {
+    setPageStack((prev) => [...prev, page]);
+  };
+
+  const goBack = () => {
+    if (pageStack.length > 1) {
+      setPageStack((prev) => prev.slice(0, -1));
+    }
+  };
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    <div className="flex flex-col min-h-screen bg-kaidCream">
+      <Navbar onNavigate={navigateTo} onBack={goBack} />
 
-export default App
+      <main className="flex-grow p-4 pb-24 max-w-3xl mx-auto bg-kaidCream">
+        {currentPage === 'home' && <Home />}
+        {currentPage === 'cookbook' && <Cookbook />}
+        {currentPage === 'fridge' && <Fridge onNavigate={navigateTo} />}
+        {currentPage === 'suggest' && <Suggest />}
+        {currentPage === 'profile' && <Profile />}
+      </main>
+
+      <Footbar onNavigate={navigateTo} />
+    </div>
+  );
+}
