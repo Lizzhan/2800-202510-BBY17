@@ -1,6 +1,6 @@
 import { HomeIcon, UserIcon, PlusIcon } from '@heroicons/react/24/solid';
 
-export default function Footbar() {
+export default function Footbar({onNavigate}) {
   return (
     <div className="fixed z-50 w-full h-16 max-w-md -translate-x-1/2 bg-navy border border-gray-200 rounded-full bottom-4 left-1/2 shadow-md dark:bg-gray-700 dark:border-gray-600">
       <div className="grid h-full grid-cols-3 items-center px-4">
