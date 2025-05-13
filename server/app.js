@@ -5,6 +5,7 @@ import MySQLStore from 'express-mysql-session';
 import db from './db.js';
 import authRoute from './routes/auth.js'
 import ingredientRoute from './routes/autosuggestsearchbar.js'
+import tagsRoute from './routes/tags.js';
 import cors from 'cors';
 
 dotenv.config({
@@ -33,6 +34,7 @@ app.use(session({
 //a request is sent to localhost:3000/api/auth/...
 app.use('/api/auth', authRoute);
 app.use('/api/ingredients', ingredientRoute);
+app.use('/api/tags', tagsRoute);
 
 // Start server
 app.listen(PORT, () => {
