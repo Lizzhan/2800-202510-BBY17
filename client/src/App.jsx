@@ -5,6 +5,8 @@ import Home from './pages/home';
 import Fridge from './pages/fridge'
 import Footbar from "./components/footbar";
 import Profile from './pages/UserProfile';
+import RecipeDetail from './pages/RecipeDetail';
+import TestRecipePage from "./pages/TestPage";
 
 
 
@@ -27,7 +29,7 @@ export default function App() {
       <Navbar onNavigate={navigateTo} onBack={goBack} />
 
       <main className="flex-grow p-4 pb-24 max-w-3xl mx-auto bg-kaidCream">
-        {currentPage === 'home' && <Home />}
+        {currentPage === 'home' && <TestRecipePage />}
         {currentPage === 'cookbook' && <Cookbook />}
         {currentPage === 'fridge' && <Fridge onNavigate={navigateTo} />}
         {currentPage === 'suggest' && <Suggest />}
