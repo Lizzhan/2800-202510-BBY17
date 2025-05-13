@@ -5,6 +5,7 @@ import Home from './pages/home';
 import Fridge from './pages/fridge'
 import Footbar from "./components/footbar";
 import Profile from './pages/UserProfile';
+import InfoFooter from "./components/infoFooter";
 
 
 
@@ -35,6 +36,7 @@ export default function App() {
       </main>
 
       <Footbar onNavigate={navigateTo} />
+      <InfoFooter onNavigate={navigateTo} />
     </div>
   );
 }
