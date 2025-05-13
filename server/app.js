@@ -4,6 +4,8 @@ import session from 'express-session';
 import MySQLStore from 'express-mysql-session';
 import db from './db.js';
 import authRoute from './routes/auth.js'
+import ingredientRoute from './routes/autosuggestsearchbar.js'
+import cors from 'cors';
 
 dotenv.config({
     path: '../.env'
@@ -15,6 +17,7 @@ const sessionStore = new MySQLSessionStore({}, db);
 const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
+app.use(cors());
 app.use(session({ 
   key: 'ilovecookies',
   secret: process.env.SESSION_SECRET,
@@ -29,7 +32,7 @@ app.use(session({
 //intermediate routes
 //a request is sent to localhost:3000/api/auth/...
 app.use('/api/auth', authRoute);
-
+app.use('/api/ingredients', ingredientRoute);
 
 // Start server
 app.listen(PORT, () => {

@@ -9,6 +9,9 @@ const db = mysql.createConnection({
     host: process.env.SQL_HOST,
     password: process.env.SQL_PASSWORD,
     database: process.env.SQL_DATABASE,
+    ssl: {
+        rejectUnauthorized: true 
+      }
 })
 
 export default db;
