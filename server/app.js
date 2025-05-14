@@ -6,7 +6,7 @@ import db from './db.js';
 import authRoute from './routes/auth.js'
 
 dotenv.config({
-    path: '../.env'
+    path: '.env'
 });
 
 const app = express();
