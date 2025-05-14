@@ -33,4 +33,12 @@ export const login = (req, res) => {
 export const logout = (req, res) => {
     req.session.destroy();
     res.status(200).json("user logged out");
-}
+};
+
+export const getCurrentUser = (req, res) => {
+  if (req.session.username) {
+    res.json({ username: req.session.username });
+  } else {
+    res.status(401).json({ error: 'Not logged in' });
+  }
+};

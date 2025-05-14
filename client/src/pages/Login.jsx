@@ -21,7 +21,9 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try{
-      await axios.post("http://localhost:3000/api/auth/login", inputs);
+      await axios.post("http://localhost:3000/api/auth/login", inputs, {
+        withCredentials: true
+      });
       navigate("/");
     }catch(err){
       setErr(err.response.data);

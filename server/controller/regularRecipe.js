@@ -10,15 +10,31 @@ export const generateRegularRecipeName = async (req, res) => {
     return res.status(400).json({ error: 'Missing or invalid ingredients array' });
   }
 
-  const prompt = `Give me a recipe based on the list of ingredients. You don't have to use all of them: ${ingredients.join(', ')}.
+const prompt = `Give me a recipe based on the following ingredients: ${ingredients.join(', ')}.
+You do not need to use all of them and dont add ingredients.
 
-Return ONLY the following:
-- A recipe name
-- A solid description (1–2 sentences)
-- 3 to 5 numbered steps
-- A list of ingredients used
+Respond using the following clear format:
+- Title of the recipe on the first line.
+- A short description (1–2 sentences) below the title.
+- 3 to 5 numbered steps, each on its own line.
+- A bullet list of ingredients used, each on its own line, introduced by "Ingredients used:".
 
-Don't add anything else — no intros or sign-offs.`;
+Example format:
+
+Recipe Title
+
+This is a short description.
+
+1. First step.
+2. Second step.
+3. Third step.
+
+Ingredients used:
+* ingredient one
+* ingredient two
+
+Do NOT include any introductions, explanations, or extra commentary. Just give the recipe in this format.`;
+
 
   try {
     const response = await fetch(
@@ -36,7 +52,7 @@ Don't add anything else — no intros or sign-offs.`;
       }
     );
 
-    const data = await response.json();
+ const data = await response.json();
     console.log("🧠 Gemini Raw Response:\n", JSON.stringify(data, null, 2));
 
     if (!data.candidates || !data.candidates[0]?.content?.parts?.length) {
@@ -46,26 +62,26 @@ Don't add anything else — no intros or sign-offs.`;
     const fullText = data.candidates[0].content.parts[0].text.trim();
     const lines = fullText.split('\n').map(line => line.trim()).filter(Boolean);
 
-    // Title: always first line
-    const name = lines[0];
+    // Step 1: Recipe Name
+    const name = lines[0].replace(/^[-*]\s*/, '').trim(); // remove dash or bullet if present
 
-    // Description: between name and first step
-    const indexOfStep1 = lines.findIndex(line => /^1\./.test(line));
+    // Step 2: Description
     let description = '';
+    const indexOfStep1 = lines.findIndex(line => /^1\./.test(line));
     if (indexOfStep1 > 1) {
       description = lines.slice(1, indexOfStep1).join(' ');
     }
 
-    // Steps: from "1." onward until the line before "Ingredients" section
-    const stepsSection = fullText.match(/1\..*?(?=\n+(Ingredients|Ingredients Used)[:\-]?\n)/s);
-    const steps = stepsSection
-      ? stepsSection[0]
+    // Step 3: Steps
+    const stepsMatch = fullText.match(/1\..*?(?=\n+(Ingredients(?: Used)?[:\-])|$)/is);
+    const steps = stepsMatch
+      ? stepsMatch[0]
           .split('\n')
           .map(line => line.trim())
           .filter(line => /^\d+\./.test(line))
       : [];
 
-    // Ingredients: match "Ingredients:" or "Ingredients Used:"
+    // Step 4: Ingredients
     let parsedIngredients = [];
     const ingredientsMatch = fullText.match(/Ingredients(?: Used)?[:\-]?\n([\s\S]*)/i);
 
