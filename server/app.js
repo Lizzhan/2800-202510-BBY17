@@ -2,6 +2,7 @@ import dotenv from 'dotenv';
 import express from 'express';
 import session from 'express-session';
 import MySQLStore from 'express-mysql-session';
+import cors from 'cors'
 import db from './db.js';
 import authRoute from './routes/auth.js'
 import ingredientRoute from './routes/autosuggestsearchbar.js'
@@ -27,6 +28,7 @@ app.use(session({
   resave: false,
   cookie: {
     httpOnly: true,
+    //encryption
     }
   }
 ));
