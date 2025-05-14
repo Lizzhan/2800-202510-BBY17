@@ -5,6 +5,7 @@ import MySQLStore from 'express-mysql-session';
 import cors from 'cors'
 import db from './db.js';
 import authRoute from './routes/auth.js'
+const { OpenAI } = require('openai');
 
 dotenv.config({
     path: '../.env'
