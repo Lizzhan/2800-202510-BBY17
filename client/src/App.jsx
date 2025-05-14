@@ -7,8 +7,10 @@ import Footbar from "./components/footbar";
 import Profile from './pages/UserProfile';
 import Layout from "./layout/Layout";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Register from './pages/Register';
+import Login from './pages/Login'
 
-
+//is user input escaped
 export default function App() {
   return (
     <div className="flex flex-col min-h-screen bg-kaidCream">
@@ -20,8 +22,8 @@ export default function App() {
             <Route path="/fridge" element={<Fridge />} />
             {/* <Route path="/suggest" element={<Suggest />} /> */}
             <Route path="/profile" element={<Profile />} />
-            {/* <Route path="/register" element={<Register />} />
-            <Route path="/login" element={<Login />} /> */}
+            <Route path="/register" element={<Register />} />
+            <Route path="/login" element={<Login />} />
           </Route>
         </Routes>
       </Router>
