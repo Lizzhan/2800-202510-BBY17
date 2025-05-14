@@ -13,7 +13,7 @@ export const generateFunnyRecipeName = async (req, res) => {
   const prompt = `You're a goofy chef. Create a made-up, funny recipe using these ingredients: ${ingredients.join(', ')}.
 
 Return ONLY the following:
-- A funny recipe name in bold (like **Leaf Bucket(salad) or pepper cheese 360(pizza)**)
+- A funny recipe name in bold (like **Leaf Bucket(salad) or pepper cheese 360(pizza) but dont include the proper recipe name **)
 - A short, funny description (1–2 sentences)
 - 3 to 5 ridiculous, numbered steps
 
