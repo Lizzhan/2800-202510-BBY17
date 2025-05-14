@@ -6,6 +6,7 @@ import cors from 'cors'
 import db from './db.js';
 import authRoute from './routes/auth.js'
 import recipeAIRoutes from './routes/funnyRecipe.js';
+import recipeRegularAiRoutes from './routes/regularRecipe.js';
 
 dotenv.config({
     path: '../.env'
@@ -34,6 +35,7 @@ app.use(session({
 //a request is sent to localhost:3000/api/auth/...
 app.use('/api/auth', authRoute);
 app.use('/api/funnyRecipe', recipeAIRoutes);
+app.use('/api/regularRecipe', recipeRegularAiRoutes);
 
 
 

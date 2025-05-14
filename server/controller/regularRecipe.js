@@ -3,20 +3,20 @@ import fetch from 'node-fetch';
 
 dotenv.config();
 
-export const generateFunnyRecipeName = async (req, res) => {
+export const generateRegularRecipeName = async (req, res) => {
   const { ingredients } = req.body;
 
   if (!ingredients || !Array.isArray(ingredients)) {
     return res.status(400).json({ error: 'Missing or invalid ingredients array' });
   }
 
-  const prompt = `You're a goofy chef. Create a made-up, funny recipe using these ingredients (you don't need to use all of them): ${ingredients.join(', ')}.
+  const prompt = `Give me a recipe based on the list of ingredients. You don't have to use all of them: ${ingredients.join(', ')}.
 
 Return ONLY the following:
-- A funny recipe name in bold (e.g., **Leaf Bucket** or **Pepper Cheese 360** — do not include the food type like "salad" or "pizza")
-- A short, funny description (1–2 sentences)
-- 3 to 5 ridiculous, numbered steps
-- A list of ingredients used (bullet-pointed, real or ridiculous)
+- A recipe name
+- A solid description (1–2 sentences)
+- 3 to 5 numbered steps
+- A list of ingredients used
 
 Don't add anything else — no intros or sign-offs.`;
 
@@ -37,7 +37,6 @@ Don't add anything else — no intros or sign-offs.`;
     );
 
     const data = await response.json();
-
     console.log("🧠 Gemini Raw Response:\n", JSON.stringify(data, null, 2));
 
     if (!data.candidates || !data.candidates[0]?.content?.parts?.length) {
@@ -45,42 +44,36 @@ Don't add anything else — no intros or sign-offs.`;
     }
 
     const fullText = data.candidates[0].content.parts[0].text.trim();
+    const lines = fullText.split('\n').map(line => line.trim()).filter(Boolean);
 
-    // Extract name (from **bold**)
-    const nameMatch = fullText.match(/\*\*(.*?)\*\*/);
-    const name = nameMatch ? nameMatch[1].trim() : 'Unnamed Recipe';
+    // Title: always first line
+    const name = lines[0];
 
-    // Extract description (between name and step 1)
-    const descMatch = fullText.match(/\*\*.*?\*\*\n\n(.*?)\n\n1\./s);
-    const description = descMatch ? descMatch[1].trim() : '';
+    // Description: between name and first step
+    const indexOfStep1 = lines.findIndex(line => /^1\./.test(line));
+    let description = '';
+    if (indexOfStep1 > 1) {
+      description = lines.slice(1, indexOfStep1).join(' ');
+    }
 
-    // Extract steps (1. ... numbered format)
-    const stepsMatch = fullText.match(/1\..*?(?=\n\n\*|\n\*)/s);
-    const steps = stepsMatch
-      ? stepsMatch[0]
+    // Steps: from "1." onward until the line before "Ingredients" section
+    const stepsSection = fullText.match(/1\..*?(?=\n+(Ingredients|Ingredients Used)[:\-]?\n)/s);
+    const steps = stepsSection
+      ? stepsSection[0]
           .split('\n')
           .map(line => line.trim())
           .filter(line => /^\d+\./.test(line))
       : [];
 
-    // Extract ingredients (bullet list after steps)
+    // Ingredients: match "Ingredients:" or "Ingredients Used:"
     let parsedIngredients = [];
-    const ingredientsMatch = fullText.match(/Ingredients:\n([\s\S]*)/);
+    const ingredientsMatch = fullText.match(/Ingredients(?: Used)?[:\-]?\n([\s\S]*)/i);
 
     if (ingredientsMatch) {
       parsedIngredients = ingredientsMatch[1]
         .split('\n')
         .map(line => line.replace(/^\*+\s*/, '').trim())
         .filter(line => line.length > 0);
-    } else {
-      // fallback: try to grab last bullet list in the text
-      const bulletsMatch = fullText.match(/\n\*[\s\S]+$/);
-      if (bulletsMatch) {
-        parsedIngredients = bulletsMatch[0]
-          .split('\n')
-          .map(line => line.replace(/^\*+\s*/, '').trim())
-          .filter(line => line.length > 0);
-      }
     }
 
     res.json({
