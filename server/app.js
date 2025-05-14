@@ -5,7 +5,7 @@ import MySQLStore from 'express-mysql-session';
 import cors from 'cors'
 import db from './db.js';
 import authRoute from './routes/auth.js'
-const { OpenAI } = require('openai');
+import recipeAIRoutes from './routes/funnyRecipe.js';
 
 dotenv.config({
     path: '../.env'
@@ -32,6 +32,8 @@ app.use(session({
 //intermediate routes
 //a request is sent to localhost:3000/api/auth/...
 app.use('/api/auth', authRoute);
+app.use('/api/funnyRecipe', recipeAIRoutes);
+
 
 
 // Start server
