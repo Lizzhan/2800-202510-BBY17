@@ -1,12 +1,14 @@
 import bcrypt from 'bcrypt';
 import db from '../db.js'
 
-export const register = (req, res) => {
+export const register = async (req, res) => {
     const salt = bcrypt.genSaltSync(12);
     const hash = bcrypt.hashSync(req.body.password, salt);
+    const bad = "INSERT VALUES" + req.body;
+    const bad2 = `INSERT VALUES ${req.body}`;
     const q = "INSERT INTO users (email, password, username) VALUES (?, ?, ?)";
     const values = [req.body.email, hash, req.body.username];
-    db.query(q, values, (err, data) => {
+    await db.query(q, values, (err, data) => {
         if(err) return res.json(err);
         res.status(200).json("User Registered");
     })

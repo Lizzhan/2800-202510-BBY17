@@ -1,4 +1,4 @@
-import mysql from 'mysql';
+import mysql from 'mysql';  //mysql2/promise
 import dotenv from 'dotenv';
 dotenv.config({
     path: '../.env'

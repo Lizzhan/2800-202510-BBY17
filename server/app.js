@@ -26,6 +26,7 @@ app.use(session({
   resave: false,
   cookie: {
     httpOnly: true,
+    //encryption
     }
   }
 ));
