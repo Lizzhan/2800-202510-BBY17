@@ -1,7 +1,9 @@
 import { useState, useRef, useEffect } from 'react';
 import { Refrigerator, ChefHat, CookingPot, Plus } from 'lucide-react';
+import { Link } from "react-router-dom";
 
-export default function Footbar({ onNavigate }) {
+export default function Footbar() {
+  // { onNavigate }
   const [isExpanded, setIsExpanded] = useState(false);
   const [isRotating, setIsRotating] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
@@ -38,11 +40,14 @@ export default function Footbar({ onNavigate }) {
             onClick={handleToggle}
             className="w-10 h-10 bg-sunshineYellow text-gray-600 rounded-full flex items-center justify-center shadow-md hover:bg-yellow-400 focus:outline-none focus:ring-2 focus:ring-blue-300 z-20 -translate-y-2"
           >
-            <Plus
-              className={`w-5 h-5 transform transition-transform duration-300 ${
-                isRotating ? 'rotate-45' : ''
-              }`}
-            />
+            <Link tp="/fridge"> 
+              <Plus
+                className={`w-5 h-5 transform transition-transform duration-300 ${
+                  isRotating ? 'rotate-45' : ''
+                }`}
+              />
+            </Link>
+
           </button>
         )}
 
@@ -58,14 +63,16 @@ export default function Footbar({ onNavigate }) {
               <button
                 type="button"
                 onClick={() => {
-                  onNavigate('fridge');
                   setIsExpanded(false);
                   setTimeout(() => setIsVisible(false), 300);
                 }}
                 className="flex flex-col items-center justify-center hover:bg-buttonPeachHover dark:hover:bg-gray-800 p-2 rounded-full"
               >
-                <Refrigerator className="w-6 h-6 text-gray-600 dark:text-gray-300" />
-                <span className="sr-only">Fridge</span>
+                <Link to="/fridge">
+                  <Refrigerator className="w-6 h-6 text-gray-600 dark:text-gray-300" />
+                  <span className="sr-only">Fridge</span>
+                </Link>
+
               </button>
 
               {/* Center: Add New */}
@@ -74,8 +81,11 @@ export default function Footbar({ onNavigate }) {
                   type="button"
                   className="w-10 h-10 bg-gray-600 text-white rounded-full flex items-center justify-center shadow-md hover:bg-buttonPeach focus:outline-none focus:ring-2 focus:ring-blue-300"
                 >
-                  <ChefHat className="w-5 h-5" />
-                  <span className="sr-only">New item</span>
+                  <Link to="/suggest">
+                    <ChefHat className="w-5 h-5" />
+                    <span className="sr-only">New item</span>
+                  </Link>
+
                 </button>
               </div>
 
@@ -83,14 +93,15 @@ export default function Footbar({ onNavigate }) {
               <button
                 type="button"
                 onClick={() => {
-                  onNavigate('cookbook');
                   setIsExpanded(false);
                   setTimeout(() => setIsVisible(false), 300);
                 }}
                 className="flex flex-col items-center justify-center hover:bg-buttonPeach dark:hover:bg-gray-800 p-2 rounded-full"
               >
-                <CookingPot className="w-6 h-6 text-gray-600 group-hover:text-blue-600 dark:text-gray-300" />
-                <span className="sr-only">Cookbook</span>
+                <Link to="/cookbook">
+                  <CookingPot className="w-6 h-6 text-gray-600 group-hover:text-blue-600 dark:text-gray-300" />
+                  <span className="sr-only">Cookbook</span>
+                </Link>
               </button>
             </div>
           </div>
