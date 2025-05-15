@@ -33,7 +33,7 @@ app.use(session({
 //a request is sent to localhost:3000/api/auth/...
 app.use('/api/auth', authRoute);
 
-
+//app.use('/api/recipe', )
 // Start server
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);

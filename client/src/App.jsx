@@ -5,6 +5,7 @@ import Home from './pages/home';
 import Fridge from './pages/fridge'
 import Footbar from "./components/footbar";
 import Profile from './pages/UserProfile';
+import Index from "./pages/Index";
 import Layout from "./layout/Layout";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Register from './pages/Register';
@@ -24,6 +25,8 @@ export default function App() {
             <Route path="/profile" element={<Profile />} />
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/index" element={<Index />} />
+
           </Route>
         </Routes>
       </Router>
