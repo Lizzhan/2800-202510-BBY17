@@ -5,6 +5,7 @@ import MySQLStore from 'express-mysql-session';
 import cors from 'cors'
 import db from './db.js';
 import authRoute from './routes/auth.js'
+import sessionRoute from './routes/session.js'
 
 dotenv.config({
     path: '../.env'
@@ -16,7 +17,10 @@ const sessionStore = new MySQLSessionStore({}, db);
 const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+  origin: 'http://localhost:5173', // or your frontend URL
+  credentials: true
+}));
 app.use(session({ 
   key: 'ilovecookies',
   secret: process.env.SESSION_SECRET,
@@ -25,6 +29,7 @@ app.use(session({
   resave: false,
   cookie: {
     httpOnly: true,
+    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
     //encryption
     }
   }
@@ -32,6 +37,8 @@ app.use(session({
 //intermediate routes
 //a request is sent to localhost:3000/api/auth/...
 app.use('/api/auth', authRoute);
+app.use('/api/session', sessionRoute);
+
 
 //app.use('/api/recipe', )
 // Start server
