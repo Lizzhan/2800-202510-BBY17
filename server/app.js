@@ -3,8 +3,9 @@ import express from 'express';
 import session from 'express-session';
 import MySQLStore from 'express-mysql-session';
 import cors from 'cors'
-import db from './db.js';
+import { db } from './db.js';
 import authRoute from './routes/auth.js'
+import recipesRouter from './routes/recipes.js';
 
 dotenv.config({
     path: '../.env'
@@ -32,6 +33,8 @@ app.use(session({
 //intermediate routes
 //a request is sent to localhost:3000/api/auth/...
 app.use('/api/auth', authRoute);
+
+app.use('/api', recipesRouter);
 
 
 // Start server

@@ -9,6 +9,7 @@ import Layout from "./layout/Layout";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Register from './pages/Register';
 import Login from './pages/Login'
+import RecipeDetail from './pages/RecipeDetail';
 
 //is user input escaped
 export default function App() {
@@ -24,6 +25,7 @@ export default function App() {
             <Route path="/profile" element={<Profile />} />
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/recipe/:id" element={<RecipeDetail />} />
           </Route>
         </Routes>
       </Router>

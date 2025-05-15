@@ -1,5 +1,5 @@
 import bcrypt from 'bcrypt';
-import db from '../db.js'
+import { db } from '../db.js'
 
 export const register = async (req, res) => {
     const salt = bcrypt.genSaltSync(12);

@@ -1,4 +1,4 @@
-import db from '../db.js'
+import { db } from '../db.js'
 
 //validate if the body is empty. If so, then stops the request, and notify user
 export const validateRegisterInput = (req, res, next) => {

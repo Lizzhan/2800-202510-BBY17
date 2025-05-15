@@ -38,7 +38,7 @@ const UserProfile = () => {
             <input type="email" className="w-full bg-white border-kaidBrown shadow-lg border-2 p-2 rounded" value="j_smith@recipedia.com"/>
           </div>
           <div>
-            <label className="block mb-1 font-medium">Shcool</label>
+            <label className="block mb-1 font-medium">School</label>
             <input type="text" className="w-full bg-white border-kaidBrown shadow-lg border-2 p-2 rounded" value="BCIT"/>
           </div>
 
