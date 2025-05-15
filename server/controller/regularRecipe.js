@@ -12,15 +12,17 @@ export const generateRegularRecipeName = async (req, res) => {
   }
 
   const prompt = `Give me a recipe based on the following ingredients: ${ingredients.join(', ')}.
-You do not need to use all of them and dont add ingredients. and please keep ingredient exactly the name that i have send you.
+You do not need to use all of them and do not add ingredients. Keep the ingredient names exactly as I’ve provided.
 
-Respond using the following clear format:
-- Title of the recipe on the first line.
-- A short description (1–2 sentences) below the title.
+Please respond using the following clear format, with **no markdown formatting** (no asterisks, hashtags, or other special characters):
+
+- Title of the recipe on the first line (plain text only, no asterisks).
+- A short description (1–2 sentences) on the next line.
 - 3 to 5 numbered steps, each on its own line.
-- A bullet list of ingredients used, each on its own line, introduced by "Ingredients used:".
+- A bullet list of ingredients used, introduced by "Ingredients used:", with each ingredient on a new line starting with "* ".
 
-Do NOT include any introductions, explanations, or extra commentary. Just give the recipe in this format.`;
+Do NOT include any intros, explanations, or extra commentary — just the recipe in this exact format.`;
+
 
   try {
     const response = await fetch(
