@@ -1,5 +1,5 @@
 import { React, useState} from 'react'
-import { Link, useNavigate } from 'react-router'
+import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 // import axios from 'axios'
 
@@ -21,7 +21,9 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try{
-      await axios.post("http://localhost:3000/api/auth/login", inputs);
+      await axios.post("http://localhost:3000/api/auth/login", inputs, {
+        withCredentials: true
+      });
       navigate("/");
     }catch(err){
       setErr(err.response.data);
