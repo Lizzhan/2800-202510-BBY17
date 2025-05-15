@@ -2,12 +2,14 @@ import dotenv from 'dotenv';
 import express from 'express';
 import session from 'express-session';
 import MySQLStore from 'express-mysql-session';
-import cors from 'cors'
+import cors from 'cors';
 import db from './db.js';
-import authRoute from './routes/auth.js'
+import authRoute from './routes/auth.js';
 import recipeAIRoutes from './routes/funnyRecipe.js';
 import recipeRegularAiRoutes from './routes/regularRecipe.js';
 import fridgeRoutes from './routes/getFridge.js';
+import ingredientRoutes from './routes/allUserIngredient.js';
+
 
 
 dotenv.config({
@@ -43,6 +45,8 @@ app.use('/api/auth', authRoute);
 app.use('/api/funnyRecipe', recipeAIRoutes);
 app.use('/api/regularRecipe', recipeRegularAiRoutes);
 app.use('/api/fridge', fridgeRoutes);
+app.use('/api/allingredients', ingredientRoutes);
+
 
 
 
