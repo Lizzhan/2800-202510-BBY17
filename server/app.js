@@ -3,7 +3,15 @@ import express from 'express';
 import session from 'express-session';
 import MySQLStore from 'express-mysql-session';
 import cors from 'cors';
+import cors from 'cors';
 import db from './db.js';
+import authRoute from './routes/auth.js';
+import recipeAIRoutes from './routes/funnyRecipe.js';
+import recipeRegularAiRoutes from './routes/regularRecipe.js';
+import fridgeRoutes from './routes/getFridge.js';
+import ingredientRoutes from './routes/allUserIngredient.js';
+
+
 import authRoute from './routes/auth.js';
 import ingredientRoute from './routes/autosuggestsearchbar.js';
 import tagsRoute from './routes/tags.js';
@@ -19,6 +27,11 @@ const sessionStore = new MySQLSessionStore({}, db);
 const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
+app.use(cors({
+  origin: 'http://localhost:5173', // your frontend dev server
+  credentials: true
+}));
+
 app.use(cors({
   origin: 'http://localhost:5173', // your frontend
   credentials: true
@@ -39,6 +52,12 @@ app.use(session({
 
 // Routes
 app.use('/api/auth', authRoute);
+app.use('/api/funnyRecipe', recipeAIRoutes);
+app.use('/api/regularRecipe', recipeRegularAiRoutes);
+app.use('/api/fridge', fridgeRoutes);
+app.use('/api/allingredients', ingredientRoutes);
+
+
 app.use('/api/ingredients', ingredientRoute);
 app.use('/api/tags', tagsRoute);
 app.use('/api', saveRecipeRoutes);
