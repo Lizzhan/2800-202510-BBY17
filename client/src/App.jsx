@@ -9,6 +9,7 @@ import Layout from "./layout/Layout";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Register from './pages/Register';
 import Login from './pages/Login'
+import Suggest from './pages/RecipeDetail';
 
 //is user input escaped
 export default function App() {
@@ -20,7 +21,7 @@ export default function App() {
             <Route path="/" element={<Home />} />
             <Route path="/cookbook" element={<Cookbook />} />
             <Route path="/fridge" element={<Fridge />} />
-            {/* <Route path="/suggest" element={<Suggest />} /> */}
+            <Route path="/suggest" element={<Suggest />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />

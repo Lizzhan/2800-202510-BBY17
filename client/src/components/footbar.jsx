@@ -81,7 +81,7 @@ export default function Footbar() {
                   type="button"
                   className="w-10 h-10 bg-gray-600 text-white rounded-full flex items-center justify-center shadow-md hover:bg-buttonPeach focus:outline-none focus:ring-2 focus:ring-blue-300"
                 >
-                  <Link to="/add">
+                  <Link to="/suggest">
                     <ChefHat className="w-5 h-5" />
                     <span className="sr-only">New item</span>
                   </Link>
