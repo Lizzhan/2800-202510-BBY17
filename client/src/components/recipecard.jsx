@@ -38,7 +38,7 @@ export default function RecipeCard({ recipe, initiallyLiked = false }) {
       className="cursor-pointer max-w-xs w-full overflow-hidden bg-white rounded-lg shadow-lg dark:bg-gray-800 border-2 border-kaidBrown border-gray-200 dark:border-gray-700"
     >
       <img className="object-cover w-full h-48" src={recipe.image} alt={recipe.recipe_title} />
-      <div className="flex items-center justify-between px-4 py-2 bg-sunshineYellow border-2 border-sunshineYellow dark:bg-gray-700 dark:border-gray-600">
+      <div className="flex items-center justify-between px-4 py-2 bg-sunshineYellow border-2 border-sunshineYellow">
         <h1 className="text-lg font-bold text-gray-800">{recipe.recipe_title}</h1>
         <button
           onClick={handleLikeClick}
