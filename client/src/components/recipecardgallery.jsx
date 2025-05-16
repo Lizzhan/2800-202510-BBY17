@@ -3,36 +3,32 @@ import RecipeCard from './recipecard';
 import axios from 'axios';
 
 export default function RecipeCardGallery() {
-  const [allRecipes, setAllRecipes] = useState([]);         // All recipes from DB
-  const [visibleRecipes, setVisibleRecipes] = useState([]); // Recipes currently shown
-  const [savedRecipes, setSavedRecipes] = useState([]);      // User's saved recipes
+  const [allRecipes, setAllRecipes] = useState([]);
+  const [visibleRecipes, setVisibleRecipes] = useState([]);
+  const [savedRecipes, setSavedRecipes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [hasMore, setHasMore] = useState(true);
   const ITEMS_PER_LOAD = 10;
 
-  // Fetch all recipes from database
+  // Fetch all recipes
   useEffect(() => {
     const fetchRecipes = async () => {
       try {
         const response = await fetch('http://localhost:3000/api/recipes');
-        if (!response.ok) {
-          throw new Error('Failed to fetch recipes');
-        }
+        if (!response.ok) throw new Error('Failed to fetch recipes');
         const data = await response.json();
 
         const processed = data.map(recipe => ({
           recipe_id: recipe.recipe_id,
           recipe_title: recipe.recipe_title,
-          description: recipe.description || '', // fallback if no description
+          description: recipe.description || '',
           image: recipe.image || `https://source.unsplash.com/featured/?${encodeURIComponent(recipe.recipe_title)}`
         }));
 
         setAllRecipes(processed);
         setVisibleRecipes(processed.slice(0, ITEMS_PER_LOAD));
-        if (processed.length <= ITEMS_PER_LOAD) {
-          setHasMore(false);
-        }
+        if (processed.length <= ITEMS_PER_LOAD) setHasMore(false);
       } catch (err) {
         setError(err.message);
       } finally {
@@ -47,7 +43,10 @@ export default function RecipeCardGallery() {
   useEffect(() => {
     const fetchSavedRecipes = async () => {
       try {
-        const response = await axios.get('/api/saved-recipes', { withCredentials: true });
+        const response = await axios.get('http://localhost:3000/api/saved-recipes', {
+          withCredentials: true
+        });
+        console.log('✅ Saved recipes response:', response.data);
         setSavedRecipes(response.data || []);
       } catch (error) {
         console.error('Error fetching saved recipes:', error);
@@ -84,16 +83,32 @@ export default function RecipeCardGallery() {
   if (error) return <p className="text-center text-red-500">Error: {error}</p>;
 
   return (
-  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 max-w-6xl mx-auto px-4">
-    {visibleRecipes.map((recipe) => (
-      <div key={recipe.recipe_id}>
-        <RecipeCard 
-          recipe={recipe}
-          initiallyLiked={Array.isArray(savedRecipes) && savedRecipes.includes(recipe.recipe_id)}
-        />
-      </div>
-    ))}
-    {hasMore && <p className="text-center col-span-full text-gray-500">Loading more recipes...</p>}
-  </div>
-);
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 max-w-6xl mx-auto px-4">
+      {visibleRecipes.map((recipe) => {
+        const isLiked =
+          Array.isArray(savedRecipes) &&
+          savedRecipes.some((saved) => {
+            // Handles both [{ recipe_id: 1 }] and [1, 2, 3]
+            return (
+              saved.recipe_id === recipe.recipe_id ||
+              saved.user_recipe_id === recipe.recipe_id ||
+              saved === recipe.recipe_id ||
+              saved === String(recipe.recipe_id)
+            );
+          });
+
+        console.log('Comparing recipe:', recipe.recipe_id, '→ liked?', isLiked);
+
+        return (
+          <div key={recipe.recipe_id}>
+            <RecipeCard
+              recipe={recipe}
+              initiallyLiked={isLiked}
+            />
+          </div>
+        );
+      })}
+      {hasMore && <p className="text-center col-span-full text-gray-500">Loading more recipes...</p>}
+    </div>
+  );
 }
