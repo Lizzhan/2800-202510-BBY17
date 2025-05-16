@@ -15,6 +15,7 @@ import tagsRoute from './routes/tags.js';
 import saveRecipeRoutes from './routes/savedRecipe.js';
 import recipeRoutes from './routes/recipe.js';
 
+import sessionRoute from './routes/session.js'
 
 dotenv.config({
   path: '../.env'
@@ -27,10 +28,9 @@ const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
 app.use(cors({
-  origin: 'http://localhost:5173', // your frontend
+  origin: 'http://localhost:5173', // or your frontend URL
   credentials: true
 }));
-
 app.use(session({ 
   key: 'ilovecookies',
   secret: process.env.SESSION_SECRET,
@@ -46,12 +46,11 @@ app.use(session({
 
 // Routes
 app.use('/api/auth', authRoute);
+app.use('/api/session', sessionRoute);
 app.use('/api/funnyRecipe', recipeAIRoutes);
 app.use('/api/regularRecipe', recipeRegularAiRoutes);
 app.use('/api/fridge', fridgeRoutes);
 app.use('/api/allingredients', ingredientRoutes);
-
-
 app.use('/api/ingredients', ingredientRoute);
 app.use('/api/tags', tagsRoute);
 app.use('/api', saveRecipeRoutes);

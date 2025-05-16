@@ -21,12 +21,14 @@ export const register = async (req, res) => {
         const isPasswordCorrect = bcrypt.compareSync(req.body.password, data[0].password);
         if(!isPasswordCorrect) return res.status(400).json("WRONG PASSWORD");
         
+        let user = data[0];
 		req.session.authenticated = true;
-		req.session.username = req.body.username;
-		console.log(req.session.username);
+		req.session.username = data.username;
+        req.session.userId = user.user_id
+		console.log(req.username);
 		req.session.cookie.maxAge = 60 * 60 * 1000;
 
-        res.status(200).json("user logged in");
+        res.status(200).json(user);
     })
 }; */
 export const login = (req, res) => {
