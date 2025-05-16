@@ -38,8 +38,6 @@ export default function App() {
         </Routes>
       </Router>
 
-
-      <InfoFooter onNavigate={navigateTo} />
     </div>
   );
 }
