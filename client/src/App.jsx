@@ -5,6 +5,7 @@ import Home from './pages/home';
 import Fridge from './pages/fridge'
 import Footbar from "./components/footbar";
 import Profile from './pages/UserProfile';
+import InfoFooter from "./components/infoFooter";
 import Index from "./pages/Index";
 import Layout from "./layout/Layout";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
@@ -38,6 +39,7 @@ export default function App() {
       </Router>
 
 
+      <InfoFooter onNavigate={navigateTo} />
     </div>
   );
 }
