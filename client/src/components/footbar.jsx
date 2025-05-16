@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { Refrigerator, WandSparkles, CookingPot, Plus } from 'lucide-react';
+import { Refrigerator, ChefHat, CookingPot, Plus } from 'lucide-react';
 import { Link } from "react-router-dom";
 
 export default function Footbar() {
