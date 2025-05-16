@@ -1,13 +1,13 @@
 import { useState, useRef, useEffect } from 'react';
-import { Refrigerator, ChefHat, CookingPot, Plus } from 'lucide-react';
+import { Refrigerator, WandSparkles, CookingPot, Plus } from 'lucide-react';
+import { Link } from "react-router-dom";
 
-export default function Footbar({ onNavigate }) {
+export default function Footbar() {
   const [isExpanded, setIsExpanded] = useState(false);
   const [isRotating, setIsRotating] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const navRef = useRef(null);
 
-  // Handle click outside to collapse
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (navRef.current && !navRef.current.contains(e.target)) {
@@ -46,52 +46,54 @@ export default function Footbar({ onNavigate }) {
           </button>
         )}
 
-        {/* Nav bar with curtain-fold animation */}
+        {/* Nav bar */}
         {isVisible && (
           <div
             className={`origin-center transition-all duration-300 ease-in-out px-4 transform
               ${isExpanded ? 'w-full opacity-100 scale-y-100' : 'w-0 opacity-0 scale-y-95'}
               max-w-md h-16 bg-sunshineYellow border border-gray-200 rounded-full shadow-md dark:bg-gray-700 dark:border-gray-600 overflow-hidden flex items-center justify-between`}
           >
-            <div className="grid grid-cols-3 w-full h-full items-center">
-              {/* Left: Fridge */}
-              <button
-                type="button"
-                onClick={() => {
-                  onNavigate('fridge');
-                  setIsExpanded(false);
-                  setTimeout(() => setIsVisible(false), 300);
-                }}
-                className="flex flex-col items-center justify-center hover:bg-buttonPeachHover dark:hover:bg-gray-800 p-2 rounded-full"
-              >
-                <Refrigerator className="w-6 h-6 text-gray-600 dark:text-gray-300" />
-                <span className="sr-only">Fridge</span>
-              </button>
+            <div className="flex w-full h-full items-center">
 
-              {/* Center: Add New */}
-              <div className="flex items-center justify-center">
+              {/* Left: Fridge */}
+              <Link to="/fridge" className="flex-1">
+                <div
+                  onClick={() => {
+                    setIsExpanded(false);
+                    setTimeout(() => setIsVisible(false), 300);
+                  }}
+                  className="w-full h-full flex flex-col items-center justify-center p-2 rounded-full hover:bg-buttonPeachHover dark:hover:bg-gray-800"
+                >
+                  <Refrigerator className="w-6 h-6 text-gray-600 dark:text-gray-300" />
+                  <span className="sr-only">Fridge</span>
+                </div>
+              </Link>
+
+              {/* Center: Suggest (with spacing) */}
+              <Link to="/suggest" className="mx-2">
                 <button
                   type="button"
-                  className="w-10 h-10 bg-gray-600 text-white rounded-full flex items-center justify-center shadow-md hover:bg-buttonPeach focus:outline-none focus:ring-2 focus:ring-blue-300"
+                  className="w-12 h-12 bg-gray-600 text-white rounded-full flex items-center justify-center shadow-md hover:bg-buttonPeach focus:outline-none focus:ring-2 focus:ring-blue-300"
                 >
-                  <ChefHat className="w-5 h-5" />
+                  <WandSparkles className="w-5 h-5" />
                   <span className="sr-only">New item</span>
                 </button>
-              </div>
+              </Link>
 
               {/* Right: Cookbook */}
-              <button
-                type="button"
-                onClick={() => {
-                  onNavigate('cookbook');
-                  setIsExpanded(false);
-                  setTimeout(() => setIsVisible(false), 300);
-                }}
-                className="flex flex-col items-center justify-center hover:bg-buttonPeach dark:hover:bg-gray-800 p-2 rounded-full"
-              >
-                <CookingPot className="w-6 h-6 text-gray-600 group-hover:text-blue-600 dark:text-gray-300" />
-                <span className="sr-only">Cookbook</span>
-              </button>
+              <Link to="/cookbook" className="flex-1">
+                <div
+                  onClick={() => {
+                    setIsExpanded(false);
+                    setTimeout(() => setIsVisible(false), 300);
+                  }}
+                  className="w-full h-full flex flex-col items-center justify-center p-2 rounded-full hover:bg-buttonPeach dark:hover:bg-gray-800"
+                >
+                  <CookingPot className="w-6 h-6 text-gray-600 dark:text-gray-300" />
+                  <span className="sr-only">Cookbook</span>
+                </div>
+              </Link>
+
             </div>
           </div>
         )}

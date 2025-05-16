@@ -1,12 +1,24 @@
-import React, { useState } from "react";
-
-const tags = [
-  "Healthy", "Quick", "Comfort", "Vegetarian", "High Protein",
-  "Low Carb", "Budget", "Family", "Fancy", "Spicy"
-];
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 export default function FilterTagSection({ onFilterChange }) {
   const [selectedTags, setSelectedTags] = useState([]);
+  const [tags, setTags] = useState([]); // 🔥 fetched from DB now
+
+  // Fetch tags once when component mounts
+  useEffect(() => {
+    const fetchTags = async () => {
+      try {
+        const res = await axios.get('http://localhost:3000/api/tags/GetTags'); 
+        const tagNames = res.data.map(tag => tag.tag); // extract only tag names
+        setTags(tagNames);
+      } catch (err) {
+        console.error('Error fetching tags:', err);
+      }
+    };
+
+    fetchTags();
+  }, []);
 
   const toggleTag = (tag) => {
     const updated =

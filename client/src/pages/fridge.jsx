@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import SearchBarWithDropdown from '../components/SearchBarWithDropdown';
 import SearchList from '../components/SearchList';
 import FilterTagSection from '../components/FilterTagSection';
@@ -6,6 +6,24 @@ import PrimaryButton from '../components/PrimaryButton';
 import IngredientModal from '../components/IngredientModal';
 
 export default function fridge({ onNavigate }) {
+
+useEffect(() => {
+  const userId = 24; // 🔁 Replace this with actual user ID from session/context
+
+  fetch(`http://localhost:3000/api/fridge/${userId}`, {
+    credentials: 'include',
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      const pantryItems = data.filter(i => i.in_pantry === 1).map(i => i.ingredient);
+      const fridgeItems = data.filter(i => i.in_pantry === 0).map(i => i.ingredient);
+
+      setSelectedPantryItems(pantryItems);
+      setSelectedFridgeItems(fridgeItems);
+    })
+    .catch((err) => console.error('Error fetching fridge data:', err));
+}, []);
+
   const [selectedPantryItems, setSelectedPantryItems] = useState([]);
   const [selectedFridgeItems, setSelectedFridgeItems] = useState([]);
   const [modalIngredient, setModalIngredient] = useState(null);

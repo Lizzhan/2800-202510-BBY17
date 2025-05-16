@@ -1,53 +1,27 @@
-import React, { useState } from 'react';
-
-const sampleSuggestions = [
-"Milk",
-"Eggs",
-"Ribeye Steak",
-"Salmon",
-"Broccoli",
-"Spinach",
-"Chicken Breast",
-"Tomatoes",
-"Cheddar Cheese",
-"Avocado",
-"Garlic",
-"Onions",
-"Bell Peppers",
-"Potatoes",
-"Mushrooms",
-"Ground Beef",
-"Zucchini",
-"Carrots",
-"Pasta",
-"Basil",
-"Olive Oil",
-"Vegetable Oil",
-"Balsamic Vinegar",
-"Apple Cider Vinegar",
-"Soy Sauce",
-"Salt",
-"Black Pepper",
-"Garlic Powder",
-"Onion Powder",
-"Paprika",
-"Cumin",
-"Oregano",
-"Basil",
-"Thyme",
-"Cinnamon",
-"Sugar",
-"Brown Sugar",
-"All-Purpose Flour",
-"Rice",
-"Pasta"
-
-];
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
 function SearchBarWithDropdown({ onSearch }) {
   const [searchTerm, setSearchTerm] = useState('');
+  const [suggestions, setSuggestions] = useState([]); // Fetched from DB
   const [filteredSuggestions, setFilteredSuggestions] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
+
+  // Fetch ingredients once when component mounts
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await axios.get('http://localhost:3000/api/ingredients/getingredients');
+        console.log(res);
+        const ingredientNames = res.data.map(item => item.ingredient); // important!
+        setSuggestions(ingredientNames);
+      } catch (err) {
+        console.error('Error fetching ingredients:', err);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const handleChange = (e) => {
     const input = e.target.value;
@@ -59,7 +33,8 @@ function SearchBarWithDropdown({ onSearch }) {
       return;
     }
 
-    const results = sampleSuggestions.filter((item) =>
+    // 🔥 filter using dynamic suggestions, not hardcoded list
+    const results = suggestions.filter((item) =>
       item.toLowerCase().includes(input.toLowerCase())
     );
 
@@ -70,7 +45,7 @@ function SearchBarWithDropdown({ onSearch }) {
   const handleSelect = (value) => {
     setSearchTerm(value);
     setShowSuggestions(false);
-    onSearch(value); // pass selected term up
+    onSearch(value);
   };
 
   const handleSubmit = (e) => {
