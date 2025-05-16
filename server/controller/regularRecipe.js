@@ -11,20 +11,22 @@ export const generateRegularRecipeName = async (req, res) => {
     db.query(ingredientQuery, async (err, ingredientRows) => {
       if (err) return res.status(500).json({ error: 'Failed to fetch ingredients' });
 
-      const ingredientList = ingredientRows.map(i => i.ingredient);
+      const ingredientList = ingredientRows
+        .map(i => i.ingredient)
+        .sort(() => Math.random() - 0.5);
 
       // Step 2: Create Gemini Prompt
-      const prompt = `
-Generate a recipe using ingredients from this list only(doesnt have to include all the ingredient make it good): ${ingredientList.join(', ')}.
-Do not invent ingredients or add extras. Ingredient names must match the list exactly.
+       const prompt = `Give me a recipe based on the following ingredients: ${ingredientList.join(', ')}.
+You do not need to use all of them and dont add ingredients. and please keep ingredient exactly the name that i have send you.
 
-Respond with only the following, no markdown formatting, and follow the structure exactly:
+Respond using the following clear format:
+- Title of the recipe on the first line.
+- A short description (1–2 sentences) below the title.
+- 3 to 5 numbered steps, each on its own line.
+- A bullet list of ingredients used, each on its own line, introduced by "Ingredients used:".
 
-- First line: Recipe title (plain text, no symbols).
-- Second line: Description (1–2 sentences).
-- Next: 3 to 5 numbered steps, each on its own line.
-- A section titled "Ingredients used:" followed by bullet points.
-`;
+Do NOT include any introductions, explanations, or extra commentary. Just give the recipe in this format. dont give me any format or any astrix or hashtags just give me text. try not to give me the same recipe`;
+
 
       // Step 3: Call Gemini
       const response = await fetch(

@@ -10,7 +10,12 @@ export const generateFunnyRecipeName = async (req, res) => {
     return res.status(400).json({ error: 'Missing or invalid ingredients array' });
   }
 
-  const prompt = `You're a goofy chef. Create a made-up, funny recipe using these ingredients (you don't need to use all of them): ${ingredients.join(', ')}.
+  // Shuffle ingredients
+  const shuffledIngredients = [...ingredients].sort(() => Math.random() - 0.5);
+
+
+
+  const prompt = `You're a goofy chef. Create a made-up, funny recipe using these ingredients (you don't need to use all of them): ${shuffledIngredients.join(', ')}.
 
 Return ONLY the following:
 - A funny recipe name in bold (e.g., **Leaf Bucket** or **Pepper Cheese 360** — do not include the food type like "salad" or "pizza")
@@ -18,7 +23,7 @@ Return ONLY the following:
 - 3 to 5 ridiculous, numbered steps
 - A list of ingredients used (bullet-pointed, real or ridiculous)
 
-Don't add anything else — no intros or sign-offs.`;
+Don't add anything else — no intros or sign-offs try not to give me the same recipe.`;
 
   try {
     const response = await fetch(
