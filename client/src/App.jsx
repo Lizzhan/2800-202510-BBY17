@@ -13,6 +13,7 @@ import Register from './pages/Register';
 import Login from './pages/Login'
 import { useAuth } from "./context/AuthContext";
 import Suggest from './pages/RecipeDetail';
+import RecipePage from './pages/RecipePage';
 
 //is user input escaped
 export default function App() {
@@ -33,6 +34,7 @@ export default function App() {
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
             <Route path="/index" element={<Index />} />
+            <Route path="/recipe/:id" element={<RecipePage />} />
 
           </Route>
         </Routes>

@@ -18,20 +18,39 @@ router.get('/recipes', (req, res) => {
   }
 });
 
-router.get('/recipes/:id', async (req, res) => {
+router.get('/recipes/:id', (req, res) => {
   const recipeId = req.params.id;
-  try {
-    const result = await db.query('SELECT * FROM recipes WHERE recipe_id = ?', [recipeId]);
-    const rows = result[0];  // ✅ Again, manually grab rows
-    if (rows.length > 0) {
-      res.json(rows[0]);
-    } else {
-      res.status(404).json({ error: 'Recipe not found' });
+
+  const recipeQuery = 'SELECT * FROM recipes WHERE recipe_id = ?';
+  const ingredientsQuery = `
+    SELECT i.ingredient AS ingredient_name
+    FROM recipe_ingredients ri
+    JOIN ingredients i ON ri.ingredient_id = i.ingredient_id
+    WHERE ri.recipe_id = ?
+  `;
+
+  db.query(recipeQuery, [recipeId], (err, recipeData) => {
+    if (err) {
+      console.error('Error fetching recipe:', err);
+      return res.status(500).json({ error: 'Database error' });
     }
-  } catch (error) {
-    console.error('Error fetching recipe by ID:', error);
-    res.status(500).json({ error: 'Internal server error' });
-  }
+
+    if (recipeData.length === 0) {
+      return res.status(404).json({ error: 'Recipe not found' });
+    }
+
+    db.query(ingredientsQuery, [recipeId], (err, ingredientsData) => {
+      if (err) {
+        console.error('Error fetching ingredients:', err);
+        return res.status(500).json({ error: 'Database error' });
+      }
+
+      const recipe = recipeData[0];
+      recipe.ingredients = ingredientsData.map(row => row.ingredient_name); // turn into array of names
+
+      res.json(recipe);
+    });
+  });
 });
 
 export default router;
