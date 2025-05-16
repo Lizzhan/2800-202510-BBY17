@@ -12,7 +12,6 @@ export const AuthProvider = ({ children }) => {
 
   const isAuthenticated = !!user;
 
-  // ✅ Check session on page load
   useEffect(() => {
     const checkSession = async () => {
       try {
@@ -26,7 +25,7 @@ export const AuthProvider = ({ children }) => {
         }
       } catch (err) {
         console.error("Session check failed", err.message || err);
-        setUser(null);
+        setUser(null);    
       } finally {
         setLoading(false);
       }
