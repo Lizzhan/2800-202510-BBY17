@@ -10,10 +10,14 @@ import recipeRegularAiRoutes from './routes/regularRecipe.js';
 import fridgeRoutes from './routes/getFridge.js';
 import ingredientRoutes from './routes/allUserIngredient.js';
 
+import ingredientRoute from './routes/autosuggestsearchbar.js';
+import tagsRoute from './routes/tags.js';
+import saveRecipeRoutes from './routes/savedRecipe.js';
+import recipeRoutes from './routes/recipe.js';
 
 
 dotenv.config({
-    path: '../.env'
+  path: '../.env'
 });
 
 const app = express();
@@ -23,7 +27,7 @@ const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
 app.use(cors({
-  origin: 'http://localhost:5173', // your frontend dev server
+  origin: 'http://localhost:5173', // your frontend
   credentials: true
 }));
 
@@ -35,12 +39,12 @@ app.use(session({
   resave: false,
   cookie: {
     httpOnly: true,
-    //encryption
-    }
+    secure: false,      // set to true if you are using HTTPS (production)
+    sameSite: 'lax'     // important: 'lax' for dev, not 'none'
   }
-));
-//intermediate routes
-//a request is sent to localhost:3000/api/auth/...
+}));
+
+// Routes
 app.use('/api/auth', authRoute);
 app.use('/api/funnyRecipe', recipeAIRoutes);
 app.use('/api/regularRecipe', recipeRegularAiRoutes);
@@ -48,10 +52,13 @@ app.use('/api/fridge', fridgeRoutes);
 app.use('/api/allingredients', ingredientRoutes);
 
 
+app.use('/api/ingredients', ingredientRoute);
+app.use('/api/tags', tagsRoute);
+app.use('/api', saveRecipeRoutes);
+app.use('/api',recipeRoutes);
 
 
-// Start server
+// Server start
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
-
