@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { Refrigerator, ChefHat, CookingPot, Plus } from 'lucide-react';
+import { Refrigerator, WandSparkles, CookingPot, Plus } from 'lucide-react';
 import { Link } from "react-router-dom";
 
 export default function Footbar() {
@@ -73,12 +73,12 @@ export default function Footbar() {
                 </Link>
 
                 {/* Center: Add New */}
-                <Link to="/add">
+                <Link to="/suggest">
                   <button
                     type="button"
                     className="w-12 h-12 bg-gray-600 text-white rounded-full flex items-center justify-center shadow-md hover:bg-buttonPeach focus:outline-none focus:ring-2 focus:ring-blue-300"
                   >
-                    <ChefHat className="w-5 h-5" />
+                    <WandSparkles className="w-5 h-5" />
                     <span className="sr-only">New item</span>
                   </button>
                 </Link>
