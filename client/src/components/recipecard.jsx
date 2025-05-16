@@ -1,19 +1,26 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-export default function RecipeCard({ title, image, recipeId, initiallyLiked = false }) {
+export default function RecipeCard({ recipe, initiallyLiked = false }) {
   const [liked, setLiked] = useState(initiallyLiked);
+  const navigate = useNavigate();
 
   useEffect(() => {
     setLiked(initiallyLiked);
   }, [initiallyLiked]);
 
-  const handleLikeClick = async () => {
+  const shortDescription = recipe.description?.length > 100
+    ? recipe.description.slice(0, 100) + '...'
+    : recipe.description;
+
+  const handleLikeClick = async (e) => {
+    e.stopPropagation(); // prevent navigation when clicking the like button
     try {
       if (!liked) {
-        await axios.post('http://localhost:3000/api/save-recipe', { user_recipe_id: recipeId }, { withCredentials: true });
+        await axios.post('http://localhost:3000/api/save-recipe', { user_recipe_id: recipe.recipe_id }, { withCredentials: true });
       } else {
-        await axios.post('http://localhost:3000/api/unsave-recipe', { user_recipe_id: recipeId }, { withCredentials: true });
+        await axios.post('http://localhost:3000/api/unsave-recipe', { user_recipe_id: recipe.recipe_id }, { withCredentials: true });
       }
       setLiked(!liked);
     } catch (error) {
@@ -21,19 +28,26 @@ export default function RecipeCard({ title, image, recipeId, initiallyLiked = fa
     }
   };
 
+  const handleCardClick = () => {
+    navigate(`/recipe/${recipe.recipe_id}`);
+  };
+
   return (
-    <div className="max-w-xs w-full overflow-hidden bg-white rounded-lg shadow-lg dark:bg-gray-800 border-2 border-kaidBrown border-gray-200 dark:border-gray-700">
-      <img className="object-cover w-full h-48" src={image} alt={title} />
+    <div
+      onClick={handleCardClick}
+      className="cursor-pointer max-w-xs w-full overflow-hidden bg-white rounded-lg shadow-lg dark:bg-gray-800 border-2 border-kaidBrown border-gray-200 dark:border-gray-700"
+    >
+      <img className="object-cover w-full h-48" src={recipe.image} alt={recipe.recipe_title} />
       <div className="flex items-center justify-between px-4 py-2 bg-sunshineYellow border-2 border-sunshineYellow dark:bg-gray-700 dark:border-gray-600">
-        <h1 className="text-lg font-bold text-gray-800">{title}</h1>
-        <button 
-          onClick={handleLikeClick} 
+        <h1 className="text-lg font-bold text-gray-800">{recipe.recipe_title}</h1>
+        <button
+          onClick={handleLikeClick}
           className="focus:outline-none"
         >
           <svg
             className={`w-6 h-6 transition-all duration-300 transform ${
-              liked 
-                ? 'text-buttonPeach scale-110' 
+              liked
+                ? 'text-buttonPeach scale-110'
                 : 'text-kaidCream hover:text-buttonPeach hover:scale-110'
             }`}
             fill="currentColor"
@@ -46,6 +60,9 @@ export default function RecipeCard({ title, image, recipeId, initiallyLiked = fa
                      6.86-8.55 11.54L12 21.35z"/>
           </svg>
         </button>
+      </div>
+      <div className="px-4 py-2">
+        <p className="text-sm text-gray-700 dark:text-gray-300">{shortDescription}</p>
       </div>
     </div>
   );

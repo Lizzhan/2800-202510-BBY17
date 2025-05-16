@@ -8,6 +8,8 @@ import authRoute from './routes/auth.js';
 import ingredientRoute from './routes/autosuggestsearchbar.js';
 import tagsRoute from './routes/tags.js';
 import saveRecipeRoutes from './routes/savedRecipe.js';
+import recipeRoutes from './routes/recipe.js';
+
 
 dotenv.config({
   path: '../.env'
@@ -42,6 +44,8 @@ app.use('/api/auth', authRoute);
 app.use('/api/ingredients', ingredientRoute);
 app.use('/api/tags', tagsRoute);
 app.use('/api', saveRecipeRoutes);
+app.use('/api',recipeRoutes);
+
 
 // Server start
 app.listen(PORT, () => {
