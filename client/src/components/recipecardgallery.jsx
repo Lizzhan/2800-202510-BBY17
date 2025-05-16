@@ -84,16 +84,16 @@ export default function RecipeCardGallery() {
   if (error) return <p className="text-center text-red-500">Error: {error}</p>;
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-3xl mx-auto">
-      {visibleRecipes.map((recipe) => (
-        <div key={recipe.recipe_id} className="min-w-[16rem]">
-          <RecipeCard 
-            recipe={recipe}
-            initiallyLiked={Array.isArray(savedRecipes) && savedRecipes.includes(recipe.recipe_id)}
-          />
-        </div>
-      ))}
-      {hasMore && <p className="text-center col-span-2 text-gray-500">Loading more recipes...</p>}
-    </div>
-  );
+  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 max-w-6xl mx-auto px-4">
+    {visibleRecipes.map((recipe) => (
+      <div key={recipe.recipe_id}>
+        <RecipeCard 
+          recipe={recipe}
+          initiallyLiked={Array.isArray(savedRecipes) && savedRecipes.includes(recipe.recipe_id)}
+        />
+      </div>
+    ))}
+    {hasMore && <p className="text-center col-span-full text-gray-500">Loading more recipes...</p>}
+  </div>
+);
 }
