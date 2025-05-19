@@ -113,7 +113,13 @@ export default function RecipeCardGallery() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [visibleRecipes, hasMore]);
 
+<<<<<<< HEAD
   // ========== LOAD MORE RECIPES (CHUNKED) ==========
+=======
+    const handleCardClick = () => {
+    navigate(`/recipe/${recipe.recipe_id}`);
+  };
+>>>>>>> lucas_liu_fridge_functions
 
   const loadMore = () => {
     // Grab next N recipes based on current scroll position

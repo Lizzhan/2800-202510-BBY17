@@ -23,9 +23,9 @@ Respond using the following clear format:
 - Title of the recipe on the first line.
 - A short description (1–2 sentences) below the title.
 - 3 to 5 numbered steps, each on its own line.
-- A bullet list of ingredients used, each on its own line, introduced by "Ingredients used:".
+- A list of ingredients used, each on its own line dont add dashes or lines in front of it, introduced by "Ingredients used:".
 
-Do NOT include any introductions, explanations, or extra commentary. Just give the recipe in this format. dont give me any format or any astrix or hashtags just give me text. try not to give me the same recipe`;
+Do NOT include any introductions, explanations, or extra commentary. Just give the recipe in this format. dont give me any format or any astrix or hashtags just give me text. try not to give me the same recipe not bolt no ephasis`;
 
 
       // Step 3: Call Gemini
@@ -60,8 +60,14 @@ Do NOT include any introductions, explanations, or extra commentary. Just give t
 
       const ingredientsMatch = fullText.match(/Ingredients used:\s*\n([\s\S]*)$/i);
       const parsedIngredients = ingredientsMatch
-        ? ingredientsMatch[1].split('\n').map(line => line.replace(/^\*+\s*/, '').trim()).filter(Boolean)
+        ? ingredientsMatch[1]
+          .split('\n')
+          .map(line =>
+            line.replace(/^[-*•–]+\s*/, '').trim() // ✅ removes -, *, •, – and any spaces after
+          )
+          .filter(Boolean)
         : [];
+
 
       // Step 5: Insert recipe
       const insertRecipeQuery = `
@@ -78,15 +84,41 @@ Do NOT include any introductions, explanations, or extra commentary. Just give t
         // Step 6: Insert into recipe_ingredients
         parsedIngredients.forEach((ingName) => {
           const ingRow = ingredientRows.find(i => i.ingredient.toLowerCase() === ingName.toLowerCase());
-          if (!ingRow) return console.warn(`❗ Ingredient not found: ${ingName}`);
 
-          db.query(
-            'INSERT INTO recipe_ingredients (recipe_id, ingredient_id) VALUES (?, ?)',
-            [recipeId, ingRow.ingredient_id],
-            (err) => {
-              if (err) console.error(`❌ Ingredient insert failed: ${ingName}`, err);
-            }
-          );
+          if (ingRow) {
+            // Ingredient exists, link it
+            db.query(
+              'INSERT INTO recipe_ingredients (recipe_id, ingredient_id) VALUES (?, ?)',
+              [recipeId, ingRow.ingredient_id],
+              (err) => {
+                if (err) console.error(`❌ Ingredient insert failed: ${ingName}`, err);
+              }
+            );
+          } else {
+            // Ingredient not found — insert it first
+            db.query(
+              'INSERT INTO ingredients (ingredient) VALUES (?)',
+              [ingName],
+              (err, result) => {
+                if (err) {
+                  console.error(`❌ Failed to insert new ingredient: ${ingName}`, err);
+                  return;
+                }
+
+                const newIngredientId = result.insertId;
+                console.log(`✅ Inserted new ingredient "${ingName}" with ID ${newIngredientId}`);
+
+                // Now link to the recipe
+                db.query(
+                  'INSERT INTO recipe_ingredients (recipe_id, ingredient_id) VALUES (?, ?)',
+                  [recipeId, newIngredientId],
+                  (err) => {
+                    if (err) console.error(`❌ Linking new ingredient failed: ${ingName}`, err);
+                  }
+                );
+              }
+            );
+          }
         });
 
         // Final response

@@ -72,7 +72,7 @@ export const logout = (req, res) => {
 
 export const getCurrentUser = (req, res) => {
   if (req.session.username) {
-    res.json({ username: req.session.username });
+    res.json({ id: req.session.userId, username: req.session.username });
   } else {
     res.status(401).json({ error: 'Not logged in' });
   }
