@@ -173,15 +173,14 @@ export default function Fridge({ onNavigate }) {
   };
 
   const handleSuggestRecipe = async () => {
-    const ingredients = [...highlightedPantry, ...highlightedFridge];
+    let ingredients = [...highlightedPantry, ...highlightedFridge];
 
+    // If nothing is highlighted, use all stored items
     if (ingredients.length === 0) {
-      setWarningMessage('Please highlight ingredients to get suggestions.');
-      return;
+      ingredients = [...selectedFridgeItems, ...selectedPantryItems];
     }
-
     try {
-      const res = await fetch('http://localhost:3000/api/recipes/match', {
+      const res = await fetch('http://localhost:3000/api/match', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
@@ -190,8 +189,10 @@ export default function Fridge({ onNavigate }) {
 
       if (!res.ok) throw new Error('Failed to fetch recipes');
       const matchingRecipes = await res.json();
+      console.log('✅ About to navigate with recipes:', matchingRecipes);
+console.log('🛠 Type of matchingRecipes:', typeof matchingRecipes, Array.isArray(matchingRecipes));
 
-      navigate('/suggest', { state: { recipes: matchingRecipes } });
+      navigate('/suggestRecipes', { state: { recipes: matchingRecipes } });
     } catch (err) {
       console.error('Error suggesting recipe:', err);
       setWarningMessage('Something went wrong while fetching recipe suggestions.');
