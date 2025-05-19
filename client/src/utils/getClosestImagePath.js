@@ -1,5 +1,5 @@
 const stockImages = [
-  "alfredo-chicken-pasta-parsli-linguini.jpeg",
+  "alfredo-chicken-pasta-parsli-linguine-penne.jpeg",
   "beef-burger.jpeg",
   "beef-steak-potato-mash.jpeg",
   "beef-stew.jpeg",
@@ -54,5 +54,5 @@ export function getClosestImagePath(title) {
     }
   }
 
-  return bestMatch ? `public/meals/${bestMatch}` : 'public/meals/default.jpeg';
+  return bestMatch ? `../public/meals/${bestMatch}` : '../public/meals/default.jpeg';
 }
