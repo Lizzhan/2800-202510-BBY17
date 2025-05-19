@@ -5,7 +5,7 @@ import SearchList from '../components/SearchList';
 import FilterTagSection from '../components/FilterTagSection';
 import PrimaryButton from '../components/PrimaryButton';
 import IngredientModal from '../components/IngredientModal';
-import WarningModal from '../components/WarningModal';
+import WarningModal from '../components/WarningMotal';
 
 export default function Fridge({ onNavigate }) {
   const navigate = useNavigate();
@@ -172,17 +172,30 @@ export default function Fridge({ onNavigate }) {
     }
   };
 
-  const handleSuggestRecipe = () => {
+  const handleSuggestRecipe = async () => {
     const ingredients = [...highlightedPantry, ...highlightedFridge];
-    const payload = {
-      ingredients,
-      tags: selectedTags,
-    };
 
-    console.log("Ingredients:", ingredients);
-    console.log("Tags:", selectedTags);
+    if (ingredients.length === 0) {
+      setWarningMessage('Please highlight ingredients to get suggestions.');
+      return;
+    }
 
-    alert(`Sending to /suggest:\n${JSON.stringify(payload, null, 2)}`);
+    try {
+      const res = await fetch('http://localhost:3000/api/recipes/match', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({ ingredients }),
+      });
+
+      if (!res.ok) throw new Error('Failed to fetch recipes');
+      const matchingRecipes = await res.json();
+
+      navigate('/suggest', { state: { recipes: matchingRecipes } });
+    } catch (err) {
+      console.error('Error suggesting recipe:', err);
+      setWarningMessage('Something went wrong while fetching recipe suggestions.');
+    }
   };
 
   return (

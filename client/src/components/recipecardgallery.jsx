@@ -71,6 +71,10 @@ export default function RecipeCardGallery() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [visibleRecipes, hasMore]);
 
+    const handleCardClick = () => {
+    navigate(`/recipe/${recipe.recipe_id}`);
+  };
+
   const loadMore = () => {
     const nextRecipes = allRecipes.slice(visibleRecipes.length, visibleRecipes.length + ITEMS_PER_LOAD);
     setVisibleRecipes(prev => [...prev, ...nextRecipes]);
