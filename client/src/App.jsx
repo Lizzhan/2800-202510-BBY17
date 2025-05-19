@@ -5,14 +5,15 @@ import Home from './pages/home';
 import Fridge from './pages/fridge'
 import Footbar from "./components/footbar";
 import Profile from './pages/UserProfile';
+import InfoFooter from "./components/infoFooter";
 import Index from "./pages/Index";
 import Layout from "./layout/Layout";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Register from './pages/Register';
 import Login from './pages/Login'
-import SuggestedRecipeGallery from "./pages/suggestedRecipes";
 import { useAuth } from "./context/AuthContext";
 import Suggest from './pages/RecipeDetail';
+import RecipePage from './pages/RecipePage';
 
 //is user input escaped
 export default function App() {
@@ -33,7 +34,7 @@ export default function App() {
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
             <Route path="/index" element={<Index />} />
-            <Route path="/suggestRecipes" element={<SuggestedRecipeGallery  />} />
+            <Route path="/recipe/:id" element={<RecipePage />} />
 
           </Route>
         </Routes>
