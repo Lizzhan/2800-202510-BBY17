@@ -5,6 +5,7 @@ import SearchList from '../components/SearchList';
 import FilterTagSection from '../components/FilterTagSection';
 import PrimaryButton from '../components/PrimaryButton';
 import IngredientModal from '../components/IngredientModal';
+import WarningModal from '../components/WarningModal';
 
 export default function Fridge({ onNavigate }) {
   const navigate = useNavigate();
@@ -13,6 +14,7 @@ export default function Fridge({ onNavigate }) {
   const [selectedFridgeItems, setSelectedFridgeItems] = useState([]);
   const [modalIngredient, setModalIngredient] = useState(null);
   const [selectedTags, setSelectedTags] = useState([]);
+  const [warningMessage, setWarningMessage] = useState('');
 
   const [highlightedPantry, setHighlightedPantry] = useState(new Set());
   const [highlightedFridge, setHighlightedFridge] = useState(new Set());
@@ -48,7 +50,7 @@ export default function Fridge({ onNavigate }) {
 
   const handleAddToPantry = async (item) => {
     if (selectedPantryItems.includes(item) || selectedFridgeItems.includes(item)) {
-      alert(`${item} is already in your pantry or fridge!`);
+      setWarningMessage(`${item} is already in your pantry or fridge!`);
       closeModal();
       return;
     }
@@ -77,10 +79,9 @@ export default function Fridge({ onNavigate }) {
     closeModal();
   };
 
-
   const handleAddToFridge = async (item) => {
     if (selectedPantryItems.includes(item) || selectedFridgeItems.includes(item)) {
-      alert(`${item} is already in your pantry or fridge!`);
+      setWarningMessage(`${item} is already in your pantry or fridge!`);
       closeModal();
       return;
     }
@@ -108,7 +109,6 @@ export default function Fridge({ onNavigate }) {
     }
     closeModal();
   };
-
 
   const handleRemovePantryItem = async (index) => {
     const item = selectedPantryItems[index];
@@ -219,6 +219,13 @@ export default function Fridge({ onNavigate }) {
         onAddToPantry={handleAddToPantry}
         onAddToFridge={handleAddToFridge}
       />
+
+      {warningMessage && (
+        <WarningModal
+          message={warningMessage}
+          onClose={() => setWarningMessage('')}
+        />
+      )}
     </div>
   );
 }
