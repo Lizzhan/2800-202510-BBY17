@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import { getClosestImagePath } from '../utils/getClosestImagePath';
 
 export default function RecipePage() {
   const { id } = useParams(); // Get recipe_id from URL
@@ -100,7 +101,7 @@ export default function RecipePage() {
       {/* Image */}
       <img
         className="w-full h-64 object-cover rounded"
-        src={`https://source.unsplash.com/featured/?${encodeURIComponent(recipe.recipe_title)}`}
+        src={getClosestImagePath(recipe.recipe_title)}
         alt={recipe.recipe_title}
       />
 
