@@ -8,7 +8,7 @@ export default function home() {
   useEffect(() => {
     fetch('http://localhost:3000/api/auth/me', {
       method: 'GET',
-      credentials: 'include', // 👈 important to include session cookie
+      credentials: 'include', // important to include session cookie
     })
       .then(res => {
         if (!res.ok) throw new Error('Not logged in');
