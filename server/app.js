@@ -16,6 +16,9 @@ import saveRecipeRoutes from './routes/savedRecipe.js';
 import recipeRoutes from './routes/recipe.js';
 import matchRecipeRoutes from './routes/suggestRecipe.js';
 import sessionRoute from './routes/session.js'
+import express from 'express';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
 dotenv.config({
   path: '../.env'
@@ -26,11 +29,24 @@ const MySQLSessionStore = MySQLStore(session);
 const sessionStore = new MySQLSessionStore({}, db);
 const PORT = process.env.PORT || 3000;
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+app.use(express.static(path.join(__dirname, '../dist')));
+
+// Fallback: send index.html for SPA
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../dist/index.html'));
+});
+
 app.use(express.json());
 app.use(cors({
-  origin: 'http://localhost:5173', // or your frontend URL
+  // origin: 'http://localhost:5173', // or your frontend URL
+  origin: true,
   credentials: true
 }));
+
+
 app.use(session({ 
   key: 'ilovecookies',
   secret: process.env.SESSION_SECRET,
