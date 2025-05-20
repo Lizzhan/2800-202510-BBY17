@@ -5,6 +5,7 @@ import { getClosestImagePath } from '../utils/getClosestImagePath';
 
 export default function RecipeCard({ recipe, initiallyLiked = false }) {
   const [liked, setLiked] = useState(initiallyLiked);
+  const [popping, setPopping] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -16,18 +17,23 @@ export default function RecipeCard({ recipe, initiallyLiked = false }) {
     : recipe.description;
 
   const handleLikeClick = async (e) => {
-    e.stopPropagation(); // prevent navigation when clicking the like button
-    try {
-      if (!liked) {
-        await axios.post('http://localhost:3000/api/save-recipe', { user_recipe_id: recipe.recipe_id }, { withCredentials: true });
-      } else {
-        await axios.post('http://localhost:3000/api/unsave-recipe', { user_recipe_id: recipe.recipe_id }, { withCredentials: true });
-      }
-      setLiked(!liked);
-    } catch (error) {
-      console.error('Error updating saved recipe:', error);
+  e.stopPropagation();
+  try {
+    // Trigger pop animation
+    setPopping(true);
+    setTimeout(() => setPopping(false), 300); // Duration matches the CSS animation
+
+    if (!liked) {
+      await axios.post('http://localhost:3000/api/save-recipe', { user_recipe_id: recipe.recipe_id }, { withCredentials: true });
+    } else {
+      await axios.post('http://localhost:3000/api/unsave-recipe', { user_recipe_id: recipe.recipe_id }, { withCredentials: true });
     }
-  };
+
+    setLiked(!liked);
+  } catch (error) {
+    console.error('Error updating saved recipe:', error);
+  }
+};
 
   const handleCardClick = () => {
     navigate(`/recipe/${recipe.recipe_id}`);

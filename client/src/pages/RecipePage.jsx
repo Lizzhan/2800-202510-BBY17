@@ -78,15 +78,19 @@ export default function RecipePage() {
       {/* Title with Heart Icon */}
       <div className="flex items-center justify-between">
         <h1 className="text-3xl font-semibold">{recipe.recipe_title}</h1>
-        <button onClick={handleLikeClick} className="ml-4 focus:outline-none" title={liked ? "Unsave" : "Save"}>
+        <button onClick={handleLikeClick} 
+        className="focus:outline-none ml-2 shrink-0" 
+        title={liked ? "Unsave" : "Save"}>
           <svg
-          className={`w-7 h-7 transition-all duration-300 transform ${
+          className={`w-6 h-6 transition-all duration-300 transform ${
            liked
              ? 'text-buttonPeach scale-110'
-              : 'text-red-300 hover:text-buttonPeach hover:scale-110'
+              : 'text-kaidCream hover:text-buttonPeach hover:scale-110'
           }`}   
            fill="currentColor"
            viewBox="0 0 24 24"
+           stroke={liked ? 'none' : 'rgba(0, 0, 0, 0.2)'} // faded black outline
+           strokeWidth={liked ? 0 : 1.5} // subtle thickness
           >
             <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 
                2 5.42 4.42 3 7.5 3c1.74 0 3.41 0.81 
