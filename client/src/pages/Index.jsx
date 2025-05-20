@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router'
-import axios from 'axios';
 
 const Index = () => {
   
@@ -15,7 +14,7 @@ const Index = () => {
             Login
       </button>
       </Link>
-      <Link to="/login" className="text-indigo-500 hover:underline">
+      <Link to="/register" className="text-indigo-500 hover:underline">
       <button
             type="button"
             className="p-4 py-2 bg-indigo-500 text-white rounded-lg hover:bg-indigo-600 transition duration-200"
