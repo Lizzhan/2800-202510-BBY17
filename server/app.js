@@ -7,6 +7,7 @@ import db from './db.js';
 import authRoute from './routes/auth.js';
 import recipeAIRoutes from './routes/funnyRecipe.js';
 import recipeRegularAiRoutes from './routes/regularRecipe.js';
+import submitRecipeRoute from './routes/submitRecipe.js';
 import fridgeRoutes from './routes/getFridge.js';
 import ingredientRoutes from './routes/allUserIngredient.js';
 
@@ -55,6 +56,7 @@ app.use('/api/ingredients', ingredientRoute);
 app.use('/api/tags', tagsRoute);
 app.use('/api', saveRecipeRoutes);
 app.use('/api',recipeRoutes);
+app.use('/api/submitRecipe', submitRecipeRoute);
 
 
 // Server start
