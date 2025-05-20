@@ -57,7 +57,14 @@ export default function Navbar() {
       >
         Home
       </Link>
-      <button
+        <button
+        onClick={handleLogout}
+        className="bg-buttonPeach text-castIron font-medium px-2 py-1 sm:px-3 sm:py-1.5 rounded-full shadow hover:bg-buttonPeachHover transition text-xs sm:text-base"
+      >
+        Logout
+        </button>
+
+        <button
         className="text-castIron hover:text-blue-600"
         aria-label="Profile"
         onClick={() => {
@@ -68,17 +75,11 @@ export default function Navbar() {
           }
         }}
       >
-      </button>
-        <button
-        onClick={handleLogout}
-        className="bg-buttonPeach text-castIron font-medium px-2 py-1 sm:px-3 sm:py-1.5 rounded-full shadow hover:bg-buttonPeachHover transition text-xs sm:text-base"
-      >
-        Logout
-        </button>
-
       <Link to="/profile" aria-label="Profile">
         <UserIcon className="h-6 w-6 text-castIron hover:text-blue-600" />
       </Link>
+      </button>
+
     </div>
   </div>
 </nav>
