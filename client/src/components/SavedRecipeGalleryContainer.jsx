@@ -1,4 +1,4 @@
-// components/GalleryContainer.jsx
+
 import { useEffect, useState } from 'react';
 import RecipeCard from './recipecard';
 import axios from 'axios';
@@ -14,7 +14,7 @@ export default function GalleryContainer({ showSavedOnly = false, uploadedOnly =
         if (showSavedOnly) {
           url = 'http://localhost:3000/api/saved-recipes';
         } else if (uploadedOnly) {
-          url = 'http://localhost:3000/api/my-recipes'; // <- update if you use another endpoint for user uploads
+          url = 'http://localhost:3000/api/my-recipes'; 
         } else {
           url = 'http://localhost:3000/api/recipes';
         }

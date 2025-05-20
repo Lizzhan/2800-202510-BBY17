@@ -54,8 +54,8 @@ export const login = (req, res) => {
 
         // Session stuff
         req.session.authenticated = true;
-        req.session.userId = user.user_id; // or whatever your user id column is called
-        req.session.username = user.username; // optional
+        req.session.userId = user.user_id; 
+        req.session.username = user.username;
 
         console.log("User logged in:", req.session.userId);
 
