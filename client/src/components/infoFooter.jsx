@@ -11,7 +11,7 @@ export default function InfoFooter() {
   };
 
   return (
-    <footer className="w-full bg-sunshineYellow border-t border-kaidBrown p-4">
+    <footer className="w-full bg-sunshineYellow border-t border-black p-4">
       <div className="flex justify-between items-center max-w-5xl mx-auto">
         <p className="text-gray-600">Made By BBY17 - 2025</p>
 

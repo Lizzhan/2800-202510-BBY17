@@ -39,6 +39,11 @@ module.exports = {
             tiled:            '#CDC6B6',
             tiledLight:       '#F7F4E3'
       },
+      fontFamily: {
+        quicksand: ['Quicksand', 'sans-serif'],
+        fredoka: ['Fredoka', 'sans-serif'],
+        lora: ['Lora', 'serif'],
+      },
       },
     },
     plugins: [],

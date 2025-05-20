@@ -115,10 +115,6 @@ export default function RecipeCardGallery() {
 
   // ========== LOAD MORE RECIPES (CHUNKED) ==========
 
-    const handleCardClick = () => {
-    navigate(`/recipe/${recipe.recipe_id}`);
-  };
-
   const loadMore = () => {
     // Grab next N recipes based on current scroll position
     const nextRecipes = allRecipes.slice(visibleRecipes.length, visibleRecipes.length + ITEMS_PER_LOAD);
@@ -140,7 +136,7 @@ export default function RecipeCardGallery() {
   // ========== MAIN RENDER BLOCK ==========
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 max-w-6xl mx-auto px-4">
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
       {visibleRecipes.map((recipe) => {
         // Determine if this recipe has been saved/favourited by the user
         const isLiked =

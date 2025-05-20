@@ -36,13 +36,13 @@ export default function RecipeCard({ recipe, initiallyLiked = false }) {
   return (
     <div
       onClick={handleCardClick}
-      className="cursor-pointer max-w-xs w-full overflow-hidden bg-white rounded-lg shadow-lg dark:bg-gray-800 border-2 border-kaidBrown border-gray-200 dark:border-gray-700"
+      className="cursor-pointer max-w-xs w-full overflow-hidden bg-white rounded-lg shadow-lg dark:bg-gray-800 border-2 border-black dark:border-black"
     >
       <img className="object-cover w-full h-48" src={getClosestImagePath(recipe.recipe_title)} alt={recipe.recipe_title} />
       <div className="flex items-center justify-between px-4 py-2 bg-sunshineYellow border-2 border-sunshineYellow group">
   <div className="overflow-hidden">
     <h1
-      className="text-lg font-bold text-gray-800 truncate max-w-[12rem] group-hover:whitespace-normal group-hover:overflow-visible group-hover:break-words"
+      className="font-lora text-lg font-bold text-gray-800 truncate max-w-[12rem] group-hover:whitespace-normal group-hover:overflow-visible group-hover:break-words"
       title={recipe.recipe_title}
     >
       {recipe.recipe_title}

@@ -66,9 +66,24 @@ export const login = (req, res) => {
 };
 
 export const logout = (req, res) => {
-    req.session.destroy();
-    res.status(200).json("user logged out");
+  req.session.destroy(err => {
+    if (err) {
+      console.error("Session destroy error:", err);
+      return res.status(500).json({ message: "Logout failed" });
+    }
+
+    res.clearCookie("ilovecookies", {
+      path: "/",
+      httpOnly: true,
+      sameSite: "lax",
+      secure: false
+    });
+
+    res.status(200).json({ message: "User logged out" });
+  });
 };
+
+
 
 export const getCurrentUser = (req, res) => {
   if (req.session.username) {

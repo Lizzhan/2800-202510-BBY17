@@ -8,7 +8,10 @@ const Layout = () => {
   return (
     <>
       <Navbar />
-      <Outlet />
+      <main className="flex-grow">
+        <Outlet />
+      </main>
+
       <Footbar />
       <InfoFooter />
     </>
