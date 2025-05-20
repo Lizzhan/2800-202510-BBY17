@@ -8,7 +8,7 @@ export default function home() {
   useEffect(() => {
     fetch('http://localhost:3000/api/auth/me', {
       method: 'GET',
-      credentials: 'include', // 👈 important to include session cookie
+      credentials: 'include', 
     })
       .then(res => {
         if (!res.ok) throw new Error('Not logged in');
@@ -21,13 +21,15 @@ export default function home() {
 
 
   return (
-    <div className="p-6 space-y-6">
-      <h1 className="text-2xl font-semibold text-gray-800">
+    <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6 pt-6">
+      <div className="space-y-1">
+      <h1 className="text-3xl font-bold text-gray-900">
         {username ? `Welcome back, ${username}!` : 'Welcome back!'}
       </h1>
       <UserLocation />
+    </div>
       <h1 className="text-2xl font-semibold text-gray-800">
-        Weekly Featured Recipes
+        Try a Featured Favourite!
       </h1>
       <RecipeCardGallery />
     </div>

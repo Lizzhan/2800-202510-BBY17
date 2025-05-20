@@ -54,23 +54,37 @@ export const unsaveRecipe = async (req, res) => {
 };
 
 
-// Get all saved recipe IDs for the logged-in user
-export const getSavedRecipes = (req, res) => {
+
+export const getSavedRecipes = async (req, res) => {
   const userId = req.session.userId;
 
   if (!userId) {
     return res.status(401).json({ message: "Not logged in" });
   }
 
-  const q = "SELECT user_recipe_id FROM `saved recipes` WHERE user_id = ?";
+  try {
+    const results = await new Promise((resolve, reject) => {
+      db.query(
+        `
+        SELECT r.recipe_id, r.recipe_title, r.description
+        FROM saved_recipes s
+        JOIN recipes r ON s.recipe_id = r.recipe_id
+        WHERE s.user_id = ?
+        `,
+        [userId],
+        (err, rows) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(rows);
+          }
+        }
+      );
+    });
 
-  db.query(q, [userId], (err, rows) => {
-    if (err) {
-      console.error("Error fetching saved recipes:", err);
-      return res.status(500).json({ message: "Error fetching saved recipes" });
-    }
-
-    const savedRecipeIds = rows.map(row => row.user_recipe_id);
-    res.status(200).json(savedRecipeIds);
-  });
+    res.status(200).json(results);
+  } catch (error) {
+    console.error("Error fetching saved recipes:", error);
+    res.status(500).json({ message: "Error fetching saved recipes" });
+  }
 };

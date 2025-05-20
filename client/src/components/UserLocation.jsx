@@ -28,7 +28,7 @@ export default function UserLocation() {
           components.county ||
           'Unknown location';
 
-        setLocation(`You're in ${city}`);
+        setLocation(`Current Location: ${city}`);
       } catch (err) {
         setLocation(`Location error: ${err.message}`);
       }

@@ -15,7 +15,7 @@ import ingredientRoute from './routes/autosuggestsearchbar.js';
 import tagsRoute from './routes/tags.js';
 import saveRecipeRoutes from './routes/savedRecipe.js';
 import recipeRoutes from './routes/recipe.js';
-
+import matchRecipeRoutes from './routes/suggestRecipe.js';
 import sessionRoute from './routes/session.js'
 
 dotenv.config({
@@ -57,6 +57,7 @@ app.use('/api/tags', tagsRoute);
 app.use('/api', saveRecipeRoutes);
 app.use('/api',recipeRoutes);
 app.use('/api/submitRecipe', submitRecipeRoute);
+app.use('/api', matchRecipeRoutes);
 
 
 // Server start

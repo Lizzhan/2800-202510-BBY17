@@ -3,16 +3,26 @@ import { useEffect, useState } from 'react';
 export default function RecipeDetail() {
   const [recipe, setRecipe] = useState(null);
   const [loading, setLoading] = useState(true);
-  const userId = 24; // 🔁 Replace with session user ID if you have one
 
   useEffect(() => {
     const fetchAIRecipe = async () => {
       try {
+        // 🔹 Get the logged-in user's ID
+        const userRes = await fetch('http://localhost:3000/api/auth/me', {
+          credentials: 'include',
+        });
+        const userData = await userRes.json();
+        const userId = userData?.id;
+
+        if (!userId) throw new Error('User not authenticated');
+
+        // 🔹 Get all ingredients for that user
         const ingRes = await fetch(`http://localhost:3000/api/allingredients/${userId}`, {
           credentials: 'include',
         });
         const ingredients = await ingRes.json();
 
+        // 🔹 Ask AI for a recipe based on the user's ingredients
         const aiRes = await fetch('http://localhost:3000/api/funnyRecipe', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },

@@ -2,98 +2,173 @@ import { useState, useEffect } from 'react';
 import RecipeCard from './recipecard';
 import axios from 'axios';
 
+// This component displays a grid of recipe cards with infinite scroll.
+// It also marks recipes the user has saved by showing a filled heart icon on those cards.
 export default function RecipeCardGallery() {
-  const [allRecipes, setAllRecipes] = useState([]);         // All recipes from DB
-  const [visibleRecipes, setVisibleRecipes] = useState([]); // Recipes currently shown
-  const [savedRecipes, setSavedRecipes] = useState([]);      // User's saved recipes
+  // ========== STATE VARIABLES ==========
+
+  // All recipes fetched from the backend
+  const [allRecipes, setAllRecipes] = useState([]);
+
+  // Subset of recipes currently shown (first N for lazy loading)
+  const [visibleRecipes, setVisibleRecipes] = useState([]);
+
+  // List of recipes the current user has saved/favourited
+  const [savedRecipes, setSavedRecipes] = useState([]);
+
+  // Loading state flag used to show a "Loading..." message initially
   const [loading, setLoading] = useState(true);
+
+  // Error message string (if any fetch fails)
   const [error, setError] = useState(null);
+
+  // Flag to determine whether more recipes are available to load
   const [hasMore, setHasMore] = useState(true);
+
+  // How many recipes to show per "page" or scroll
   const ITEMS_PER_LOAD = 10;
 
-  // Fetch all recipes from database
+  // ========== FETCH ALL RECIPES FROM BACKEND ==========
+
   useEffect(() => {
     const fetchRecipes = async () => {
       try {
+        // API call to fetch all recipes
         const response = await fetch('http://localhost:3000/api/recipes');
-        if (!response.ok) {
-          throw new Error('Failed to fetch recipes');
-        }
+        if (!response.ok) throw new Error('Failed to fetch recipes');
+
+        // Parse JSON data
         const data = await response.json();
 
+        // Process raw recipe data to format it for the UI
         const processed = data.map(recipe => ({
           recipe_id: recipe.recipe_id,
           recipe_title: recipe.recipe_title,
-          description: recipe.description || '', // fallback if no description
+          description: recipe.description || '',
+          // If no image is available, use a dynamic Unsplash placeholder
           image: recipe.image || `https://source.unsplash.com/featured/?${encodeURIComponent(recipe.recipe_title)}`
         }));
 
+        // Save the full list of recipes
         setAllRecipes(processed);
+
+        // Show the first chunk of recipes
         setVisibleRecipes(processed.slice(0, ITEMS_PER_LOAD));
-        if (processed.length <= ITEMS_PER_LOAD) {
-          setHasMore(false);
-        }
+
+        // If total is less than one page, disable further loading
+        if (processed.length <= ITEMS_PER_LOAD) setHasMore(false);
       } catch (err) {
+        // Save any error for rendering
         setError(err.message);
       } finally {
+        // Hide loading spinner
         setLoading(false);
       }
     };
 
-    fetchRecipes();
+    fetchRecipes(); // Initial fetch on component mount
   }, []);
 
-  // Fetch user's saved recipes
+  // ========== FETCH USER'S SAVED RECIPES ==========
+
+  
+
   useEffect(() => {
     const fetchSavedRecipes = async () => {
       try {
-        const response = await axios.get('/api/saved-recipes', { withCredentials: true });
+        // API call to get recipes saved by this user (requires cookie/session)
+        const response = await axios.get('http://localhost:3000/api/saved-recipes', {
+          withCredentials: true // important: includes session cookie
+        });
+
+        console.log('✅ Saved recipes response:', response.data);
+
+        // Set to an array of saved recipes (likely full or partial recipe objects)
         setSavedRecipes(response.data || []);
       } catch (error) {
+        // If request fails, fallback to empty list
         console.error('Error fetching saved recipes:', error);
         setSavedRecipes([]);
       }
     };
 
-    fetchSavedRecipes();
+    fetchSavedRecipes(); // Initial fetch on component mount
   }, []);
 
-  // Infinite scroll
+  // ========== SET UP INFINITE SCROLL ==========
+
   useEffect(() => {
     const handleScroll = () => {
+      // Check if the user has scrolled near the bottom of the page
       const nearBottom = window.innerHeight + window.scrollY >= document.body.offsetHeight - 300;
       if (nearBottom && hasMore) {
-        loadMore();
+        loadMore(); // Load more recipes
       }
     };
 
+    // Add scroll event listener
     window.addEventListener('scroll', handleScroll);
+
+    // Clean up scroll listener when component unmounts or re-renders
     return () => window.removeEventListener('scroll', handleScroll);
   }, [visibleRecipes, hasMore]);
 
+  // ========== LOAD MORE RECIPES (CHUNKED) ==========
+
   const loadMore = () => {
+    // Grab next N recipes based on current scroll position
     const nextRecipes = allRecipes.slice(visibleRecipes.length, visibleRecipes.length + ITEMS_PER_LOAD);
+
+    // Add to visible list
     setVisibleRecipes(prev => [...prev, ...nextRecipes]);
 
+    // If we've shown all recipes, stop future loading
     if (visibleRecipes.length + ITEMS_PER_LOAD >= allRecipes.length) {
       setHasMore(false);
     }
   };
 
+  // ========== CONDITIONAL RENDERING FOR LOADING/ERROR ==========
+
   if (loading) return <p className="text-center">Loading recipes...</p>;
   if (error) return <p className="text-center text-red-500">Error: {error}</p>;
 
+  // ========== MAIN RENDER BLOCK ==========
+
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-3xl mx-auto">
-      {visibleRecipes.map((recipe) => (
-        <div key={recipe.recipe_id} className="min-w-[16rem]">
-          <RecipeCard 
-            recipe={recipe}
-            initiallyLiked={Array.isArray(savedRecipes) && savedRecipes.includes(recipe.recipe_id)}
-          />
-        </div>
-      ))}
-      {hasMore && <p className="text-center col-span-2 text-gray-500">Loading more recipes...</p>}
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+      {visibleRecipes.map((recipe) => {
+        // Determine if this recipe has been saved/favourited by the user
+        const isLiked =
+          Array.isArray(savedRecipes) &&
+          savedRecipes.some((saved) => {
+            // Check using multiple strategies to support both:
+            // - [1, 2, 3] (just IDs)
+            // - [{ recipe_id: 1 }, { user_recipe_id: 2 }]
+            return (
+              saved.recipe_id === recipe.recipe_id ||     // match if recipe_id
+              saved.user_recipe_id === recipe.recipe_id || // match if user_recipe_id
+              saved === recipe.recipe_id ||                // match if array of numbers
+              saved === String(recipe.recipe_id)           // match if stringified number
+            );
+          });
+
+        console.log('Comparing recipe:', recipe.recipe_id, '→ liked?', isLiked);
+
+        return (
+          <div key={recipe.recipe_id}>
+            <RecipeCard
+              recipe={recipe}
+              initiallyLiked={isLiked} // Pass liked state to the card component
+            />
+          </div>
+        );
+      })}
+
+      {/* Message displayed at the bottom when there are more items being fetched */}
+      {hasMore && (
+        <p className="text-center col-span-full text-gray-500">Loading more recipes...</p>
+      )}
     </div>
   );
 }

@@ -14,6 +14,7 @@ import Login from './pages/Login'
 import { useAuth } from "./context/AuthContext";
 import Suggest from './pages/RecipeDetail';
 import RecipePage from './pages/RecipePage';
+import SuggestedRecipeGallery from "./pages/suggestedRecipes";
 import CreateRecipe from './pages/createRecipe';
 
 //is user input escaped
@@ -36,6 +37,8 @@ export default function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/index" element={<Index />} />
             <Route path="/recipe/:id" element={<RecipePage />} />
+            <Route path="/suggestRecipes" element={<SuggestedRecipeGallery />} />
+
             <Route path="/createRecipe" element={<CreateRecipe />} />
 
           </Route>

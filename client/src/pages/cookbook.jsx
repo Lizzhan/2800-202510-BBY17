@@ -1,18 +1,18 @@
-import GalleryContainer from '../components/GalleryContainer';
+import GalleryContainer from '../components/SavedRecipeGalleryContainer';
 import { Link } from 'react-router-dom';
 
 export default function Cookbook() {
   return (
-    <div className="flex flex-col gap-8">
+    <div className="flex flex-col gap-8 p-6">
       <br></br>
       <section>
         <h2 className="text-lg font-semibold mb-2">Your Favourite Recipes</h2>
-        <GalleryContainer />
+        <GalleryContainer showSavedOnly={true} />
       </section>
 
       <section>
         <h2 className="text-lg font-semibold mb-2">Your Uploaded Recipes</h2>
-        <GalleryContainer />
+        <GalleryContainer uploadedOnly={true} />
       </section>
 
       <div className="flex justify-center pt-6">
