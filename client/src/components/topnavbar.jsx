@@ -1,9 +1,11 @@
 import { ArrowLeftIcon, UserIcon } from '@heroicons/react/24/solid';
 import { useNavigate, useLocation, Link } from "react-router-dom";
+import { useAuth } from '../context/AuthContext';
 
 export default function Navbar() {
   const navigate = useNavigate();
   const location = useLocation();
+  const { isAuthenticated }= useAuth();
   const handleBack = () => {
     if (location.pathname !== '/') {
       navigate(-1);
@@ -28,11 +30,15 @@ export default function Navbar() {
       <button
         className="text-castIron hover:text-blue-600"
         aria-label="Profile"
+        onClick={() => {
+          if (isAuthenticated) {
+            navigate("/profile");
+          } else {
+            navigate("/login");
+          }
+        }}
       >
-        <Link to="/profile">
-          <UserIcon className="h-6 w-6" />
-        </Link>
-
+        <UserIcon className="h-6 w-6" />
       </button>
     </nav>
   );
