@@ -36,7 +36,7 @@ export default function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/index" element={<Index />} />
             <Route path="/recipe/:id" element={<RecipePage />} />
-            <Route path="//suggestRecipes" element={<SuggestedRecipeGallery />} />
+            <Route path="/suggestRecipes" element={<SuggestedRecipeGallery />} />
 
 
           </Route>
