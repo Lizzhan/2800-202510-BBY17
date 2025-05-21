@@ -1,4 +1,14 @@
-//Full list of available stock meal images in the Public/Meals folder.
+/**
+ * File is used to house the function that chooses and attaches the closest
+ * matching image to a recipe based on the comparison of the title of the 
+ * image and the title of the recipe. Utilized ChatGPT (version 4.0) to help create
+ * the function. 
+ * 
+ * @author: Liam Pickrell
+ * @version: 1.0
+ */
+
+//  Full list of available stock meal images in the Public/Meals folder.
 const stockImages = [
   "alfredo-chicken-pasta-parsli-linguine-penne.jpeg",
   "beef-burger.jpeg",

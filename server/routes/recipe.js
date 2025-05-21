@@ -1,3 +1,12 @@
+/**
+ * File creates the routes for the recipe API. Used to fetch all recipes in 
+ * the home page and in each specific recipe page. Used ChatGPT (version 4.0)
+ * to help create the SQL queries and the routes.
+ * 
+ * @author: Liam Pickrell
+ * @version: 1.0
+ */
+
 import express from 'express'; // Import express framework
 import db from '../db.js'; // Import database connection module
 

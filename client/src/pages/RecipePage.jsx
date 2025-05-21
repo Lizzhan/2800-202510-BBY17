@@ -1,6 +1,17 @@
 /**
- * Importing libraries and components.
+ * Completes the RecipePage component which displays the details of a recipe.
+ * Utilizes logic from getClosestImagePath.js to fetch the closest image path based
+ * on the recipe title. The component fetches the recipe data from the server using
+ * recipe.js and populates the recipe details and ingredients onto the page. Uses 
+ * similar logic to handle the saving and unsaving of recipes as seen in the 
+ * recipecard.jsx file, created by Kaid Krawchuk. Utilized ChatGPT (version 4.0) 
+ * to help create the functions and troubleshoot bugs.
+ * 
+ * @author: Liam Pickrell
+ * @version: 1.0
  */
+
+// Importing libraries and components.
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
