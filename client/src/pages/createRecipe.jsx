@@ -1,8 +1,14 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import SearchBarWithDropdown from '../components/SearchBarWithDropdown';
 import FilterTagSection from '../components/FilterTagSection';
+
+const handleOverlayClick = (e) => {
+  if (modalRef.current && !modalRef.current.contains(e.target)) {
+    setIsModalOpen(false);
+  }
+};
 
 export default function CreateRecipe() 
 {
@@ -17,6 +23,11 @@ export default function CreateRecipe()
   const [allTags, setAllTags] = useState([]);
 
   const navigate = useNavigate();
+
+  const [modalContent, setModalContent] = useState('');
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalAction, setModalAction] = useState(null);
+  const modalRef = useRef(null);
 
   useEffect(() =>
     {
@@ -86,10 +97,13 @@ export default function CreateRecipe()
   {
     try 
     {
-        if (!title || !description || !steps) {
-            alert('Please fill in all required fields');
-            return;
-        }
+        
+      if (!title || !description || !steps) 
+      {
+        setModalContent('Please fill in all required fields');
+        setIsModalOpen(true);
+        return;
+      }
 
         const submissionData = {
             recipe_title: title,
@@ -107,17 +121,13 @@ export default function CreateRecipe()
           );
 
         if (res.data?.message) {
-            alert(res.data.message);
-            navigate('/cookbook');
+            setModalContent(res.data.message);
+            setIsModalOpen(true);
+            setModalAction(() => () => navigate('/cookbook')); 
         }
     } catch (err) {
-        console.error('Error submitting recipe:', 
-          {
-            error: err,
-            response: err.response?.data
-          }
-        );
-        alert(err.response?.data?.error || 'Failed to submit recipe. Please try again.');
+        setModalContent(err.response?.data?.error || 'Failed to submit recipe. Please try again.');
+        setIsModalOpen(true);
     }
   };
 
@@ -183,10 +193,44 @@ export default function CreateRecipe()
       <div className="text-center">
         <button
           className="bg-buttonPeach text-white font-semibold px-6 py-2 rounded-xl hover:bg-buttonPeachHover transition"
-          onClick={handleSubmit}
-        >
+          onClick={handleSubmit}>
           Submit Recipe
         </button>
+
+        {isModalOpen && (
+          <div
+            className="fixed inset-0 z-50 bg-black bg-opacity-50 flex items-center justify-center"
+            onClick={handleOverlayClick}>
+            <div
+              ref={modalRef}
+              className="bg-white max-w-md w-full rounded shadow-lg">
+              <div className="p-4 border-b flex justify-between items-center">
+                <h2 className="text-xl font-bold">Notice</h2>
+                <button
+                  onClick={() => 
+                    {
+                      setIsModalOpen(false);
+                      setModalAction(null);
+                    }}
+                  className="text-gray-600 hover:text-black text-xl">
+                  &times;
+                </button>
+              </div>
+              <div className="p-6 text-gray-700">
+                <p>{modalContent}</p>
+              </div>
+              {modalAction && (
+                <div className="p-4 border-t text-center">
+                  <button
+                    onClick={() => modalAction()}
+                    className="bg-buttonPeach text-white font-semibold px-6 py-2 rounded-xl hover:bg-buttonPeachHover transition">
+                      Return to Cookbook
+                    </button>
+                  </div>
+              )}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

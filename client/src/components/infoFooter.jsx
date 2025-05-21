@@ -37,7 +37,13 @@ export default function InfoFooter() {
         </div>
       </div>
 
+
       {isModalOpen && (
+        //   Modals to display Information about App and it's creators.
+        //  Code was adapted from Net Ninja Javascript Tutorial Series
+        //  @author Net Ninja on Youtube 
+        //  @author James Smith
+        //  @see https://www.youtube.com/watch?v=tt5uUMQgzl0&list=PL4cUxeGkcC9joIM91nLzd_qaH_AimmdAR&index=16
         <div
           className="fixed inset-0 z-50 bg-black bg-opacity-50 flex items-center justify-center"
           onClick={handleOverlayClick}
