@@ -54,6 +54,10 @@ export default function RecipeCard({ recipe, initiallyLiked = false, onDelete = 
   }
 };
 
+// Navigate to recipe detail page
+  const handleCardClick = () => {
+    navigate(`/recipe/${recipe.recipe_id}`);
+  };
     
 
   // Render the recipe card
