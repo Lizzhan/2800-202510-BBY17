@@ -199,6 +199,8 @@ console.log('🛠 Type of matchingRecipes:', typeof matchingRecipes, Array.isArr
     }
   };
 
+  const selectedTagNames = selectedTags.map(tag => tag.name);
+
   return (
     <div className="min-h-screen bg-[#FDF6EC]">
       <main className="p-4 space-y-8 max-w-2xl mx-auto">
@@ -220,7 +222,8 @@ console.log('🛠 Type of matchingRecipes:', typeof matchingRecipes, Array.isArr
           setHighlightedItems={setHighlightedFridge}
         />
 
-        <FilterTagSection onFilterChange={setSelectedTags} />
+        <FilterTagSection onFilterChange={setSelectedTags} 
+                          selectedTags={selectedTags}/>
 
         <div className="flex justify-center pt-4">
           <PrimaryButton onClick={handleSuggestRecipe}>Suggest Recipe</PrimaryButton>

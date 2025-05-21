@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-function SearchBarWithDropdown({ onSearch }) {
+function SearchBarWithDropdown({ onSearch, resetTrigger }) {
   const [searchTerm, setSearchTerm] = useState('');
   const [suggestions, setSuggestions] = useState([]); // Fetched from DB
   const [filteredSuggestions, setFilteredSuggestions] = useState([]);
@@ -12,7 +12,6 @@ function SearchBarWithDropdown({ onSearch }) {
     const fetchData = async () => {
       try {
         const res = await axios.get('http://localhost:3000/api/ingredients/getingredients');
-        console.log(res);
         const ingredientNames = res.data.map(item => item.ingredient); // important!
         setSuggestions(ingredientNames);
       } catch (err) {
@@ -22,6 +21,13 @@ function SearchBarWithDropdown({ onSearch }) {
 
     fetchData();
   }, []);
+
+  useEffect(() =>
+  {
+    setSearchTerm('');
+    setFilteredSuggestions([]);
+    setShowSuggestions(false);
+  }, [resetTrigger]);
 
   const handleChange = (e) => {
     const input = e.target.value;
@@ -33,7 +39,6 @@ function SearchBarWithDropdown({ onSearch }) {
       return;
     }
 
-    // 🔥 filter using dynamic suggestions, not hardcoded list
     const results = suggestions.filter((item) =>
       item.toLowerCase().includes(input.toLowerCase())
     );

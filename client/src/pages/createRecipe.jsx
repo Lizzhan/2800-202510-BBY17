@@ -22,12 +22,23 @@ export default function CreateRecipe()
   const [selectedTagNames, setSelectedTagNames] = useState([]);
   const [allTags, setAllTags] = useState([]);
 
+  const [resetSearch, setResetSearch] = useState(false);
+
   const navigate = useNavigate();
 
   const [modalContent, setModalContent] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalAction, setModalAction] = useState(null);
   const modalRef = useRef(null);
+
+  const handleReset = () => {
+    setTitle('');
+    setDescription('');
+    setSteps('');
+    setSelectedIngredients([]);
+    setSelectedTagNames([]);
+    setResetSearch(prev => !prev);
+  };
 
   useEffect(() =>
     {
@@ -152,7 +163,7 @@ export default function CreateRecipe()
 
       <div>
         <h2 className="font-medium mb-1">Search & Add Ingredients</h2>
-        <SearchBarWithDropdown onSearch={handleIngredientSelect} />
+        <SearchBarWithDropdown onSearch={handleIngredientSelect} resetTrigger={resetSearch} />
 
         <div className="flex flex-wrap gap-2 mt-2">
           {selectedIngredients.map((item) => (
@@ -176,7 +187,8 @@ export default function CreateRecipe()
 
       <div>
         <h2 className="font-medium mb-1">Tags</h2>
-        <FilterTagSection onFilterChange={setSelectedTagNames} />
+        <FilterTagSection onFilterChange={setSelectedTagNames} 
+                          selectedTags={selectedTagNames}/>
 
             <div className="flex flex-wrap gap-2 mt-2">
             {selectedTagNames.map((tagName) => (
@@ -190,11 +202,17 @@ export default function CreateRecipe()
         </div>
       </div>
 
-      <div className="text-center">
+      <div className="text-center space-y-2">
         <button
           className="bg-buttonPeach text-white font-semibold px-6 py-2 rounded-xl hover:bg-buttonPeachHover transition"
           onClick={handleSubmit}>
           Submit Recipe
+        </button>
+        <br></br>
+        <button
+          className="bg-gray-300 text-gray-800 font-semibold px-6 py-2 rounded-xl hover:bg-gray-400 transition ml-2"
+          onClick={handleReset}>
+            Reset
         </button>
 
         {isModalOpen && (

@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-export default function FilterTagSection({ onFilterChange }) {
-  const [selectedTags, setSelectedTags] = useState([]);
+export default function FilterTagSection({ onFilterChange, selectedTags }) {
   const [tags, setTags] = useState([]); // fetched from DB now
 
   // Fetch tags once when component mounts
@@ -26,7 +25,6 @@ export default function FilterTagSection({ onFilterChange }) {
         ? selectedTags.filter((t) => t !== tag)
         : [...selectedTags, tag];
 
-    setSelectedTags(updated);
     onFilterChange(updated); // pass to parent
   };
 
