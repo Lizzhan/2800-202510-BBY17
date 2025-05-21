@@ -8,6 +8,7 @@ import authRoute from './routes/auth.js';
 import recipeAIRoutes from './routes/funnyRecipe.js';
 import recipeRegularAiRoutes from './routes/regularRecipe.js';
 import submitRecipeRoute from './routes/submitRecipe.js';
+import userRecipeRoutes from './routes/userRecipes.js';
 import fridgeRoutes from './routes/getFridge.js';
 import ingredientRoutes from './routes/allUserIngredient.js';
 
@@ -16,7 +17,9 @@ import tagsRoute from './routes/tags.js';
 import saveRecipeRoutes from './routes/savedRecipe.js';
 import recipeRoutes from './routes/recipe.js';
 import matchRecipeRoutes from './routes/suggestRecipe.js';
-import sessionRoute from './routes/session.js'
+import sessionRoute from './routes/session.js';
+
+
 
 dotenv.config({
   path: '../.env'
@@ -58,6 +61,7 @@ app.use('/api', saveRecipeRoutes);
 app.use('/api',recipeRoutes);
 app.use('/api/submitRecipe', submitRecipeRoute);
 app.use('/api', matchRecipeRoutes);
+app.use('/api/user-recipes', userRecipeRoutes);
 
 
 // Server start
