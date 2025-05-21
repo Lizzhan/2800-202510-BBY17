@@ -34,7 +34,7 @@ export default function RecipePage() {
   useEffect(() => {
     const fetchRecipe = async () => {
       try {
-        const res = await fetch(`http://ec2-99-79-7-165.ca-central-1.compute.amazonaws.com:3000/api/recipes/${id}`, {
+        const res = await fetch(`https://ec2-99-79-7-165.ca-central-1.compute.amazonaws.com:3000/api/recipes/${id}`, {
           credentials: 'include',
         });
         if (!res.ok) {
@@ -48,7 +48,7 @@ export default function RecipePage() {
         setLoading(false); // Hide loading message once data is fetched
       }
     };
-
+    does render automati
     fetchRecipe();
   }, [id]);
 
@@ -68,7 +68,7 @@ export default function RecipePage() {
     }
     const fetchSavedStatus = async () => {
       try {
-        const res = await axios.get('http://ec2-99-79-7-165.ca-central-1.compute.amazonaws.com:3000/api/saved-recipes', {
+        const res = await axios.get('https://ec2-99-79-7-165.ca-central-1.compute.amazonaws.com:3000/api/saved-recipes', {
           withCredentials: true,
         });
         const savedIds = res.data;
@@ -95,14 +95,14 @@ export default function RecipePage() {
       if (!liked) {
         // Saves the recipe (assumes currently unsaved)
         await axios.post(
-          'http://ec2-99-79-7-165.ca-central-1.compute.amazonaws.com:3000/api/save-recipe',
+          'https://ec2-99-79-7-165.ca-central-1.compute.amazonaws.com:3000/api/save-recipe',
           { user_recipe_id: recipe.recipe_id },
           { withCredentials: true }
         );
       } else {
         // Unsave the recipe (assumes currently saved)
         await axios.post(
-          'http://ec2-99-79-7-165.ca-central-1.compute.amazonaws.com:3000/api/unsave-recipe',
+          'https://ec2-99-79-7-165.ca-central-1.compute.amazonaws.com:3000/api/unsave-recipe',
           { user_recipe_id: recipe.recipe_id },
           { withCredentials: true }
         );

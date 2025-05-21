@@ -9,7 +9,7 @@ export default function FilterTagSection({ onFilterChange }) {
   useEffect(() => {
     const fetchTags = async () => {
       try {
-        const res = await axios.get(`http://ec2-99-79-7-165.ca-central-1.compute.amazonaws.com:3000/api/tags/GetTags`); 
+        const res = await axios.get(`https://ec2-99-79-7-165.ca-central-1.compute.amazonaws.com:3000/api/tags/GetTags`); 
         const tagNames = res.data.map(tag => tag.tag); // extract only tag names
         setTags(tagNames);
       } catch (err) {

@@ -11,7 +11,7 @@ function SearchBarWithDropdown({ onSearch }) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get('http://ec2-99-79-7-165.ca-central-1.compute.amazonaws.com:3000/api/ingredients/getingredients');
+        const res = await axios.get('https://ec2-99-79-7-165.ca-central-1.compute.amazonaws.com:3000/api/ingredients/getingredients');
         console.log(res);
         const ingredientNames = res.data.map(item => item.ingredient); // important!
         setSuggestions(ingredientNames);
