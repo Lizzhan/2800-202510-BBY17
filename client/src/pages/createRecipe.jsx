@@ -115,7 +115,7 @@ export default function CreateRecipe()
 
         console.log("submitting: ", submissionData);
 
-        const res = await axios.post('https://ec2-99-79-7-165.ca-central-1.compute.amazonaws.com:3000/api/submitRecipe',
+        const res = await axios.post('https://two800-202510-bby17.onrender.com/api/submitRecipe',
             submissionData, 
             { withCredentials: true }
           );

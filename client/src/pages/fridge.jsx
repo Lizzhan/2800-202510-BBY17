@@ -118,7 +118,7 @@ export default function Fridge({ onNavigate }) {
       });
       const userData = await userRes.json();
 
-      await fetch('/api/fridge/remove', {
+      await fetch('https://two800-202510-bby17.onrender.com/api/fridge/remove', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
