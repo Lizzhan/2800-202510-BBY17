@@ -31,10 +31,24 @@ const sessionStore = new MySQLSessionStore({}, db);
 const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
+
+const allowedOrigins = [
+  'https://host-v2.d33xop1a16t6zi.amplifyapp.com/', // ✅ use your real Amplify domain
+  'http://localhost:5173'                     // optional: for local dev
+];
+
 app.use(cors({
-  origin: 'https://host-v2.d33xop1a16t6zi.amplifyapp.com/', // or your frontend URL
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('CORS not allowed'));
+    }
+  },
   credentials: true
 }));
+
+
 app.use(session({ 
   key: 'ilovecookies',
   secret: process.env.SESSION_SECRET,
