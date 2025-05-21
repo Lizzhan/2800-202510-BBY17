@@ -1,3 +1,9 @@
+
+/**
+ * simple 404 layout taken from tailwind css documentation with our custom color added to it
+ * @author https://tailwindcss.com
+ * @author Lucas Liu
+ */
 function NotFound() {
   return (
     <div className="text-center">
