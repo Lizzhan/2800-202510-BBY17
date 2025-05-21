@@ -22,7 +22,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try{
-      const res = await axios.post("http://ec2-99-79-7-165.ca-central-1.compute.amazonaws.com:3000/api/auth/login", inputs,{
+      const res = await axios.post("https://ec2-99-79-7-165.ca-central-1.compute.amazonaws.com:3000/api/auth/login", inputs,{
         withCredentials: true
       });
       login(res.data)
