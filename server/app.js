@@ -25,13 +25,6 @@ dotenv.config({
   path: '../.env'
 });
 
-const app = express();
-const MySQLSessionStore = MySQLStore(session);
-const sessionStore = new MySQLSessionStore({}, db);
-const PORT = process.env.PORT || 3000;
-
-app.use(express.json());
-
 const allowedOrigins = [
   'https://host-v2.d33xop1a16t6zi.amplifyapp.com'
 ];
@@ -46,6 +39,14 @@ app.use(cors({
   },
   credentials: true
 }));
+
+
+const app = express();
+const MySQLSessionStore = MySQLStore(session);
+const sessionStore = new MySQLSessionStore({}, db);
+const PORT = process.env.PORT || 3000;
+
+app.use(express.json());
 
 
 
