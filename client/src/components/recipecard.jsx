@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { getClosestImagePath } from '../utils/getClosestImagePath';
 
-export default function RecipeCard({ recipe, initiallyLiked = false }) {
+export default function RecipeCard({ recipe, initiallyLiked = false, onDelete = null }) {
   const [liked, setLiked] = useState(initiallyLiked);
   const navigate = useNavigate();
 
@@ -40,14 +40,13 @@ export default function RecipeCard({ recipe, initiallyLiked = false }) {
     >
       <img className="object-cover w-full h-48" src={getClosestImagePath(recipe.recipe_title)} alt={recipe.recipe_title} />
       <div className="flex items-center justify-between px-4 py-2 bg-sunshineYellow border-2 border-sunshineYellow group">
-  <div className="overflow-hidden">
-    <h1
-      className="font-lora text-lg font-bold text-gray-800 truncate max-w-[12rem] group-hover:whitespace-normal group-hover:overflow-visible group-hover:break-words"
-      title={recipe.recipe_title}
-    >
+        <div className="overflow-hidden">
+          <h1 className="font-lora text-lg font-bold text-gray-800 truncate max-w-[12rem] group-hover:whitespace-normal group-hover:overflow-visible group-hover:break-words"
+              title={recipe.recipe_title}>
       {recipe.recipe_title}
     </h1>
   </div>
+  <div className="flex items-center space-x-2 ml-2 shrink-0">
     <button
     onClick={handleLikeClick}
     className="focus:outline-none ml-2 shrink-0"
@@ -68,6 +67,19 @@ export default function RecipeCard({ recipe, initiallyLiked = false }) {
                 6.86-8.55 11.54L12 21.35z"/>
         </svg>
     </button>
+      {onDelete && (
+        <button onClick={(e) => 
+        {
+          e.stopPropagation(); // prevent navigation
+          onDelete(); // call the parent delete function
+        }}
+        className="ml-2 text-red-500 hover:text-red-700"
+        title="Delete Recipe"
+      >
+      🗑️
+      </button>
+      )}
+    </div>
   </div>
 </div>
   );
