@@ -33,8 +33,7 @@ const PORT = process.env.PORT || 3000;
 app.use(express.json());
 
 const allowedOrigins = [
-  'https://host-v2.d33xop1a16t6zi.amplifyapp.com/', // ✅ use your real Amplify domain
-  'http://localhost:5173'                     // optional: for local dev
+  'https://host-v2.d33xop1a16t6zi.amplifyapp.com'
 ];
 
 app.use(cors({
@@ -42,11 +41,12 @@ app.use(cors({
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
-      callback(new Error('CORS not allowed'));
+      callback(new Error('Not allowed by CORS'));
     }
   },
   credentials: true
 }));
+
 
 
 app.use(session({ 
