@@ -189,8 +189,8 @@ export default function Fridge({ onNavigate }) {
 
       if (!res.ok) throw new Error('Failed to fetch recipes');
       const matchingRecipes = await res.json();
-      console.log('✅ About to navigate with recipes:', matchingRecipes);
-console.log('🛠 Type of matchingRecipes:', typeof matchingRecipes, Array.isArray(matchingRecipes));
+      //console.log('✅ About to navigate with recipes:', matchingRecipes);
+      //console.log('🛠 Type of matchingRecipes:', typeof matchingRecipes, Array.isArray(matchingRecipes));
 
       navigate('/suggestRecipes', { state: { recipes: matchingRecipes } });
     } catch (err) {
@@ -203,10 +203,11 @@ console.log('🛠 Type of matchingRecipes:', typeof matchingRecipes, Array.isArr
 
   return (
     <div className="min-h-screen bg-[#FDF6EC]">
-      <main className="p-4 space-y-8 max-w-2xl mx-auto">
+      <main className="p-6 space-y-8 max-w-3xl mx-auto bg-white rounded-xl shadow border border-[#CDC6B6]">
+        <h1 className="text-3xl font-bold text-center text-castIron">What's in Your Kitchen?</h1>
         <SearchBarWithDropdown onSearch={openModalForItem} />
 
-        <h2 className="text-xl font-semibold">Pantry</h2>
+        <h2 className="text-xl font-semibold text-olive mt-6">Pantry</h2>
         <SearchList
           items={selectedPantryItems}
           onRemove={handleRemovePantryItem}
@@ -214,7 +215,7 @@ console.log('🛠 Type of matchingRecipes:', typeof matchingRecipes, Array.isArr
           setHighlightedItems={setHighlightedPantry}
         />
 
-        <h2 className="text-xl font-semibold">Fridge</h2>
+        <h2 className="text-xl font-semibold text-olive mt-6">Fridge</h2>
         <SearchList
           items={selectedFridgeItems}
           onRemove={handleRemoveFridgeItem}
