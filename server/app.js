@@ -32,7 +32,7 @@ const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
 app.use(cors({
-  origin: 'http://localhost:5173', // or your frontend URL
+  origin: 'http://ec2-99-79-7-165.ca-central-1.compute.amazonaws.com', // or your frontend URL
   credentials: true
 }));
 app.use(session({ 
