@@ -69,9 +69,8 @@ export default function RecipeCardGallery() {
     fetchRecipes(); // Initial fetch on component mount
   }, []);
 
-  // ========== FETCH USER'S SAVED RECIPES ==========
-
   
+  // ========== FETCH USER'S SAVED RECIPES ==========
 
   useEffect(() => {
     const fetchSavedRecipes = async () => {
