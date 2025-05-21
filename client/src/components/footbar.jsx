@@ -1,12 +1,14 @@
 import { useState, useRef, useEffect } from 'react';
 import { Refrigerator, WandSparkles, CookingPot, Plus } from 'lucide-react';
 import { Link } from "react-router-dom";
+import { useAuth } from '../context/AuthContext';
 
 export default function Footbar() {
   const [isExpanded, setIsExpanded] = useState(false);
   const [isRotating, setIsRotating] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const navRef = useRef(null);
+  const { isAuthenticated }= useAuth();
 
   useEffect(() => {
     const handleClickOutside = (e) => {
@@ -20,6 +22,9 @@ export default function Footbar() {
   }, []);
 
   const handleToggle = () => {
+    if(!isAuthenticated){
+      return ;
+    }
     setIsRotating(true);
     setTimeout(() => {
       setIsVisible(true);
@@ -36,7 +41,7 @@ export default function Footbar() {
         {!isVisible && (
           <button
             onClick={handleToggle}
-            className="w-10 h-10 bg-sunshineYellow text-gray-600 rounded-full flex items-center justify-center shadow-md hover:bg-yellow-400 focus:outline-none focus:ring-2 focus:ring-blue-300 z-20 -translate-y-2"
+            className="w-10 h-10 bg-buttonPeach text-gray-600 rounded-full flex items-center justify-center shadow-md hover:bg-buttonPeachHover focus:outline-none focus:ring-2 focus:ring-blue-300 z-20 -translate-y-2"
           >
             <Plus
               className={`w-5 h-5 transform transition-transform duration-300 ${

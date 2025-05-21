@@ -1,14 +1,12 @@
 import bcrypt from 'bcrypt';
 import db from '../db.js'
 
-export const register = async (req, res) => {
+export const register = (req, res) => {
     const salt = bcrypt.genSaltSync(12);
     const hash = bcrypt.hashSync(req.body.password, salt);
-    const bad = "INSERT VALUES" + req.body;
-    const bad2 = `INSERT VALUES ${req.body}`;
     const q = "INSERT INTO users (email, password, username) VALUES (?, ?, ?)";
     const values = [req.body.email, hash, req.body.username];
-    await db.query(q, values, (err, data) => {
+    db.query(q, values, (err, data) => {
         if(err) return res.json(err);
         res.status(200).json("User Registered");
     })
@@ -56,6 +54,7 @@ export const login = (req, res) => {
         req.session.authenticated = true;
         req.session.userId = user.user_id; // or whatever your user id column is called
         req.session.username = user.username; // optional
+        req.session.email = user.email
 
         console.log("User logged in:", req.session.userId);
 
@@ -87,8 +86,12 @@ export const logout = (req, res) => {
 
 export const getCurrentUser = (req, res) => {
   if (req.session.username) {
-    res.json({ id: req.session.userId, username: req.session.username });
+    res.json({ id: req.session.userId, username: req.session.username, email:req.session.email });
   } else {
     res.status(401).json({ error: 'Not logged in' });
   }
 };
+
+export const updateInfo = (req, res) => {
+
+}
