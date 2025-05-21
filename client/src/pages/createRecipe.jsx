@@ -148,14 +148,14 @@ export default function CreateRecipe()
 
       <input
         type="text"
-        placeholder="Recipe Title"
+        placeholder="*Recipe Title"
         className="w-full p-2 border border-gray-300 rounded"
         value={title}
         onChange={(e) => setTitle(e.target.value)}
       />
 
       <textarea
-        placeholder="Description"
+        placeholder="*Description"
         className="w-full p-2 border border-gray-300 rounded"
         value={description}
         onChange={(e) => setDescription(e.target.value)}
@@ -179,7 +179,7 @@ export default function CreateRecipe()
       </div>
 
       <textarea
-        placeholder="Steps"
+        placeholder="*Steps"
         className="w-full p-2 border border-gray-300 rounded"
         value={steps}
         onChange={(e) => setSteps(e.target.value)}
