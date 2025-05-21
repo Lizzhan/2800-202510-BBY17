@@ -3,6 +3,16 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { getClosestImagePath } from '../utils/getClosestImagePath';
 
+/**
+ * recipe cards to be used throuhg out the website to display an image of the recipe and a short 
+ * description of the recipe. with function added to link to a recipe details page. Initial design
+ * was taken from tailwind documentation. Help from chatgpt was used to finish the code here.
+ * @param {} param0 
+ * @author: Lucas Liu
+ * @author: Kaid Krawchuk
+ * @author: https://chat.openai.com
+ * @author: https://flowbite.com
+ */
 export default function RecipeCard({ recipe, initiallyLiked = false }) {
   const [liked, setLiked] = useState(initiallyLiked);
   const navigate = useNavigate();
@@ -33,6 +43,7 @@ export default function RecipeCard({ recipe, initiallyLiked = false }) {
     navigate(`/recipe/${recipe.recipe_id}`);
   };
 
+  //returns the actual recipe cards that will be used in the front end page. 
   return (
     <div
       onClick={handleCardClick}

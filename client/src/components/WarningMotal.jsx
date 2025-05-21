@@ -1,5 +1,13 @@
 import React from 'react';
 
+/**
+ * a little motal created similar to sweet alert for users when they try to add an ingredient that 
+ * is already in the fridge or pantry. Kaid's code was studied to make this motal. 
+ * @param {} param0 
+ * @author Lucas Liu
+ * @author Kaid Krawchuk
+ *
+ */
 export default function WarningModal({ message, onClose }) {
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">

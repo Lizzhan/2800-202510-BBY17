@@ -37,7 +37,7 @@ export default function Navbar() {
       </button>
     </div>
 
-    {/* Center: Title (now in its own wrapper) */}
+    {/* Center: Title*/}
     <div className="absolute left-1/2 transform -translate-x-1/2">
       <Link
         to="/"
