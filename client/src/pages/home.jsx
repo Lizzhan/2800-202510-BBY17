@@ -19,7 +19,7 @@ export default function home() {
 
   // Fetch the logged-in user's information from the backend
   useEffect(() => {
-    fetch('https://ec2-99-79-7-165.ca-central-1.compute.amazonaws.com:3000/api/auth/me', {
+    fetch('https://two800-202510-bby17.onrender.com/api/auth/me', {
       method: 'GET',
       credentials: 'include', // includes cookies for authentication
     })

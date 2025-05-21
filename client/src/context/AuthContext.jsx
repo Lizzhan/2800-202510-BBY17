@@ -15,7 +15,7 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const checkSession = async () => {
       try {
-        const res = await axios.get("https://ec2-99-79-7-165.ca-central-1.compute.amazonaws.com:3000/api/session/checklogin",{
+        const res = await axios.get("https://two800-202510-bby17.onrender.com/api/session/checklogin",{
           withCredentials: true
         });
         if (res.data) {

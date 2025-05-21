@@ -16,7 +16,7 @@ export default function Navbar() {
 
   const handleLogout = async () => {
   try {
-    await axios.post("https://ec2-99-79-7-165.ca-central-1.compute.amazonaws.com:3000/api/auth/logout", {}, { withCredentials: true });
+    await axios.post("https://two800-202510-bby17.onrender.com/api/auth/logout", {}, { withCredentials: true });
     navigate("/login");
   } catch (error) {
     console.error("Logout failed:", error);

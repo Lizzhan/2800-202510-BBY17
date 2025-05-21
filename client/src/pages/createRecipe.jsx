@@ -35,10 +35,10 @@ export default function CreateRecipe()
         {
             try 
             {
-                const ingredientRes = await axios.get('https://ec2-99-79-7-165.ca-central-1.compute.amazonaws.com:3000/api/ingredients/getingredients');
+                const ingredientRes = await axios.get('https://two800-202510-bby17.onrender.com/api/ingredients/getingredients');
                 setAllIngredients(ingredientRes.data);
 
-                const tagsRes = await axios.get('https://ec2-99-79-7-165.ca-central-1.compute.amazonaws.com:3000/api/tags/GetTags');
+                const tagsRes = await axios.get('https://two800-202510-bby17.onrender.com/api/tags/GetTags');
                 console.log("Fetched tags data:", tagsRes.data);
                 setAllTags(tagsRes.data)
             }

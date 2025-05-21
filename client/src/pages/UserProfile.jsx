@@ -11,7 +11,7 @@ const UserProfile = () => {
   useEffect(() => {
     const getData = async () => {
       try {
-        const res = await axios.get('https://ec2-99-79-7-165.ca-central-1.compute.amazonaws.com:3000/api/auth/me', {
+        const res = await axios.get('https://two800-202510-bby17.onrender.com/api/auth/me', {
           withCredentials: true,
         });
         setInputs(res.data);
