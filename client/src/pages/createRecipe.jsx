@@ -20,6 +20,8 @@ export default function CreateRecipe()
 
   const navigate = useNavigate();
 
+  const [submitting, setSubmitting] = useState(false);
+
   const [modalContent, setModalContent] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalAction, setModalAction] = useState(null);
@@ -106,6 +108,13 @@ export default function CreateRecipe()
 
   const handleSubmit = async () => 
   {
+    if (submitting)
+    {
+      return;
+    }
+
+    setSubmitting(true);
+
     try 
     {
         
@@ -139,6 +148,10 @@ export default function CreateRecipe()
     } catch (err) {
         setModalContent(err.response?.data?.error || 'Failed to submit recipe. Please try again.');
         setIsModalOpen(true);
+    }
+    finally
+    {
+      setSubmitting(false);
     }
   };
 
@@ -205,8 +218,9 @@ export default function CreateRecipe()
       <div className="text-center space-y-2">
         <button
           className="bg-buttonPeach text-white font-semibold px-6 py-2 rounded-xl hover:bg-buttonPeachHover transition"
-          onClick={handleSubmit}>
-          Submit Recipe
+          onClick={handleSubmit}
+          disabled={submitting}>
+          {submitting ? 'Submitting...' : 'Submit Recipe'}
         </button>
         <br></br>
         <button
