@@ -32,9 +32,10 @@ const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
 app.use(cors({
-  origin: 'https://host-v2.d33xop1a16t6zi.amplifyapp.com/', // or your frontend URL
+  origin: 'https://host-v2.d33xop1a16t6zi.amplifyapp.com',
   credentials: true
 }));
+
 app.use(session({ 
   key: 'ilovecookies',
   secret: process.env.SESSION_SECRET,
