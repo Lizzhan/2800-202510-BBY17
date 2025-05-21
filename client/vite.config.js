@@ -7,7 +7,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'http://<your-ec2-backend-ip>:3000',
+        target: 'http://ec2-99-79-7-165.ca-central-1.compute.amazonaws.com:3000',
         changeOrigin: true,
         secure: false,
       },

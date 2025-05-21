@@ -27,7 +27,7 @@ export default function Fridge({ onNavigate }) {
         });
         const userData = await userRes.json();
 
-        const fridgeRes = await fetch(`http://localhost:3000/api/fridge/${userData.id}`, {
+        const fridgeRes = await fetch(`/api/fridge/${userData.id}`, {
           credentials: 'include',
         });
         const data = await fridgeRes.json();
@@ -56,12 +56,12 @@ export default function Fridge({ onNavigate }) {
     }
 
     try {
-      const userRes = await fetch('http://localhost:3000/api/auth/me', {
+      const userRes = await fetch('/api/auth/me', {
         credentials: 'include',
       });
       const userData = await userRes.json();
 
-      await fetch('http://localhost:3000/api/fridge/add', {
+      await fetch('/api/fridge/add', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
@@ -87,12 +87,12 @@ export default function Fridge({ onNavigate }) {
     }
 
     try {
-      const userRes = await fetch('http://localhost:3000/api/auth/me', {
+      const userRes = await fetch('/api/auth/me', {
         credentials: 'include',
       });
       const userData = await userRes.json();
 
-      await fetch('http://localhost:3000/api/fridge/add', {
+      await fetch('/api/fridge/add', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
@@ -113,12 +113,12 @@ export default function Fridge({ onNavigate }) {
   const handleRemovePantryItem = async (index) => {
     const item = selectedPantryItems[index];
     try {
-      const userRes = await fetch('http://localhost:3000/api/auth/me', {
+      const userRes = await fetch('/api/auth/me', {
         credentials: 'include',
       });
       const userData = await userRes.json();
 
-      await fetch('http://localhost:3000/api/fridge/remove', {
+      await fetch('/api/fridge/remove', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
@@ -144,12 +144,12 @@ export default function Fridge({ onNavigate }) {
   const handleRemoveFridgeItem = async (index) => {
     const item = selectedFridgeItems[index];
     try {
-      const userRes = await fetch('http://localhost:3000/api/auth/me', {
+      const userRes = await fetch('/api/auth/me', {
         credentials: 'include',
       });
       const userData = await userRes.json();
 
-      await fetch('http://localhost:3000/api/fridge/remove', {
+      await fetch('/api/fridge/remove', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
@@ -180,7 +180,7 @@ export default function Fridge({ onNavigate }) {
       ingredients = [...selectedFridgeItems, ...selectedPantryItems];
     }
     try {
-      const res = await fetch('http://localhost:3000/api/match', {
+      const res = await fetch('/api/match', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',

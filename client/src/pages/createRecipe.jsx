@@ -115,7 +115,7 @@ export default function CreateRecipe()
 
         console.log("submitting: ", submissionData);
 
-        const res = await axios.post('http://localhost:3000/api/submitRecipe',
+        const res = await axios.post('/api/submitRecipe',
             submissionData, 
             { withCredentials: true }
           );

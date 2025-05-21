@@ -45,7 +45,7 @@ export default function RecipeCard({ recipe, initiallyLiked = false, onDelete = 
         );
       } else {
         await axios.post(
-          'http://localhost:3000/api/unsave-recipe',
+          'api/unsave-recipe',
           { user_recipe_id: recipe.recipe_id },
           { withCredentials: true }
         );

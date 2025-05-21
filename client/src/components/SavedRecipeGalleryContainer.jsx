@@ -40,14 +40,14 @@ export default function GalleryContainer({ showSavedOnly = false, uploadedOnly =
       try {
         let data;
         if (showSavedOnly) {
-          const response = await axios.get('http://localhost:3000/api/saved-recipes', {
+          const response = await axios.get('/api/saved-recipes', {
             withCredentials: true
           });
           data = response.data;
         } else if (uploadedOnly) {
           data = await fetchUserRecipes();
         } else {
-          const response = await axios.get('http://localhost:3000/api/recipes', {
+          const response = await axios.get('/api/recipes', {
             withCredentials: true
           });
           data = response.data;

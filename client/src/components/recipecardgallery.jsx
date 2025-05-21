@@ -76,7 +76,7 @@ export default function RecipeCardGallery() {
     const fetchSavedRecipes = async () => {
       try {
         // API call to get recipes saved by this user (requires cookie/session)
-        const response = await axios.get('http://localhost:3000/api/saved-recipes', {
+        const response = await axios.get('/api/saved-recipes', {
           withCredentials: true // important: includes session cookie
         });
 
