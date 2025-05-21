@@ -24,7 +24,7 @@ export default function RecipeDetail() {
     const fetchAIRecipe = async () => {
       try {
         // Get the current user's ID from the session
-        const userRes = await fetch('http://localhost:3000/api/auth/me', {
+        const userRes = await fetch('/api/auth/me', {
           credentials: 'include',
         });
         const userData = await userRes.json();
@@ -34,13 +34,13 @@ export default function RecipeDetail() {
         if (!userId) throw new Error('User not authenticated');
 
         // Fetch all ingredients associated with this user
-        const ingRes = await fetch(`http://localhost:3000/api/allingredients/${userId}`, {
+        const ingRes = await fetch(`/api/allingredients/${userId}`, {
           credentials: 'include',
         });
         const ingredients = await ingRes.json();
 
         // Send ingredients to the backend AI to generate a funny recipe
-        const aiRes = await fetch('http://localhost:3000/api/funnyRecipe', {
+        const aiRes = await fetch('/api/funnyRecipe', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           credentials: 'include',

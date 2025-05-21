@@ -39,7 +39,7 @@ export default function RecipeCard({ recipe, initiallyLiked = false, onDelete = 
     try {
       if (!liked) {
         await axios.post(
-          'http://localhost:3000/api/save-recipe',
+          'api/save-recipe',
           { user_recipe_id: recipe.recipe_id },
           { withCredentials: true }
         );

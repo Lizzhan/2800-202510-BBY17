@@ -22,7 +22,7 @@ export default function Fridge({ onNavigate }) {
   useEffect(() => {
     const fetchFridgeData = async () => {
       try {
-        const userRes = await fetch('http://localhost:3000/api/auth/me', {
+        const userRes = await fetch('/api/auth/me', {
           credentials: 'include',
         });
         const userData = await userRes.json();

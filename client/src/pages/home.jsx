@@ -19,7 +19,7 @@ export default function home() {
 
   // Fetch the logged-in user's information from the backend
   useEffect(() => {
-    fetch('http://localhost:3000/api/auth/me', {
+    fetch('/api/auth/me', {
       method: 'GET',
       credentials: 'include', // includes cookies for authentication
     })

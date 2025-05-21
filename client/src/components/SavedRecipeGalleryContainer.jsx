@@ -10,7 +10,7 @@ export default function GalleryContainer({ showSavedOnly = false, uploadedOnly =
   // Fetch user recipes
   const fetchUserRecipes = async () => {
     try {
-      const response = await axios.get('http://localhost:3000/api/user-recipes', {
+      const response = await axios.get('/api/user-recipes', {
         withCredentials: true
       });
       return response.data;
@@ -23,7 +23,7 @@ export default function GalleryContainer({ showSavedOnly = false, uploadedOnly =
   // Delete a recipe
   const handleDeleteRecipe = async (recipeId) => {
     try {
-      await axios.delete(`http://localhost:3000/api/user-recipes/${recipeId}`, {
+      await axios.delete(`/api/user-recipes/${recipeId}`, {
         withCredentials: true
       });
       // Remove the deleted recipe from state

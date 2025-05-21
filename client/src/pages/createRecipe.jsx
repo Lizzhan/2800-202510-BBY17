@@ -35,10 +35,10 @@ export default function CreateRecipe()
         {
             try 
             {
-                const ingredientRes = await axios.get('http://localhost:3000/api/ingredients/getingredients');
+                const ingredientRes = await axios.get('/api/ingredients/getingredients');
                 setAllIngredients(ingredientRes.data);
 
-                const tagsRes = await axios.get('http://localhost:3000/api/tags/GetTags');
+                const tagsRes = await axios.get('/api/tags/GetTags');
                 console.log("Fetched tags data:", tagsRes.data);
                 setAllTags(tagsRes.data)
             }
