@@ -19,8 +19,6 @@ export const checkIfEmailAlreadyUsed = (req, res, next) => {
     const q = "SELECT * FROM users WHERE email=?";
     db.query(q, [req.body.email], (err, data)=>{
         if(err) return res.json(err);
-        //if user exists
-        console.log(data);
         if(data.length > 0) return res.status(409).json('This email is already used');
         next();
     })
@@ -32,7 +30,6 @@ export const checkIfUsernameAlreadyUsed = (req, res, next) => {
     db.query(q, [req.body.username], (err, data)=>{
         if(err) return res.json(err);
         //if user exists
-        console.log(data);
         if(data.length > 0) return res.status(409).json('This username is already used');
         next();
     })

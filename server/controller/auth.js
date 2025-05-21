@@ -23,7 +23,6 @@ export const register = (req, res) => {
 		req.session.authenticated = true;
 		req.session.username = data.username;
         req.session.userId = user.user_id
-		console.log(req.username);
 		req.session.cookie.maxAge = 60 * 60 * 1000;
 
         res.status(200).json(user);
@@ -55,8 +54,6 @@ export const login = (req, res) => {
         req.session.userId = user.user_id; // or whatever your user id column is called
         req.session.username = user.username; // optional
         req.session.email = user.email
-
-        console.log("User logged in:", req.session.userId);
 
         req.session.cookie.maxAge = 60 * 60 * 1000; // 1 hour
 

@@ -12,7 +12,6 @@ import db from '../db.js';
  * @author https://chat.openai.com
  */
 export const matchRecipes = (req, res) => {
-  console.log('🧪 Received ingredients:', req.body);
   const { ingredients } = req.body;
 
   // Validate the input
@@ -20,7 +19,6 @@ export const matchRecipes = (req, res) => {
     return res.status(400).json({ error: 'Ingredient list is required.' });
   }
 
-  console.log('✅ Parsed ingredients:', ingredients);
 
   // Step 1: Convert ingredient names to IDs
   const placeholders = ingredients.map(() => '?').join(',');
@@ -37,7 +35,6 @@ export const matchRecipes = (req, res) => {
     }
 
     const ids = rows.map(row => row.ingredient_id);
-    console.log('🔎 Matching ingredient IDs:', ids);
 
     // If no matching IDs found, return empty list
     if (ids.length === 0) return res.json([]);

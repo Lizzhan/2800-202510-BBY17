@@ -58,8 +58,6 @@ Don't add anything else — no intros or sign-offs try not to give me the same r
 
     const data = await response.json();
 
-    // Log the raw response for debugging
-    console.log("🧠 Gemini Raw Response:\n", JSON.stringify(data, null, 2));
 
     // Check if response contains valid content
     if (!data.candidates || !data.candidates[0]?.content?.parts?.length) {
