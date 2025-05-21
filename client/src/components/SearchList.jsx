@@ -18,7 +18,7 @@ export default function SearchList({
   };
 
   return (
-    <div className="max-h-60 overflow-y-auto border rounded p-2 bg-[#FDF6EC] border-2 border-[#65350f]">
+    <div className="max-h-60 overflow-y-auto border rounded p-2 bg-[#FDF6EC] border-2 border-black">
       {items.length === 0 ? (
         <div className="text-gray-500 italic">No ingredients selected.</div>
       ) : (
