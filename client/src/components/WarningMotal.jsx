@@ -1,12 +1,14 @@
 import React from 'react';
 
 /**
- * a little motal created similar to sweet alert for users when they try to add an ingredient that 
- * is already in the fridge or pantry. Kaid's code was studied to make this motal. 
- * @param {} param0 
+ * A lightweight warning modal similar to SweetAlert, used to alert users
+ * when they try to add an ingredient that is already in their fridge or pantry.
+ * The styling is simple and centers the modal on the screen with a dark overlay.
+ *
+ * The implementation was inspired by Kaid's modal code.
+ *
  * @author Lucas Liu
  * @author Kaid Krawchuk
- *
  */
 export default function WarningModal({ message, onClose }) {
   return (

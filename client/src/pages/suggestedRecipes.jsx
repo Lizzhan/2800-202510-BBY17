@@ -1,20 +1,30 @@
 import { useLocation } from 'react-router-dom';
 import SuggestedRecipeGallery from '../components/SuggestedRecipeGallery';
+
 /**
- * a recipe gallery used to display recipes that is suggested to the user based on what ingredient was selected. 
+ * A recipe gallery page that displays AI-suggested recipes based on
+ * the user's selected ingredients. Recipes are passed via navigation state
+ * from a previous page (e.g., fridge or suggestion trigger).
+ *
+ * @returns {JSX.Element} A list of suggested recipes in a responsive gallery layout.
+ *
  * @author Lucas Liu
  */
 export default function SuggestedRecipesPage() {
-  //use location and get the location recipe that was passed from the previous page.
+  // Use React Router's location object to access state passed during navigation
   const location = useLocation();
   const recipes = location.state?.recipes;
 
-  //if no recipe then give a good message. 
+  // If no recipes were passed, display a fallback message
   if (!recipes) {
-    return <p className="text-center text-red-500">No recipes provided. Please go back and try again.</p>;
+    return (
+      <p className="text-center text-red-500">
+        No recipes provided. Please go back and try again.
+      </p>
+    );
   }
 
-  //render the gallery.
+  // Render the suggested recipe gallery
   return (
     <div className="pt-6">
       <h1 className="text-2xl font-bold text-center mb-4">Suggested Recipes</h1>

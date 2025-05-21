@@ -1,38 +1,45 @@
 import { useEffect, useState } from 'react';
+
 /**
- * the recipe detail pages that fetches ingredient from the user database and try to create a funny recipe
- * with ai prompt on the back end. then displays the recipe  on the page. Help from chatgpt was used to complete
- * the code. 
+ * The RecipeDetail page fetches all ingredients from the logged-in user's database
+ * and generates a humorous recipe using an AI backend prompt.
+ * Once generated, the recipe is displayed on the page.
+ *
+ * Code completed with assistance from ChatGPT.
+ *
+ * @returns {JSX.Element} A dynamically generated recipe based on user's ingredients.
+ *
  * @author Lucas Liu 
- * @author https://chat.openai.com
+ * @see https://chat.openai.com
  */
 export default function RecipeDetail() {
-  //the data state used to show the recipe when the ai finishes generates the data
+  // Stores the AI-generated recipe data
   const [recipe, setRecipe] = useState(null);
-  //the loading state used for when the ai is still generating the data
+
+  // Tracks whether the recipe is still being generated
   const [loading, setLoading] = useState(true);
 
-  //the function to fetch the user id and then passing it to the ai back end. 
+  // Fetches the user ID, retrieves ingredients, and calls the AI backend for a custom recipe
   useEffect(() => {
     const fetchAIRecipe = async () => {
       try {
-        // Get the logged-in user's ID
+        // Get the current user's ID from the session
         const userRes = await fetch('http://localhost:3000/api/auth/me', {
           credentials: 'include',
         });
         const userData = await userRes.json();
-        //assign the userID
         const userId = userData?.id;
-        //if no userid is assigned then the user is not logged in
+
+        // If no user ID is found, stop and show an error
         if (!userId) throw new Error('User not authenticated');
 
-        //Get all ingredients for that user
+        // Fetch all ingredients associated with this user
         const ingRes = await fetch(`http://localhost:3000/api/allingredients/${userId}`, {
           credentials: 'include',
         });
         const ingredients = await ingRes.json();
 
-        // 🔹 Ask AI for a recipe based on the user's ingredients
+        // Send ingredients to the backend AI to generate a funny recipe
         const aiRes = await fetch('http://localhost:3000/api/funnyRecipe', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -41,43 +48,49 @@ export default function RecipeDetail() {
         });
 
         const aiRecipe = await aiRes.json();
-        //display the recipe after ai finishes  generating the the recipe
+
+        // Store the generated recipe in state
         setRecipe(aiRecipe);
       } catch (err) {
         console.error('Failed to generate recipe:', err);
       } finally {
-        //remove the loading state. 
+        // Mark loading as complete regardless of success or failure
         setLoading(false);
       }
     };
+
     fetchAIRecipe();
   }, []);
 
-  //show message for when loading the recipe and when ai could not make an recipe
+  // Render loading or error states before displaying the recipe
   if (loading) return <div className="p-6 text-center">Generating recipe...</div>;
   if (!recipe) return <div className="p-6 text-center text-red-500">No recipe found.</div>;
 
   return (
     <div className="max-w-xl mx-auto px-4 py-6 space-y-6">
-      {/* Title */}
+      {/* Recipe Title */}
       <h1 className="text-3xl font-semibold">{recipe.name}</h1>
 
-      {/* Description */}
+      {/* Recipe Description */}
       <p className="text-gray-700">{recipe.description}</p>
 
-      {/* Ingredients */}
+      {/* Ingredients Section */}
       <div className="bg-white p-4 rounded shadow space-y-2">
         <h2 className="text-xl font-semibold">Ingredients</h2>
         <p className="whitespace-pre-wrap text-gray-800">
-          {Array.isArray(recipe.ingredients) ? recipe.ingredients.join('\n') : recipe.ingredients}
+          {Array.isArray(recipe.ingredients)
+            ? recipe.ingredients.join('\n')
+            : recipe.ingredients}
         </p>
       </div>
 
-      {/* Steps */}
+      {/* Steps Section */}
       <div className="bg-white p-4 rounded shadow space-y-2">
         <h2 className="text-xl font-semibold">Steps</h2>
         <p className="whitespace-pre-wrap text-gray-800">
-          {Array.isArray(recipe.steps) ? recipe.steps.join('\n') : recipe.steps}
+          {Array.isArray(recipe.steps)
+            ? recipe.steps.join('\n')
+            : recipe.steps}
         </p>
       </div>
     </div>

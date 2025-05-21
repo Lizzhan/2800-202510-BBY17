@@ -1,45 +1,52 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import RecipeCard from './recipecard';
+
 /**
- * suggested recipe in a gallery that is based on  what recipe is passed or all the ingredient in the fridge. Back-end function
- * is called to check for recipe is favorited. favorite recipe part of the code was taken after studying kaid's code.
- * 
- * @param the list of recipes fetched from the back end 
+ * Displays a grid of suggested recipe cards in a responsive gallery layout.
+ * This component checks which recipes have been favorited by the user and updates
+ * the UI accordingly (i.e., showing a "liked" heart icon).
+ *
+ * The favorite-checking logic was adapted with inspiration from Kaid's implementation.
+ *
  * @author Lucas Liu
  * @author Kaid Krawchuk
  */
 export default function SuggestedRecipeGallery({ recipes }) {
-  //state used to determine if a recipe is favorited or no
+  // State to store the list of recipes the user has favorited (saved)
   const [savedRecipes, setSavedRecipes] = useState([]);
 
-  //back-end call use to determine if the recipe have been favorited by the user.
+  // Fetch the user's saved (favorited) recipes from the backend when the component mounts
   useEffect(() => {
     const fetchSavedRecipes = async () => {
       try {
         const res = await axios.get('http://localhost:3000/api/saved-recipes', {
           withCredentials: true,
         });
-        //if the recipe is favorited then set the sate so the heart will light up
+        // Store the list of saved recipes in state to determine "liked" status
         setSavedRecipes(res.data || []);
       } catch (err) {
         console.error('Error fetching saved recipes:', err);
-        setSavedRecipes([]);
+        setSavedRecipes([]); // fallback to empty array if there's an error
       }
     };
 
     fetchSavedRecipes();
   }, []);
 
-  //if we cant find the recipe based on the ingredient then just show a message. 
+  // Show a message if there are no suggested recipes
   if (!recipes || recipes.length === 0) {
-    return <p className="text-center text-gray-500">No suggested recipes found.</p>;
+    return (
+      <p className="text-center text-gray-500">
+        No suggested recipes found.
+      </p>
+    );
   }
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 max-w-6xl mx-auto px-4">
-      
       {recipes.map((recipe) => {
+        // Determine if this recipe has been favorited by checking multiple matching strategies
         const isLiked =
           Array.isArray(savedRecipes) &&
           savedRecipes.some((saved) =>
@@ -54,7 +61,9 @@ export default function SuggestedRecipeGallery({ recipes }) {
             <RecipeCard
               recipe={{
                 ...recipe,
-                image: recipe.image || `https://source.unsplash.com/featured/?${encodeURIComponent(recipe.recipe_title)}`
+                image:
+                  recipe.image ||
+                  `https://source.unsplash.com/featured/?${encodeURIComponent(recipe.recipe_title)}`,
               }}
               initiallyLiked={isLiked}
             />

@@ -1,50 +1,59 @@
 import { useState, useRef, useEffect } from 'react';
 import { Refrigerator, WandSparkles, CookingPot, Plus } from 'lucide-react';
 import { Link } from "react-router-dom";
-/** 
-  * an expanding footbar thats is always stickingg to the bottomethe design of the foot bar is found from tailwind 
-  * w8ith the help of chatgpt i was able to create the funciton that expands and contract when clicked else where
-  * @author Lucas Liu
-  * @author https://chat.openai.com//
-  * @author https://flowbite.com
-*/
+
+/**
+ * An expandable footbar component that stays fixed to the bottom of the screen.
+ * The design is based on Tailwind CSS with styling inspiration from Flowbite.
+ * With help from ChatGPT, functionality was implemented to expand and collapse
+ * the bar when clicking inside or outside of it.
+ * 
+ * @author Lucas Liu
+ * @author https://chat.openai.com
+ * @author https://flowbite.com
+ */
 export default function Footbar() {
-  //the state used for set the state of the footbar if it is expanded or not
+  // Tracks whether the footbar is currently expanded
   const [isExpanded, setIsExpanded] = useState(false);
-  //the state used to set if the button is currently rotating
+
+  // Tracks whether the central '+' button is in a rotating animation state
   const [isRotating, setIsRotating] = useState(false);
-  //state  used to set if the button or the footbar is visible
+
+  // Controls visibility of the expanded navigation buttons
   const [isVisible, setIsVisible] = useState(false);
+
+  // Ref to the navigation container to detect outside clicks
   const navRef = useRef(null);
 
-  //when the footbar is expanded and open when clicking else where it shrinks the footbar back to a button
+  // Adds an event listener that collapses the footbar when clicking outside of it
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (navRef.current && !navRef.current.contains(e.target)) {
         setIsExpanded(false);
-        setTimeout(() => setIsVisible(false), 300);
+        setTimeout(() => setIsVisible(false), 300); // delay to match animation
       }
     };
+
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  //when button is clicked set up the rotating animation of the button
+  // Toggles the visibility and rotation of the '+' button and expands the menu
   const handleToggle = () => {
     setIsRotating(true);
     setTimeout(() => {
       setIsVisible(true);
       setIsExpanded(true);
       setIsRotating(false);
-    }, 300);
+    }, 300); // delay to match animation
   };
 
-  //returning the react componnent of the footbar
+  // Return the JSX layout for the footbar
   return (
     <div className="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 w-full max-w-md px-4">
       <div ref={navRef} className="relative flex justify-center items-end">
 
-        {/* + Button */}
+        {/* '+' Button — Shown only when the bar is collapsed */}
         {!isVisible && (
           <button
             onClick={handleToggle}
@@ -58,7 +67,7 @@ export default function Footbar() {
           </button>
         )}
 
-        {/* Nav bar */}
+        {/* Navigation Bar — Shown when the '+' button is clicked */}
         {isVisible && (
           <div
             className={`origin-center transition-all duration-300 ease-in-out px-4 transform
@@ -67,7 +76,7 @@ export default function Footbar() {
           >
             <div className="flex w-full h-full items-center">
 
-              {/* Left: Fridge */}
+              {/* Left: Fridge Icon — Collapses the menu on click */}
               <Link to="/fridge" className="flex-1">
                 <div
                   onClick={() => {
@@ -81,7 +90,7 @@ export default function Footbar() {
                 </div>
               </Link>
 
-              {/* Center: Suggest*/}
+              {/* Center: Suggest Icon — Always active; stays in place */}
               <Link to="/suggest" className="mx-2">
                 <button
                   type="button"
@@ -92,7 +101,7 @@ export default function Footbar() {
                 </button>
               </Link>
 
-              {/* Right: Cookbook */}
+              {/* Right: Cookbook Icon — Collapses the menu on click */}
               <Link to="/cookbook" className="flex-1">
                 <div
                   onClick={() => {

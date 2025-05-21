@@ -1,8 +1,9 @@
-
 /**
- * simple component used to export a horizontial scrolling gallery used to display image cards on the cookbook 
- * page. The code was taken from tailwind documentation.
- * @param {*} param0 : imaged card to be used when displaying the recipes in the cookbook page.
+ * A simple component that renders a horizontally scrollable gallery.
+ * This is primarily used to display image cards on the Cookbook page.
+ * The layout styling is based on examples from Tailwind CSS documentation.
+ *
+ * @author Lucas Liu
  * @author https://flowbite.com
  */
 export default function Gallery({ children }) {

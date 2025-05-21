@@ -57,10 +57,6 @@ app.use('/api', saveRecipeRoutes);
 app.use('/api',recipeRoutes);
 app.use('/api', matchRecipeRoutes);
 
-app.get('/ping', (req, res) => {
-  res.send('pong');
-});
-
 
 // Server start
 app.listen(PORT, () => {
