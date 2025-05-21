@@ -25,33 +25,16 @@ dotenv.config({
   path: '../.env'
 });
 
-
-
 const app = express();
 const MySQLSessionStore = MySQLStore(session);
 const sessionStore = new MySQLSessionStore({}, db);
 const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
-
-const allowedOrigins = [
-  'https://host-v2.d33xop1a16t6zi.amplifyapp.com'
-];
-
 app.use(cors({
-  origin: function (origin, callback) {
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
+  origin: 'http://localhost:5173', // or your frontend URL
   credentials: true
 }));
-
-
-const isProduction = process.env.NODE_ENV === 'production';
-
 app.use(session({ 
   key: 'ilovecookies',
   secret: process.env.SESSION_SECRET,
@@ -60,8 +43,8 @@ app.use(session({
   resave: false,
   cookie: {
     httpOnly: true,
-    secure: isProduction,                // true only in production (requires HTTPS)
-    sameSite: isProduction ? 'None' : 'Lax',  // 'None' for cross-origin in prod, 'Lax' in dev
+    secure: true,      // set to true if you are using HTTPS (production)
+    sameSite: 'lax'     // important: 'lax' for dev, not 'none'
   }
 }));
 
