@@ -48,7 +48,6 @@ export default function RecipePage() {
         setLoading(false); // Hide loading message once data is fetched
       }
     };
-    does render automati
     fetchRecipe();
   }, [id]);
 
