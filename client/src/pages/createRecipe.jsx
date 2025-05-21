@@ -35,10 +35,10 @@ export default function CreateRecipe()
         {
             try 
             {
-                const ingredientRes = await axios.get('/api/ingredients/getingredients');
+                const ingredientRes = await axios.get('http://ec2-99-79-7-165.ca-central-1.compute.amazonaws.com:3000/api/ingredients/getingredients');
                 setAllIngredients(ingredientRes.data);
 
-                const tagsRes = await axios.get('/api/tags/GetTags');
+                const tagsRes = await axios.get('http://ec2-99-79-7-165.ca-central-1.compute.amazonaws.com:3000/api/tags/GetTags');
                 console.log("Fetched tags data:", tagsRes.data);
                 setAllTags(tagsRes.data)
             }
@@ -115,7 +115,7 @@ export default function CreateRecipe()
 
         console.log("submitting: ", submissionData);
 
-        const res = await axios.post('/api/submitRecipe',
+        const res = await axios.post('http://ec2-99-79-7-165.ca-central-1.compute.amazonaws.com:3000/api/submitRecipe',
             submissionData, 
             { withCredentials: true }
           );

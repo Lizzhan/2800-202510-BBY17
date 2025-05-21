@@ -19,7 +19,7 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("/api/auth/register", inputs);
+      await axios.post("http://ec2-99-79-7-165.ca-central-1.compute.amazonaws.com:3000/api/auth/register", inputs);
       navigate('/login');
     } catch (err) {
       setErr(err.response?.data || 'Something went wrong');

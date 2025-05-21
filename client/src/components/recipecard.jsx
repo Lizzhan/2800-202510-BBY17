@@ -39,13 +39,13 @@ export default function RecipeCard({ recipe, initiallyLiked = false, onDelete = 
     try {
       if (!liked) {
         await axios.post(
-          'api/save-recipe',
+          'http://ec2-99-79-7-165.ca-central-1.compute.amazonaws.com:3000/api/save-recipe',
           { user_recipe_id: recipe.recipe_id },
           { withCredentials: true }
         );
       } else {
         await axios.post(
-          'api/unsave-recipe',
+          'http://ec2-99-79-7-165.ca-central-1.compute.amazonaws.com:3000/api/unsave-recipe',
           { user_recipe_id: recipe.recipe_id },
           { withCredentials: true }
         );

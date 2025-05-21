@@ -34,7 +34,7 @@ export default function RecipeCardGallery() {
     const fetchRecipes = async () => {
       try {
         // API call to fetch all recipes
-        const response = await fetch('/api/recipes');
+        const response = await fetch('http://ec2-99-79-7-165.ca-central-1.compute.amazonaws.com:3000/api/recipes');
         if (!response.ok) throw new Error('Failed to fetch recipes');
 
         // Parse JSON data
@@ -76,7 +76,7 @@ export default function RecipeCardGallery() {
     const fetchSavedRecipes = async () => {
       try {
         // API call to get recipes saved by this user (requires cookie/session)
-        const response = await axios.get('/api/saved-recipes', {
+        const response = await axios.get('http://ec2-99-79-7-165.ca-central-1.compute.amazonaws.com:3000/api/saved-recipes', {
           withCredentials: true // important: includes session cookie
         });
 

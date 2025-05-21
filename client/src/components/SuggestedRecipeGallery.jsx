@@ -20,7 +20,7 @@ export default function SuggestedRecipeGallery({ recipes }) {
   useEffect(() => {
     const fetchSavedRecipes = async () => {
       try {
-        const res = await axios.get('/api/saved-recipes', {
+        const res = await axios.get('http://ec2-99-79-7-165.ca-central-1.compute.amazonaws.com:3000/api/saved-recipes', {
           withCredentials: true,
         });
         // Store the list of saved recipes in state to determine "liked" status
