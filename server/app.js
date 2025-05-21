@@ -50,6 +50,8 @@ app.use(cors({
 }));
 
 
+const isProduction = process.env.NODE_ENV === 'production';
+
 app.use(session({ 
   key: 'ilovecookies',
   secret: process.env.SESSION_SECRET,
@@ -58,8 +60,8 @@ app.use(session({
   resave: false,
   cookie: {
     httpOnly: true,
-    secure: false,      // set to true if you are using HTTPS (production)
-    sameSite: 'lax'     // important: 'lax' for dev, not 'none'
+    secure: isProduction,                // true only in production (requires HTTPS)
+    sameSite: isProduction ? 'None' : 'Lax',  // 'None' for cross-origin in prod, 'Lax' in dev
   }
 }));
 
