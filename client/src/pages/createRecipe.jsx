@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import SearchBarWithDropdown from '../components/SearchBarWithDropdown';
 import FilterTagSection from '../components/FilterTagSection';
@@ -14,6 +15,8 @@ export default function CreateRecipe()
 
   const [selectedTagNames, setSelectedTagNames] = useState([]);
   const [allTags, setAllTags] = useState([]);
+
+  const navigate = useNavigate();
 
   useEffect(() =>
     {
@@ -105,11 +108,7 @@ export default function CreateRecipe()
 
         if (res.data?.message) {
             alert(res.data.message);
-            setTitle('');
-            setDescription('');
-            setSteps('');
-            setSelectedIngredients([]);
-            setSelectedTagNames([]);
+            navigate('/cookbook');
         }
     } catch (err) {
         console.error('Error submitting recipe:', 
