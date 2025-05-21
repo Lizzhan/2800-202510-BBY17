@@ -54,31 +54,7 @@ export default function RecipeCard({ recipe, initiallyLiked = false, onDelete = 
   }
 };
 
-    e.stopPropagation(); // Prevent card click navigation
-    try {
-      if (!liked) {
-        await axios.post(
-          'http://localhost:3000/api/save-recipe',
-          { user_recipe_id: recipe.recipe_id },
-          { withCredentials: true }
-        );
-      } else {
-        await axios.post(
-          'http://localhost:3000/api/unsave-recipe',
-          { user_recipe_id: recipe.recipe_id },
-          { withCredentials: true }
-        );
-      }
-      setLiked(!liked);
-    } catch (error) {
-      console.error('Error updating saved recipe:', error);
-    }
-  };
-
-  // Navigate to recipe detail page
-  const handleCardClick = () => {
-    navigate(`/recipe/${recipe.recipe_id}`);
-  };
+    
 
   // Render the recipe card
   return (
