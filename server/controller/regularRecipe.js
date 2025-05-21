@@ -4,19 +4,36 @@ import db from '../db.js';
 
 dotenv.config();
 
+/**
+ * Backend controller that generates a regular (non-funny) recipe using the Gemini API
+ * based on a shuffled list of all ingredients in the database. The result is parsed
+ * and stored in the `recipes` and `recipe_ingredients` tables.
+ *
+ * The Gemini prompt is structured to return a clean, predictable text format
+ * with a title, description, steps, and a list of used ingredients.
+ * 
+ * Help from chatgpt was used to complete part of this code
+ *
+ * @param {Object} req - Express request object.
+ * @param {Object} res - Express response object.
+ *
+ * @author Lucas Liu
+ * @author https://chat.openai.com
+ */
 export const generateRegularRecipeName = async (req, res) => {
   try {
-    // Step 1: Fetch ingredients from DB
+    // Step 1: Fetch all ingredients from the database
     const ingredientQuery = 'SELECT * FROM ingredients';
     db.query(ingredientQuery, async (err, ingredientRows) => {
       if (err) return res.status(500).json({ error: 'Failed to fetch ingredients' });
 
+      // Shuffle ingredient names to vary AI results
       const ingredientList = ingredientRows
         .map(i => i.ingredient)
         .sort(() => Math.random() - 0.5);
 
-      // Step 2: Create Gemini Prompt
-       const prompt = `Give me a recipe based on the following ingredients: ${ingredientList.join(', ')}.
+      // Step 2: Construct Gemini prompt
+      const prompt = `Give me a recipe based on the following ingredients: ${ingredientList.join(', ')}.
 You do not need to use all of them and dont add ingredients. and please keep ingredient exactly the name that i have send you.
 
 Respond using the following clear format:
@@ -27,8 +44,7 @@ Respond using the following clear format:
 
 Do NOT include any introductions, explanations, or extra commentary. Just give the recipe in this format. dont give me any format or any astrix or hashtags just give me text. try not to give me the same recipe not bolt no ephasis`;
 
-
-      // Step 3: Call Gemini
+      // Step 3: Send prompt to Gemini API
       const response = await fetch(
         `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${process.env.GEMINI_API_KEY}`,
         {
@@ -45,11 +61,11 @@ Do NOT include any introductions, explanations, or extra commentary. Just give t
         return res.status(502).json({ error: 'No content received from Gemini' });
       }
 
-      // Step 4: Parse response
+      // Step 4: Parse Gemini response
       const fullText = data.candidates[0].content.parts[0].text.trim();
       const lines = fullText.split('\n').map(line => line.trim()).filter(Boolean);
 
-      const name = lines[0];
+      const name = lines[0]; // First line = title
       const indexOfStep1 = lines.findIndex(line => /^1\./.test(line));
       const description = indexOfStep1 > 1 ? lines.slice(1, indexOfStep1).join(' ') : '';
 
@@ -61,15 +77,14 @@ Do NOT include any introductions, explanations, or extra commentary. Just give t
       const ingredientsMatch = fullText.match(/Ingredients used:\s*\n([\s\S]*)$/i);
       const parsedIngredients = ingredientsMatch
         ? ingredientsMatch[1]
-          .split('\n')
-          .map(line =>
-            line.replace(/^[-*•–]+\s*/, '').trim() // ✅ removes -, *, •, – and any spaces after
-          )
-          .filter(Boolean)
+            .split('\n')
+            .map(line =>
+              line.replace(/^[-*•–]+\s*/, '').trim() // Remove bullet symbols
+            )
+            .filter(Boolean)
         : [];
 
-
-      // Step 5: Insert recipe
+      // Step 5: Insert new recipe into the database
       const insertRecipeQuery = `
         INSERT INTO recipes (recipe_title, description, steps, num_of_favorites)
         VALUES (?, ?, ?, 0)
@@ -81,12 +96,14 @@ Do NOT include any introductions, explanations, or extra commentary. Just give t
 
         const recipeId = result.insertId;
 
-        // Step 6: Insert into recipe_ingredients
+        // Step 6: Link ingredients to recipe, inserting new ones if needed
         parsedIngredients.forEach((ingName) => {
-          const ingRow = ingredientRows.find(i => i.ingredient.toLowerCase() === ingName.toLowerCase());
+          const ingRow = ingredientRows.find(
+            i => i.ingredient.toLowerCase() === ingName.toLowerCase()
+          );
 
           if (ingRow) {
-            // Ingredient exists, link it
+            // Ingredient exists — link it
             db.query(
               'INSERT INTO recipe_ingredients (recipe_id, ingredient_id) VALUES (?, ?)',
               [recipeId, ingRow.ingredient_id],
@@ -95,7 +112,7 @@ Do NOT include any introductions, explanations, or extra commentary. Just give t
               }
             );
           } else {
-            // Ingredient not found — insert it first
+            // Ingredient doesn't exist — insert it, then link it
             db.query(
               'INSERT INTO ingredients (ingredient) VALUES (?)',
               [ingName],
@@ -108,7 +125,6 @@ Do NOT include any introductions, explanations, or extra commentary. Just give t
                 const newIngredientId = result.insertId;
                 console.log(`✅ Inserted new ingredient "${ingName}" with ID ${newIngredientId}`);
 
-                // Now link to the recipe
                 db.query(
                   'INSERT INTO recipe_ingredients (recipe_id, ingredient_id) VALUES (?, ?)',
                   [recipeId, newIngredientId],
@@ -121,7 +137,7 @@ Do NOT include any introductions, explanations, or extra commentary. Just give t
           }
         });
 
-        // Final response
+        // Step 7: Respond with structured recipe data
         res.json({
           name,
           description,

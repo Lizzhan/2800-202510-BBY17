@@ -3,7 +3,7 @@ import axios from "axios";
 
 export default function FilterTagSection({ onFilterChange }) {
   const [selectedTags, setSelectedTags] = useState([]);
-  const [tags, setTags] = useState([]); // 🔥 fetched from DB now
+  const [tags, setTags] = useState([]); // fetched from DB now
 
   // Fetch tags once when component mounts
   useEffect(() => {
