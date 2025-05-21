@@ -16,6 +16,7 @@ import Suggest from './pages/RecipeDetail';
 import RecipePage from './pages/RecipePage';
 import SuggestedRecipeGallery from "./pages/suggestedRecipes";
 import CreateRecipe from './pages/createRecipe';
+import NotFound from './pages/NotFound';
 
 //is user input escaped
 export default function App() {
@@ -40,7 +41,7 @@ export default function App() {
             <Route path="/suggestRecipes" element={<SuggestedRecipeGallery />} />
 
             <Route path="/createRecipe" element={<CreateRecipe />} />
-
+            <Route path="*" element={<NotFound />} />
           </Route>
         </Routes>
       </Router>
