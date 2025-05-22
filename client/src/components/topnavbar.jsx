@@ -106,9 +106,9 @@ export default function Navbar() {
       </Link>
       </button>
 
-    </div>
-  </div>
-</nav>
+        </div>
+      </div>
+    </nav>
 
   );
 

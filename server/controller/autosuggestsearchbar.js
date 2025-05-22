@@ -1,5 +1,5 @@
 
-import db from '../db.js'; // Import your database connection
+import db from '../db.js'; // Import database connection
 
 /**
  * Controller to get all ingredients from the database.
