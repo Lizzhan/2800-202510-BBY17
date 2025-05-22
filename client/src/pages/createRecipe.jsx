@@ -185,29 +185,36 @@ export default function CreateRecipe()
       <input
         type="text"
         placeholder="*Recipe Title"
-        className="w-full p-2 border border-gray-300 rounded"
+        className="w-full p-2 border-2 border-black rounded"
         value={title}
         onChange={(e) => setTitle(e.target.value)}
       />
 
       {/* Description Text Area */}
-      <textarea
-        placeholder="*Description"
-        className="w-full p-2 border border-gray-300 rounded"
-        value={description}
-        onChange={(e) => setDescription(e.target.value)}
-      ></textarea>
+      <div>
+        <h2 className="font-medium mb-1">Recipe Description</h2>
+        <textarea
+          placeholder="*Add a short description.."
+          className="w-full p-2 border-2 border-black rounded"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+        ></textarea>
+      </div>
 
       {/* Ingredient Seatch Bar and Drop Down suggesitons */}
       <div>
         <h2 className="font-medium mb-1">Search & Add Ingredients</h2>
-        <SearchBarWithDropdown onSearch={handleIngredientSelect} resetTrigger={resetSearch} />
+        <SearchBarWithDropdown
+          onSearch={handleIngredientSelect}
+          resetTrigger={resetSearch}
+          centered={false}
+        />
 
         <div className="flex flex-wrap gap-2 mt-2">
           {selectedIngredients.map((item) => (
             <div
               key={item.ingredient_id}
-              className="bg-peach text-white px-3 py-1 rounded-full flex items-center gap-2"
+              className="bg-buttonPeach text-black px-3 py-1 rounded-full flex items-center gap-2"
             >
               <span>{item.ingredient}</span>
               <button onClick={() => handleRemoveIngredient(item.ingredient_id)}>×</button>
@@ -216,30 +223,22 @@ export default function CreateRecipe()
         </div>
       </div>
 
-      {/* Steps Input */}
+      <div>
+        <h2 className="font-medium text-base text-black mb-1">Instructions</h2>
+        {/* Steps Input */}
       <textarea
-        placeholder="*Steps"
-        className="w-full p-2 border border-gray-300 rounded"
-        value={steps}
-        onChange={(e) => setSteps(e.target.value)}
-      ></textarea>
+          placeholder="*Steps"
+          className="w-full p-2 border-2 border-black rounded"
+          value={steps}
+          onChange={(e) => setSteps(e.target.value)}
+        ></textarea>
+      </div>
 
       {/* Tags Selection */}
       <div>
-        <h2 className="font-medium mb-1">Tags</h2>
+        <h2 className="font-medium text-base text-black mb-1">Tags</h2>
         <FilterTagSection onFilterChange={setSelectedTagNames} 
                           selectedTags={selectedTagNames}/>
-
-            <div className="flex flex-wrap gap-2 mt-2">
-            {selectedTagNames.map((tagName) => (
-                <div
-                    key={tagName}  // Use the actual ID
-                    className="bg-buttonPeach text-white px-3 py-1 rounded-full"
-                >
-                {tagName}
-                </div>
-        ))}
-        </div>
       </div>
 
       {/* Submit and Reset Buttons */}
@@ -250,7 +249,6 @@ export default function CreateRecipe()
           disabled={submitting}>
           {submitting ? 'Submitting...' : 'Submit Recipe'}
         </button>
-        <br></br>
         <button
           className="bg-gray-300 text-gray-800 font-semibold px-6 py-2 rounded-xl hover:bg-gray-400 transition ml-2"
           onClick={handleReset}>

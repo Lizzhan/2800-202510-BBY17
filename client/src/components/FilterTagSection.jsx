@@ -29,7 +29,7 @@ export default function FilterTagSection({ onFilterChange, selectedTags }) {
   };
 
   return (
-    <div className="bg-kaidCream rounded p-4 shadow-md border border-black">
+    <div className="bg-kaidCream rounded p-4 shadow-md border-2 border-black">
       <h2 className="text-xl font-semibold mb-3">What are you feeling?</h2>
       <div className="flex flex-wrap gap-2">
         {tags.map((tag) => (

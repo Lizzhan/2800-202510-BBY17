@@ -62,13 +62,11 @@ export default function GalleryContainer({ showSavedOnly = false, uploadedOnly =
       // Remove the deleted recipe from UI
       setRecipes(prev => prev.filter(recipe => recipe.recipe_id !== recipeId));
       return true;
-    } catch (error) 
-    {
+    } catch (error) {
       console.error('Error deleting recipe:', error);
       return false;
-    }
-    finally
-    {
+    } finally {
+      // Hide modal and reset selection
       setShowConfirmModal(false);
       setRecipeToDelete(null);
     }
@@ -82,7 +80,7 @@ export default function GalleryContainer({ showSavedOnly = false, uploadedOnly =
   {
     setRecipeToDelete(recipeId);
     setShowConfirmModal(true);
-  }
+  };
 
   /**
    * Cancels the delete action, closes modal 
@@ -91,7 +89,7 @@ export default function GalleryContainer({ showSavedOnly = false, uploadedOnly =
   {
     setRecipeToDelete(null);
     setShowConfirmModal(false);
-  }
+  };
 
   // Fetches recipes when component mounts or filter props change.
   useEffect(() => 
@@ -157,6 +155,7 @@ export default function GalleryContainer({ showSavedOnly = false, uploadedOnly =
             <RecipeCard 
               recipe={recipe} 
               initiallyLiked={true}
+              // Show delete button only if uploadedOnly is true
               onDelete={uploadedOnly ? () => confirmDelete(recipe.recipe_id) : null}
             />
           </div>
@@ -171,23 +170,27 @@ export default function GalleryContainer({ showSavedOnly = false, uploadedOnly =
           @see https://www.youtube.com/watch?v=tt5uUMQgzl0&list=PL4cUxeGkcC9joIM91nLzd_qaH_AimmdAR&index=16 */
       }
       {showConfirmModal && (
-      <div className="fixed inset-0 z-50 bg-black bg-opacity-50 flex items-center justify-center">
-        <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-sm">
-          <h2 className="text-lg font-semibold mb-4">Confirm Delete</h2>
-          <p className="mb-6">Are You Sure You want to Delete this Recipe?</p>
-          <div className="flex justify-end gap-3">
-            <button className="bg-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-400"
-                    onClick={cancelDelete}>
-              Cancel      
-            </button>
-            <button className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
-                    onClick={() => handleDeleteRecipe(recipeToDelete)}>
-              Delete      
-            </button>
+        <div className="fixed inset-0 z-50 bg-black bg-opacity-50 flex items-center justify-center">
+          <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-sm">
+            <h2 className="text-lg font-semibold mb-4">Confirm Delete</h2>
+            <p className="mb-6">Are you sure you want to delete this recipe?</p>
+            <div className="flex justify-end gap-3">
+              <button
+                className="bg-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-400"
+                onClick={cancelDelete}
+              >
+                Cancel
+              </button>
+              <button
+                className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+                onClick={() => handleDeleteRecipe(recipeToDelete)}
+              >
+                Delete
+              </button>
+            </div>
           </div>
         </div>
-      </div>
-    )}
+      )}
     </div>
   );
 };
