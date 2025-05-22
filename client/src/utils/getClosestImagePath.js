@@ -74,7 +74,6 @@ export function getClosestImagePath(title) {
   for (const filename of stockImages) {
     // Remove file extension to get the base name
     const baseName = filename.replace(/\.(jpeg|jpg)$/, '');
-
     // Split image filename into a Set of keywords
     const imageWords = new Set(baseName.toLowerCase().split('-'));
 
@@ -90,5 +89,8 @@ export function getClosestImagePath(title) {
   }
 
   // Returns the best matching image path, or default if no match found
-  return bestMatch ? `/meals/${bestMatch}` : '/meals/default.jpeg';
+  return bestMatch ? `/meals/${bestMatch}` : '/meals/Default.jpeg';
+  // return `../public/meals/${bestMatch}`;
+
+
 }
