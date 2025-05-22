@@ -31,7 +31,7 @@ export default function Cookbook() {
       {/* Button to allow users to write their own recipes */}
       <div className="flex justify-center pt-6">
         <Link to="/createRecipe">
-          <button className="bg-buttonPeach text-white font-semibold px-6 py-2 rounded-xl hover:bg-buttonPeachHover transition">
+          <button className="bg-buttonPeach text-black font-semibold px-6 py-2 rounded-xl hover:bg-buttonPeachHover transition">
             Write a New Recipe
           </button>
         </Link>

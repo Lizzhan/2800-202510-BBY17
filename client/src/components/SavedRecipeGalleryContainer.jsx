@@ -8,11 +8,6 @@ import axios from 'axios';
  * Displays a horizontal scrolling gallery of recipe cards based on a user's written recipes.
  * Users can "heart" these recipes, or delete them (with a confirmation).
  * 
- * @param {boolean} showSavedOnly - If true, displays users saved recipes.
- * @param {boolean} uploadedOnly - If true, displays users uploaded recipes. 
- * 
- * @returns gallery UI with recipe cards for saved and uploaded recipes.
- * 
  * @author Kaid Krawchuk
  * @author James Smith
  * @author Liam Pickrell
@@ -125,7 +120,6 @@ export default function GalleryContainer({ showSavedOnly = false, uploadedOnly =
           recipe_id: recipe.recipe_id,
           recipe_title: recipe.recipe_title,
           description: recipe.description || '',
-          image: `https://source.unsplash.com/featured/?${encodeURIComponent(recipe.recipe_title)}`
         }));
 
         setRecipes(processed);
@@ -147,22 +141,23 @@ export default function GalleryContainer({ showSavedOnly = false, uploadedOnly =
   if (recipes.length === 0) return <p className="text-center text-gray-500">No recipes to display.</p>;
 
   return (
-    <div className="overflow-x-auto whitespace-nowrap px-2 py-4 scrollbar-hide">
-      {/* Horizontal scrollable recipe card container */}
-      <div className="flex gap-4">
-        {recipes.map(recipe => (
-          <div key={recipe.recipe_id} className="inline-block min-w-[16rem] max-w-[20rem]">
-            <RecipeCard 
-              recipe={recipe} 
-              initiallyLiked={true}
-              // Show delete button only if uploadedOnly is true
-              onDelete={uploadedOnly ? () => confirmDelete(recipe.recipe_id) : null}
-            />
-          </div>
-        ))}
+    <div className="bg-white rounded-lg px-4 py-6 mx-2 shadow-lg">
+      <div className="overflow-x-auto whitespace-nowrap scrollbar-hide">
+        <div className="flex gap-4">
+          {recipes.map(recipe => (
+            <div key={recipe.recipe_id} className="inline-block min-w-[16rem] max-w-[20rem]">
+              <RecipeCard
+                recipe={recipe}
+                initiallyLiked={true}
+                onDelete={uploadedOnly ? () => confirmDelete(recipe.recipe_id) : null}
+              />
+            </div>
+          ))}
+        </div>
       </div>
+    
 
-      {/* onfirmation modal for deleting recipe.
+      {/* confirmation modal for deleting recipe.
           Adapted from code provided by Net Ninja on youtube
 
           @author Net Ninja on Youtube 

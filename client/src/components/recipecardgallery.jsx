@@ -46,7 +46,7 @@ export default function RecipeCardGallery() {
   const [hasMore, setHasMore] = useState(true);
 
   // How many recipes to show per "page" or scroll
-  const ITEMS_PER_LOAD = 10;
+  const ITEMS_PER_LOAD = 12;
 
   // ========== FETCH ALL RECIPES FROM BACKEND ==========
 
@@ -134,28 +134,28 @@ export default function RecipeCardGallery() {
 
   // ========== LOAD MORE RECIPES (CHUNKED) ==========
 
-  const loadMore = () => {
-    // Grab next N recipes based on current scroll position
-    const nextRecipes = allRecipes.slice(visibleRecipes.length, visibleRecipes.length + ITEMS_PER_LOAD);
+  // const loadMore = () => {
+  //   // Grab next N recipes based on current scroll position
+  //   const nextRecipes = allRecipes.slice(visibleRecipes.length, visibleRecipes.length + ITEMS_PER_LOAD);
 
-    // Add to visible list
-    setVisibleRecipes(prev => [...prev, ...nextRecipes]);
+  //   // Add to visible list
+  //   setVisibleRecipes(prev => [...prev, ...nextRecipes]);
 
-    // If we've shown all recipes, stop future loading
-    if (visibleRecipes.length + ITEMS_PER_LOAD >= allRecipes.length) {
-      setHasMore(false);
-    }
-  };
+  //   // If we've shown all recipes, stop future loading
+  //   if (visibleRecipes.length + ITEMS_PER_LOAD >= allRecipes.length) {
+  //     setHasMore(false);
+  //   }
+  // };
 
   // ========== CONDITIONAL RENDERING FOR LOADING/ERROR ==========
 
-  if (loading) return <p className="text-center">Loading recipes...</p>;
-  if (error) return <p className="text-center text-red-500">Error: {error}</p>;
+  // if (loading) return <p className="text-center">Loading recipes...</p>;
+  // if (error) return <p className="text-center text-red-500">Error: {error}</p>;
 
   // ========== MAIN RENDER BLOCK ==========
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 place-items-center">
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 place-items-center pb-12">
       {visibleRecipes.map((recipe) => {
         // Determine if this recipe has been saved/favourited by the user
         const isLiked =
@@ -179,11 +179,6 @@ export default function RecipeCardGallery() {
 
         );
       })}
-
-      {/* Message displayed at the bottom when there are more items being fetched */}
-      {hasMore && (
-        <p className="text-center col-span-full text-gray-500">Loading more recipes...</p>
-      )}
     </div>
   );
 }
