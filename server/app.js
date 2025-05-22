@@ -65,6 +65,6 @@ app.use('/api/user-recipes', userRecipeRoutes);
 
 
 // Server start
-app.listen(PORT, () => {
+app.listen(PORT, '0.0.0.0', () => {
   console.log(`Server running on port ${PORT}`);
 });

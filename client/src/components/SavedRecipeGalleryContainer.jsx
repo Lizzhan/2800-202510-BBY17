@@ -12,7 +12,7 @@ export default function GalleryContainer({ showSavedOnly = false, uploadedOnly =
   // Fetch user recipes
   const fetchUserRecipes = async () => {
     try {
-      const response = await axios.get('http://localhost:3000/api/user-recipes', {
+      const response = await axios.get('https://ec2-99-79-7-165.ca-central-1.compute.amazonaws.com/api/user-recipes', {
         withCredentials: true
       });
       return response.data;
@@ -25,7 +25,7 @@ export default function GalleryContainer({ showSavedOnly = false, uploadedOnly =
   // Delete a recipe
   const handleDeleteRecipe = async (recipeId) => {
     try {
-      await axios.delete(`http://localhost:3000/api/user-recipes/${recipeId}`, {
+      await axios.delete(`https://ec2-99-79-7-165.ca-central-1.compute.amazonaws.com/api/user-recipes/${recipeId}`, {
         withCredentials: true
       });
       // Remove the deleted recipe from state
@@ -61,14 +61,14 @@ export default function GalleryContainer({ showSavedOnly = false, uploadedOnly =
       try {
         let data;
         if (showSavedOnly) {
-          const response = await axios.get('http://localhost:3000/api/saved-recipes', {
+          const response = await axios.get('https://ec2-99-79-7-165.ca-central-1.compute.amazonaws.com/api/saved-recipes', {
             withCredentials: true
           });
           data = response.data;
         } else if (uploadedOnly) {
           data = await fetchUserRecipes();
         } else {
-          const response = await axios.get('http://localhost:3000/api/recipes', {
+          const response = await axios.get('https://ec2-99-79-7-165.ca-central-1.compute.amazonaws.com/api/recipes', {
             withCredentials: true
           });
           data = response.data;

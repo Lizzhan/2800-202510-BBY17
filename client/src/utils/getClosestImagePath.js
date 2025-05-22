@@ -90,5 +90,5 @@ export function getClosestImagePath(title) {
   }
 
   // Returns the best matching image path, or default if no match found
-  return bestMatch ? `../public/meals/${bestMatch}` : '../public/meals/default.jpeg';
+  return bestMatch ? `/meals/${bestMatch}` : '/meals/default.jpeg';
 }

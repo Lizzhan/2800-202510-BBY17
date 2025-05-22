@@ -43,9 +43,9 @@ export default function RecipeCard({ recipe, initiallyLiked = false, onDelete = 
     setTimeout(() => setPopping(false), 300); // Duration matches the CSS animation
 
     if (!liked) {
-      await axios.post('http://localhost:3000/api/save-recipe', { user_recipe_id: recipe.recipe_id }, { withCredentials: true });
+      await axios.post('https://ec2-99-79-7-165.ca-central-1.compute.amazonaws.com/api/save-recipe', { user_recipe_id: recipe.recipe_id }, { withCredentials: true });
     } else {
-      await axios.post('http://localhost:3000/api/unsave-recipe', { user_recipe_id: recipe.recipe_id }, { withCredentials: true });
+      await axios.post('https://ec2-99-79-7-165.ca-central-1.compute.amazonaws.com/api/unsave-recipe', { user_recipe_id: recipe.recipe_id }, { withCredentials: true });
     }
 
     setLiked(!liked);

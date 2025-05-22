@@ -34,7 +34,7 @@ const Login = () => {
     e.preventDefault();
     try {
       // Send login request to backend
-      const res = await axios.post("http://localhost:3000/api/auth/login", inputs, {
+      const res = await axios.post("https://ec2-99-79-7-165.ca-central-1.compute.amazonaws.com/api/auth/login", inputs, {
         withCredentials: true, // send cookies
       });
 

@@ -20,7 +20,7 @@ const UserProfile = () => {
     const getData = async () => {
       try {
         // Request user session data from backend
-        const res = await axios.get('http://localhost:3000/api/auth/me', {
+        const res = await axios.get('https://ec2-99-79-7-165.ca-central-1.compute.amazonaws.com/api/auth/me', {
           withCredentials: true,
         });
         setInputs(res.data); // Update state with response

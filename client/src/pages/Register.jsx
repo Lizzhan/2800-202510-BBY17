@@ -31,7 +31,7 @@ const Register = () => {
     e.preventDefault();
     try {
       // Send registration data to backend API
-      await axios.post("http://localhost:3000/api/auth/register", inputs);
+      await axios.post("https://ec2-99-79-7-165.ca-central-1.compute.amazonaws.com/api/auth/register", inputs);
 
       // Navigate to login page if successful
       navigate('/login');

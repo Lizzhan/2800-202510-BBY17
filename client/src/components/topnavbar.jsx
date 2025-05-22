@@ -16,7 +16,7 @@ export default function Navbar() {
 
   const handleLogout = async () => {
     try {
-      await axios.post("http://localhost:3000/api/auth/logout", {}, { withCredentials: true });
+      await axios.post("https://ec2-99-79-7-165.ca-central-1.compute.amazonaws.com/api/auth/logout", {}, { withCredentials: true });
       window.location.href = "/"; // This reloads the page and goes to the homepage
     } catch (error) {
       console.error("Logout failed:", error);
