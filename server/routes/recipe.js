@@ -26,7 +26,7 @@ router.get('/recipes', (req, res) => {
     // Execute the query
     db.query(q, (err, data) => {
       if (err) return err; // If error occurs, just return it (consider improving error handling here)
-      console.log(data); 
+      //console.log(data); 
 
       res.json(data);  // Respond with JSON array of all recipes
     });

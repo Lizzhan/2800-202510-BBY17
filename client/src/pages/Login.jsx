@@ -39,7 +39,6 @@ const Login = () => {
       });
 
       login(res.data); // set user context
-      console.log(res.data); // debug: log user info
       navigate("/"); // redirect to home on success
     } catch (err) {
       setErr(err.response.data); // show error message

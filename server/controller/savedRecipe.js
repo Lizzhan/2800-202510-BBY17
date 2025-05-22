@@ -11,7 +11,7 @@ export const saveRecipe = async (req, res) => {
   const recipeId = parseInt(user_recipe_id, 10); // <-- Parse to integer
   const userId = parseInt(req.session.userId, 10); // <-- Parse to integer
 
-  console.log("Saving recipe... User ID:", userId, "Recipe ID:", recipeId);
+  // console.log("Saving recipe... User ID:", userId, "Recipe ID:", recipeId);
 
   if (!userId) {
     return res.status(401).json({ message: "Not logged in" });

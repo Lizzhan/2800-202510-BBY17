@@ -123,7 +123,7 @@ Do NOT include any introductions, explanations, or extra commentary. Just give t
                 }
 
                 const newIngredientId = result.insertId;
-                console.log(`✅ Inserted new ingredient "${ingName}" with ID ${newIngredientId}`);
+                //console.log(`✅ Inserted new ingredient "${ingName}" with ID ${newIngredientId}`);
 
                 db.query(
                   'INSERT INTO recipe_ingredients (recipe_id, ingredient_id) VALUES (?, ?)',

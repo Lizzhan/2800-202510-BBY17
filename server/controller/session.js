@@ -9,7 +9,7 @@ import db from '../db.js';
  * @author Leslie Zhang
  */
 export const checkLogin = async (req, res) => {
-  console.log("Checking session username:", req.session.username);
+  // console.log("Checking session username:", req.session.username);
 
   // Respond with session username (or null/undefined if not logged in)
   res.status(200).json(req.session.username);
@@ -20,9 +20,9 @@ export const checkLogin = async (req, res) => {
  * Useful for fetching user info in frontend after login without re-querying DB.
  */
 export const getSessionUser = async (req, res) => {
-  console.log("Session Username:", req.session.username);
-  console.log("Session Email:", req.session.email);
-  console.log("Session User ID:", req.session.userId);
+  // console.log("Session Username:", req.session.username);
+  // console.log("Session Email:", req.session.email);
+  // console.log("Session User ID:", req.session.userId);
 
   // Respond with a full session user object
   res.status(200).json({
