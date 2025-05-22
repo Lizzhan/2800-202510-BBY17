@@ -1,6 +1,6 @@
-
 import db from '../db.js';
 
+// Middleware to verify if the recipe actually exists before proceeding
 export const checkRecipeAlreadySaved = (req, res, next) => {
   const { user_recipe_id } = req.body;
   const recipeId = parseInt(user_recipe_id);
@@ -22,7 +22,7 @@ export const checkRecipeAlreadySaved = (req, res, next) => {
       // Already saved
       return res.status(409).json({ message: "Recipe already saved!" });
     } else {
-      // Not saved yet, continue to controller
+       // Valid recipe, continue
       next();
     }
   });

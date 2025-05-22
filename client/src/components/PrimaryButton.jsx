@@ -10,7 +10,6 @@
  *
  * @author Kaid Krawchuk
  * @author https://chat.openai.com/
- * 
  */
 import React from "react";
 
