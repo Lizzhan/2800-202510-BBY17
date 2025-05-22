@@ -2,14 +2,34 @@ import { useEffect, useState } from 'react';
 import RecipeCard from './recipecard';
 import axios from 'axios';
 
+/**
+ * GalleryContainer Component
+ *
+ * Displays a horizontal scrollable gallery of recipe cards.
+ * Can be filtered to show:
+ * - all recipes
+ * - only saved recipes
+ * - only uploaded recipes (with delete functionality)
+ *
+ * Also includes a confirmation modal for deleting uploaded recipes.
+ *
+ * Props:
+ * @param {boolean} showSavedOnly - Whether to display only saved recipes
+ * @param {boolean} uploadedOnly - Whether to display only recipes uploaded by the user
+ *
+ * @returns {JSX.Element}
+ * 
+ * @author Kaid Krawchuk
+ * @author James Smith
+ */
 export default function GalleryContainer({ showSavedOnly = false, uploadedOnly = false }) {
-  const [recipes, setRecipes] = useState([]);
-  const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [showConfirmModal, setShowConfirmModal] = useState(false);
-  const [recipeToDelete, setRecipeToDelete] = useState(null);
+  const [recipes, setRecipes] = useState([]);                 // Array of recipe objects to display
+  const [error, setError] = useState(null);                   // Error message state
+  const [loading, setLoading] = useState(true);               // Loading indicator state
+  const [showConfirmModal, setShowConfirmModal] = useState(false);  // Controls delete confirmation modal
+  const [recipeToDelete, setRecipeToDelete] = useState(null);       // ID of recipe selected for deletion
 
-  // Fetch user recipes
+  // === Helper: Fetch recipes uploaded by the current user ===
   const fetchUserRecipes = async () => {
     try {
       const response = await axios.get('http://localhost:3000/api/user-recipes', {
@@ -22,44 +42,45 @@ export default function GalleryContainer({ showSavedOnly = false, uploadedOnly =
     }
   };
 
-  // Delete a recipe
+  // === Handle delete confirmation and update state ===
   const handleDeleteRecipe = async (recipeId) => {
     try {
       await axios.delete(`http://localhost:3000/api/user-recipes/${recipeId}`, {
         withCredentials: true
       });
-      // Remove the deleted recipe from state
+
+      // Filter the deleted recipe out of the list
       setRecipes(prev => prev.filter(recipe => recipe.recipe_id !== recipeId));
       return true;
-    } catch (error) 
-    {
+    } catch (error) {
       console.error('Error deleting recipe:', error);
       return false;
-    }
-    finally
-    {
+    } finally {
+      // Hide modal and reset selection
       setShowConfirmModal(false);
       setRecipeToDelete(null);
     }
   };
 
-  const confirmDelete = (recipeId) =>
-  {
+  // === Open confirmation modal ===
+  const confirmDelete = (recipeId) => {
     setRecipeToDelete(recipeId);
     setShowConfirmModal(true);
-  }
+  };
 
-  const cancelDelete = (recipeId) =>
-  {
+  // === Cancel deletion and hide modal ===
+  const cancelDelete = () => {
     setRecipeToDelete(null);
     setShowConfirmModal(false);
-  }
+  };
 
-  useEffect(() => 
-  {
+  // === Fetch recipes on mount or when filters change ===
+  useEffect(() => {
     const fetchRecipes = async () => {
       try {
         let data;
+
+        // Determine which endpoint to use based on props
         if (showSavedOnly) {
           const response = await axios.get('http://localhost:3000/api/saved-recipes', {
             withCredentials: true
@@ -74,6 +95,7 @@ export default function GalleryContainer({ showSavedOnly = false, uploadedOnly =
           data = response.data;
         }
 
+        // Map each recipe to ensure required fields and fallback image
         const processed = data.map(recipe => ({
           recipe_id: recipe.recipe_id,
           recipe_title: recipe.recipe_title,
@@ -94,6 +116,7 @@ export default function GalleryContainer({ showSavedOnly = false, uploadedOnly =
     fetchRecipes();
   }, [showSavedOnly, uploadedOnly]);
 
+  // === Conditional UI states ===
   if (loading) return <p className="text-center">Loading recipes...</p>;
   if (error) return <p className="text-center text-red-500">{error}</p>;
   if (recipes.length === 0) return <p className="text-center text-gray-500">No recipes to display.</p>;
@@ -106,30 +129,36 @@ export default function GalleryContainer({ showSavedOnly = false, uploadedOnly =
             <RecipeCard 
               recipe={recipe} 
               initiallyLiked={true}
+              // Show delete button only if uploadedOnly is true
               onDelete={uploadedOnly ? () => confirmDelete(recipe.recipe_id) : null}
             />
           </div>
         ))}
       </div>
 
+      {/* Confirmation modal for deleting a recipe */}
       {showConfirmModal && (
-      <div className="fixed inset-0 z-50 bg-black bg-opacity-50 flex items-center justify-center">
-        <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-sm">
-          <h2 className="text-lg font-semibold mb-4">Confirm Delete</h2>
-          <p className="mb-6">Are You Sure You want to Delete this Recipe?</p>
-          <div className="flex justify-end gap-3">
-            <button className="bg-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-400"
-                    onClick={cancelDelete}>
-              Cancel      
-            </button>
-            <button className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
-                    onClick={() => handleDeleteRecipe(recipeToDelete)}>
-              Delete      
-            </button>
+        <div className="fixed inset-0 z-50 bg-black bg-opacity-50 flex items-center justify-center">
+          <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-sm">
+            <h2 className="text-lg font-semibold mb-4">Confirm Delete</h2>
+            <p className="mb-6">Are you sure you want to delete this recipe?</p>
+            <div className="flex justify-end gap-3">
+              <button
+                className="bg-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-400"
+                onClick={cancelDelete}
+              >
+                Cancel
+              </button>
+              <button
+                className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+                onClick={() => handleDeleteRecipe(recipeToDelete)}
+              >
+                Delete
+              </button>
+            </div>
           </div>
         </div>
-      </div>
-    )}
+      )}
     </div>
   );
 };
