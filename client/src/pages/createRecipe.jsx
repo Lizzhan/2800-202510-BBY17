@@ -80,7 +80,7 @@ export default function CreateRecipe()
                 setAllIngredients(ingredientRes.data);
 
                 const tagsRes = await axios.get('http://localhost:3000/api/tags/GetTags');
-                console.log("Fetched tags data:", tagsRes.data);
+                
                 setAllTags(tagsRes.data)
             }
             catch (err)
@@ -93,11 +93,6 @@ export default function CreateRecipe()
 
     const getTagsFromNames = (tagNames) =>
     {
-      console.log("Converting tag names to IDs:", {
-        allTags: allTags,           // Log all available tags
-        selectedTagNames: tagNames // Log names we're trying to convert
-      });
-
       const tagIds = tagNames.map(name => 
       {
         const tag = allTags.find(t => t.tag === name);
@@ -109,7 +104,6 @@ export default function CreateRecipe()
         return tag.tag_id;
       }).filter(id => id !== null); // filters tags that weren't found
 
-      console.log("Converted tag IDs:", tagIds);
       return tagIds;
     };
 
@@ -157,8 +151,6 @@ export default function CreateRecipe()
             ingredients: selectedIngredients.map(i => i.ingredient_id), // Just send IDs
             tags: getTagsFromNames(selectedTagNames) // converts names to IDs
         };
-
-        console.log("submitting: ", submissionData);
 
         // Post to backend
         const res = await axios.post('http://localhost:3000/api/submitRecipe',
