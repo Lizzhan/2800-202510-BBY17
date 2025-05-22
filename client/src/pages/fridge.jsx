@@ -267,7 +267,19 @@ export default function Fridge({ onNavigate }) {
         <SearchBarWithDropdown onSearch={openModalForItem} />
 
         {/* Pantry section with removable and highlightable items */}
-        <h2 className="text-xl font-semibold text-olive mt-6">Pantry</h2>
+        <h2 className="text-xl font-semibold text-black mt-6 flex items-center gap-2">
+          Pantry
+          <div className="relative group inline-block">
+            <div className="w-5 h-5 flex items-center justify-center rounded-full border text-sm font-bold text-black bg-white cursor-pointer group-hover:bg-gray-100">
+              ?
+            </div>
+
+            <div className="absolute left-6 top-1/2 -translate-y-1/2 hidden group-hover:block bg-black text-white text-sm rounded px-3 py-1 whitespace-nowrap shadow-lg z-20">
+              Pantry is the food that you will always have and most likely things that you will not run out of.(eg. Sugar,Salt,Oil)
+              <div className="absolute left-[-6px] top-1/2 -translate-y-1/2 w-3 h-3 bg-black rotate-45"></div>
+            </div>
+          </div>
+        </h2>
         <SearchList
           items={selectedPantryItems}
           onRemove={handleRemovePantryItem}
@@ -276,7 +288,20 @@ export default function Fridge({ onNavigate }) {
         />
 
         {/* Fridge section */}
-        <h2 className="text-xl font-semibold text-olive mt-6">Fridge</h2>
+        <h2 className="text-xl font-semibold text-black mt-6 flex items-center gap-2">
+          Fridge
+          <div className="relative group inline-block">
+            <div className="w-5 h-5 flex items-center justify-center rounded-full border text-sm font-bold text-black bg-white cursor-pointer group-hover:bg-gray-100">
+              ?
+            </div>
+
+            <div className="absolute left-6 top-1/2 -translate-y-1/2 hidden group-hover:block bg-black text-white text-sm rounded px-3 py-1 whitespace-nowrap shadow-lg z-20">
+              Fresh items you buy on weekly basis.
+              <div className="absolute left-[-6px] top-1/2 -translate-y-1/2 w-3 h-3 bg-black rotate-45"></div>
+            </div>
+          </div>
+        </h2>
+      
         <SearchList
           items={selectedFridgeItems}
           onRemove={handleRemoveFridgeItem}

@@ -7,16 +7,9 @@
  * an optional onClick handler.
  *
  *
- * @component
- * 
- * @param {Object} props - React props
- * @param {function} props.onClick - Function to call when the button is clicked
- * @param {React.ReactNode} props.children - The button label or content
- * @param {string} [props.className=""] - Additional Tailwind CSS classes
- *
- * @returns {JSX.Element} A styled button element
  *
  * @author Kaid Krawchuk
+ * @author https://chat.openai.com/
  */
 import React from "react";
 

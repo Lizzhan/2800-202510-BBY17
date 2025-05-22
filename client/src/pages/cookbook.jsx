@@ -9,26 +9,29 @@ import { Link } from 'react-router-dom';
  * a clean section-based structure using Tailwind CSS for styling.
  *
  * @author Lucas Liu
+ * @author James Smith
+ * @author https://chat.openai.com
  */
 export default function Cookbook() {
   return (
     <div className="flex flex-col gap-8 p-6">
       <br></br>
-      {/* Section for favorited recipes */}
+      {/* Section to display favorited recipes */}
       <section>
         <h2 className="text-lg font-semibold mb-2">Your Favourite Recipes</h2>
         <GalleryContainer showSavedOnly={true} />
       </section>
 
-      {/* Section for user-uploaded recipes */}
+      {/* Section to display user-uploaded recipes */}
       <section>
         <h2 className="text-lg font-semibold mb-2">Your Uploaded Recipes</h2>
         <GalleryContainer uploadedOnly={true} />
       </section>
 
+      {/* Button to allow users to write their own recipes */}
       <div className="flex justify-center pt-6">
         <Link to="/createRecipe">
-          <button className="bg-buttonPeach text-white font-semibold px-6 py-2 rounded-xl hover:bg-buttonPeachHover transition">
+          <button className="bg-buttonPeach text-black font-semibold px-6 py-2 rounded-xl hover:bg-buttonPeachHover transition">
             Write a New Recipe
           </button>
         </Link>

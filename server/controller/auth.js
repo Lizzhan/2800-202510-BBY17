@@ -53,8 +53,6 @@ export const login = (req, res) => {
     req.session.username = user.username;
     req.session.email = user.email;
 
-    console.log("User logged in:", req.session.userId);
-
     req.session.cookie.maxAge = 60 * 60 * 1000; // session expires in 1 hour
 
     res.status(200).json("User logged in successfully");
