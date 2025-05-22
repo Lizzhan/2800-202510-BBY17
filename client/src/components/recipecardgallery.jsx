@@ -2,8 +2,29 @@ import { useState, useEffect } from 'react';
 import RecipeCard from './recipecard';
 import axios from 'axios';
 
-// This component displays a grid of recipe cards with infinite scroll.
-// It also marks recipes the user has saved by showing a filled heart icon on those cards.
+/**
+ * A scrollable grid component that displays a list of recipe cards with infinite scroll.
+ * This gallery fetches all recipes from the backend and displays them in chunks, loading more
+ * as the user scrolls. It also highlights recipes the user has already saved (liked) by
+ * comparing against the user's saved recipes fetched from a separate endpoint.
+ *
+ * Uses Tailwind CSS for responsive layout and styling. Works in coordination with
+ * the `RecipeCard` component to render individual recipe cards with like functionality.
+ *
+ * Portions of this code were generated with assistance from ChatGPT
+ *  Prompts included:
+ *    - "How to compare saved items to determine liked state in React?"
+ * 
+ * Attribution: https://chat.openai.com/
+ * 
+ * @component
+ * @returns {JSX.Element} A responsive grid of recipe cards with lazy loading support.
+ *
+ * @author Kaid Krawchuk
+ * @author Lucas Liu
+ * 
+ */
+
 export default function RecipeCardGallery() {
   // ========== STATE VARIABLES ==========
 
@@ -141,9 +162,6 @@ export default function RecipeCardGallery() {
         const isLiked =
           Array.isArray(savedRecipes) &&
           savedRecipes.some((saved) => {
-            // Check using multiple strategies to support both:
-            // - [1, 2, 3] (just IDs)
-            // - [{ recipe_id: 1 }, { user_recipe_id: 2 }]
             return (
               saved.recipe_id === recipe.recipe_id ||     // match if recipe_id
               saved.user_recipe_id === recipe.recipe_id || // match if user_recipe_id
@@ -151,8 +169,6 @@ export default function RecipeCardGallery() {
               saved === String(recipe.recipe_id)           // match if stringified number
             );
           });
-
-        console.log('Comparing recipe:', recipe.recipe_id, '→ liked?', isLiked);
 
         return (
           <div key={recipe.recipe_id}>

@@ -4,12 +4,6 @@ import axios from 'axios';
 import SearchBarWithDropdown from '../components/SearchBarWithDropdown';
 import FilterTagSection from '../components/FilterTagSection';
 
-const handleOverlayClick = (e) => {
-  if (modalRef.current && !modalRef.current.contains(e.target)) {
-    setIsModalOpen(false);
-  }
-};
-
 export default function CreateRecipe() 
 {
   const [title, setTitle] = useState('');
@@ -39,6 +33,12 @@ export default function CreateRecipe()
     setSelectedTagNames([]);
     setResetSearch(prev => !prev);
   };
+
+  const handleOverlayClick = (e) => {
+  if (modalRef.current && !modalRef.current.contains(e.target)) {
+    setIsModalOpen(false);
+  }
+};
 
   useEffect(() =>
     {
