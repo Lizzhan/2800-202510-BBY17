@@ -5,43 +5,30 @@ import axios from 'axios';
  * SearchBarWithDropdown Component
  * 
  * A dynamic ingredient search bar with auto-suggest dropdown, powered by live ingredient data from a backend API.
- * Features:
- * - Fetches ingredient list from backend once on mount
+ * - Fetches ingredient list on mount
  * - Filters suggestions as user types
- * - Resets input and suggestions when `resetTrigger` changes (used by parent)
- * - Allows selection from dropdown or manual search
- * part of the code was complete with the help of chatGPT 4
- * 
- * @param {function} onSearch - Callback function to handle selected search term
- * @param {any} resetTrigger - When changed, resets input and suggestion list
+ * - Scrollable dropdown (max 6 visible)
+ * - Handles manual and suggestion-based search
+ *
+ * @param {function} onSearch - Callback to handle selected search term
+ * @param {any} resetTrigger - When changed, resets input and suggestions
  * 
  * @author Kaid Krawchuk
  * @author https://chat.openai.com
  */
-function SearchBarWithDropdown({ onSearch, resetTrigger }) {
-  // Stores the current user input in the search box
+function SearchBarWithDropdown({ onSearch, resetTrigger, centered = true }) {
   const [searchTerm, setSearchTerm] = useState('');
-
-  // Holds all possible ingredient suggestions (fetched once from backend)
   const [suggestions, setSuggestions] = useState([]);
-
-  // Stores filtered results based on what the user types
   const [filteredSuggestions, setFilteredSuggestions] = useState([]);
-
-  // Controls visibility of the dropdown suggestion list
   const [showSuggestions, setShowSuggestions] = useState(false);
 
-  /**
-   * useEffect: Fetch ingredient data from backend when component mounts
-   * Endpoint should return a list of ingredient objects
-   */
+  // Fetch ingredient names once on mount
   useEffect(() => {
     const fetchData = async () => {
       try {
         const res = await axios.get('http://localhost:3000/api/ingredients/getingredients');
-        // Extract ingredient names only (e.g. from [{ ingredient: "apple" }, ...])
         const ingredientNames = res.data.map(item => item.ingredient);
-        setSuggestions(ingredientNames); // Store for filtering
+        setSuggestions(ingredientNames);
       } catch (err) {
         console.error('Error fetching ingredients:', err);
       }
@@ -50,81 +37,61 @@ function SearchBarWithDropdown({ onSearch, resetTrigger }) {
     fetchData();
   }, []);
 
-  /**
-   * useEffect: Reset input and suggestions when resetTrigger changes
-   * Useful for parent-controlled clearing after a search
-   */
+  // Reset input/suggestions when trigger changes
   useEffect(() => {
     setSearchTerm('');
     setFilteredSuggestions([]);
     setShowSuggestions(false);
   }, [resetTrigger]);
 
-  /**
-   * Handles user input in the search field
-   * - Updates input state
-   * - Filters suggestion list
-   * - Shows dropdown if input is not empty
-   */
   const handleChange = (e) => {
     const input = e.target.value;
     setSearchTerm(input);
 
-    // If input is empty, close dropdown and clear suggestions
     if (input.trim() === '') {
       setFilteredSuggestions([]);
       setShowSuggestions(false);
       return;
     }
 
-    // Filter suggestions based on input (case-insensitive substring match)
     const results = suggestions.filter((item) =>
       item.toLowerCase().includes(input.toLowerCase())
     );
 
     setFilteredSuggestions(results);
-    setShowSuggestions(true); // Show dropdown
+    setShowSuggestions(true);
   };
 
-  /**
-   * Handles selection of a suggestion from dropdown
-   * - Fills input box with selected value
-   * - Closes dropdown
-   * - Triggers search callback with selected item
-   */
   const handleSelect = (value) => {
     setSearchTerm(value);
     setShowSuggestions(false);
-    onSearch(value); // Notify parent
+    onSearch(value);
   };
 
-  /**
-   * Handles form submit (e.g. when user presses Enter)
-   * - Triggers search callback with current input value
-   */
   const handleSubmit = (e) => {
-    e.preventDefault(); // Prevent page reload
-    setShowSuggestions(false); // Hide suggestions
-    onSearch(searchTerm); // Send term to parent
+    e.preventDefault();
+    setShowSuggestions(false);
+    onSearch(searchTerm);
   };
 
   return (
-    <div className="relative max-w-md mx-auto">
-      {/* Search input field with form wrapper to support Enter key */}
+    <div className={`relative ${centered ? 'max-w-md mx-auto' : 'w-full'}`}>
+      {/* Search input field */}
       <form onSubmit={handleSubmit}>
         <input
           type="text"
           value={searchTerm}
           onChange={handleChange}
-          placeholder="Search..."
-          className="w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 
+          placeholder="Enter Ingredients"
+          className="w-full p-4 ps-10 text-sm text-gray-900 border-2 border-black rounded-lg bg-gray-50 
                      focus:ring-blue-500 focus:border-blue-500"
         />
       </form>
 
-      {/* Conditional rendering of filtered suggestions in dropdown list */}
+      {/* Suggestion dropdown (scrollable) */}
       {showSuggestions && filteredSuggestions.length > 0 && (
-        <ul className="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg">
+        <ul className="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg 
+                       max-h-60 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
           {filteredSuggestions.map((suggestion, index) => (
             <li
               key={index}

@@ -101,8 +101,6 @@ export default function RecipeCardGallery() {
           withCredentials: true // important: includes session cookie
         });
 
-        console.log('✅ Saved recipes response:', response.data);
-
         // Set to an array of saved recipes (likely full or partial recipe objects)
         setSavedRecipes(response.data || []);
       } catch (error) {

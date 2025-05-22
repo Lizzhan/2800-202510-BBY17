@@ -1,6 +1,18 @@
 import db from '../db.js';
 
-// Get all recipes uploaded by the current user
+/**
+ * Get all recipes uploaded by the current user
+ * 
+ * Route: GET /api/user-recipes
+ * 
+ * Requires a valid user session. If the user is not logged in,
+ * returns a 401 Unauthorized.
+ * 
+ * Returns a JSON array of recipes authored by the user.
+ * 
+ * @author James Smith
+ * @author hhttps://chat.openai.com
+ */
 export const getUserRecipes = async (req, res) => {
   const userId = req.session.userId;
 
@@ -34,7 +46,22 @@ export const getUserRecipes = async (req, res) => {
   }
 };
 
-// Delete a recipe (only if user is the author)
+/**
+ * Delete a recipe, only if the current user is the author.
+ *
+ * Route: DELETE /api/user-recipes/:id
+ * 
+ * Requires a valid user session. If the user is not logged in,
+ * returns 401 Unauthorized.
+ * 
+ * If the user does not own the recipe, returns 403 Forbidden.
+ * 
+ * Deletes the recipe from the database and any related data
+ * (e.g., tags, ingredients) in a single atomic transaction.
+ * 
+ * @author James Smith
+ * @author https://chatgpt.com/
+ */
 export const deleteUserRecipe = async (req, res) => {
   const userId = req.session.userId;
   const recipeId = parseInt(req.params.id, 10);
@@ -44,7 +71,7 @@ export const deleteUserRecipe = async (req, res) => {
   }
 
   try {
-    // First verify the user owns the recipe
+    // Step 1. verify the recipe belongs to the current user.
     const ownershipCheck = await new Promise((resolve, reject) => {
       db.query(
         "SELECT author_id FROM recipes WHERE recipe_id = ?",
@@ -60,7 +87,7 @@ export const deleteUserRecipe = async (req, res) => {
       return res.status(403).json({ message: "Not authorized to delete this recipe" });
     }
 
-    // Start transaction for atomic deletion
+    // Step 2. Begin transaction to ensure atomic deletion
     await new Promise((resolve, reject) => {
       db.beginTransaction(err => {
         if (err) reject(err);
@@ -68,7 +95,8 @@ export const deleteUserRecipe = async (req, res) => {
       });
     });
 
-    // Delete all related records first
+    // Delete all related records first 
+    // (note: database is set with cascading delete, associated join tables are deleted with recipe)
     const deleteOperations = [
       "DELETE FROM recipes WHERE recipe_id = ?"
     ];
@@ -82,7 +110,7 @@ export const deleteUserRecipe = async (req, res) => {
       });
     }
 
-    // Commit the transaction
+    // Step 4. Commit the transaction
     await new Promise((resolve, reject) => {
       db.commit(err => {
         if (err) reject(err);
@@ -92,7 +120,7 @@ export const deleteUserRecipe = async (req, res) => {
 
     res.status(200).json({ message: "Recipe deleted successfully" });
   } catch (error) {
-    // Rollback on error
+    // Step 5. Rollback transaction on error
     await new Promise(resolve => {
       db.rollback(() => resolve());
     });

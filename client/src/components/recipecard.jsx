@@ -18,6 +18,7 @@ import { getClosestImagePath } from '../utils/getClosestImagePath';
  *
  * @author Lucas Liu
  * @author Kaid Krawchuk
+ * @author James Smith
  */
 export default function RecipeCard({ recipe, initiallyLiked = false, onDelete = null }) {
   const [liked, setLiked] = useState(initiallyLiked);
