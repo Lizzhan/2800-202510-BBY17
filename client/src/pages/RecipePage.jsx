@@ -68,7 +68,7 @@ export default function RecipePage() {
     }
     const fetchSavedStatus = async () => {
       try {
-        const res = await axios.get('https://two800-202510-bby17.onrender.com/api/saved-recipes', {
+        const res = await axios.get('https://ec2-99-79-7-165.ca-central-1.compute.amazonaws.com/api/saved-recipes', {
           withCredentials: true,
         });
         const savedIds = res.data;
