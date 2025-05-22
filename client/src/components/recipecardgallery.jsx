@@ -15,7 +15,6 @@ import axios from 'axios';
  *  Prompts included:
  *    - "How to compare saved items to determine liked state in React?"
  * 
- * Attribution: https://chat.openai.com/
  * 
  * @component
  * @returns {JSX.Element} A responsive grid of recipe cards with lazy loading support.
@@ -101,6 +100,8 @@ export default function RecipeCardGallery() {
           withCredentials: true // important: includes session cookie
         });
 
+        console.log('✅ Saved recipes response:', response.data);
+
         // Set to an array of saved recipes (likely full or partial recipe objects)
         setSavedRecipes(response.data || []);
       } catch (error) {
@@ -154,7 +155,7 @@ export default function RecipeCardGallery() {
   // ========== MAIN RENDER BLOCK ==========
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 place-items-center">
       {visibleRecipes.map((recipe) => {
         // Determine if this recipe has been saved/favourited by the user
         const isLiked =
@@ -169,12 +170,13 @@ export default function RecipeCardGallery() {
           });
 
         return (
-          <div key={recipe.recipe_id}>
+          <div key={recipe.recipe_id} className="w-full max-w-[300px]">
             <RecipeCard
               recipe={recipe}
-              initiallyLiked={isLiked} // Pass liked state to the card component
+              initiallyLiked={isLiked}
             />
           </div>
+
         );
       })}
 
