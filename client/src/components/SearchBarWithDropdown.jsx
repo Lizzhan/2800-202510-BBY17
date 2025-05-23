@@ -1,19 +1,33 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-function SearchBarWithDropdown({ onSearch }) {
+/**
+ * SearchBarWithDropdown Component
+ * 
+ * A dynamic ingredient search bar with auto-suggest dropdown, powered by live ingredient data from a backend API.
+ * - Fetches ingredient list on mount
+ * - Filters suggestions as user types
+ * - Scrollable dropdown (max 6 visible)
+ * - Handles manual and suggestion-based search
+ *
+ * @param {function} onSearch - Callback to handle selected search term
+ * @param {any} resetTrigger - When changed, resets input and suggestions
+ * 
+ * @author Kaid Krawchuk
+ * @author https://chat.openai.com
+ */
+function SearchBarWithDropdown({ onSearch, resetTrigger, centered = true }) {
   const [searchTerm, setSearchTerm] = useState('');
-  const [suggestions, setSuggestions] = useState([]); // Fetched from DB
+  const [suggestions, setSuggestions] = useState([]);
   const [filteredSuggestions, setFilteredSuggestions] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
 
-  // Fetch ingredients once when component mounts
+  // Fetch ingredient names once on mount
   useEffect(() => {
     const fetchData = async () => {
       try {
         const res = await axios.get('http://localhost:3000/api/ingredients/getingredients');
-        console.log(res);
-        const ingredientNames = res.data.map(item => item.ingredient); // important!
+        const ingredientNames = res.data.map(item => item.ingredient);
         setSuggestions(ingredientNames);
       } catch (err) {
         console.error('Error fetching ingredients:', err);
@@ -22,6 +36,13 @@ function SearchBarWithDropdown({ onSearch }) {
 
     fetchData();
   }, []);
+
+  // Reset input/suggestions when trigger changes
+  useEffect(() => {
+    setSearchTerm('');
+    setFilteredSuggestions([]);
+    setShowSuggestions(false);
+  }, [resetTrigger]);
 
   const handleChange = (e) => {
     const input = e.target.value;
@@ -33,7 +54,6 @@ function SearchBarWithDropdown({ onSearch }) {
       return;
     }
 
-    // 🔥 filter using dynamic suggestions, not hardcoded list
     const results = suggestions.filter((item) =>
       item.toLowerCase().includes(input.toLowerCase())
     );
@@ -55,21 +75,23 @@ function SearchBarWithDropdown({ onSearch }) {
   };
 
   return (
-    <div className="relative max-w-md mx-auto">
+    <div className={`relative ${centered ? 'max-w-md mx-auto' : 'w-full'}`}>
+      {/* Search input field */}
       <form onSubmit={handleSubmit}>
         <input
           type="text"
           value={searchTerm}
           onChange={handleChange}
-          placeholder="Search..."
-          className="w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 
+          placeholder="Enter Ingredients"
+          className="w-full p-4 ps-10 text-sm text-gray-900 border-2 border-black rounded-lg bg-gray-50 
                      focus:ring-blue-500 focus:border-blue-500"
         />
       </form>
 
-      {/* Dropdown suggestions */}
+      {/* Suggestion dropdown (scrollable) */}
       {showSuggestions && filteredSuggestions.length > 0 && (
-        <ul className="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg">
+        <ul className="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg 
+                       max-h-60 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
           {filteredSuggestions.map((suggestion, index) => (
             <li
               key={index}

@@ -1,24 +1,46 @@
 import React, { useState } from 'react';
 
+/**
+ * SearchBar Component
+ * 
+ * Renders a styled search input with a submit button.
+ * Accepts user input and triggers the `onSearch` callback with the current search term
+ * whenever the input changes or the form is submitted.
+ * 
+ * Props:
+ * - onSearch (function): Callback to receive the search term as the user types or submits
+ * 
+ * @author Kaid Krawchuk
+ * @author https://chat.openai.com/
+ * 
+ * @returns {JSX.Element} A styled search form with a magnifying glass icon and submit button
+ */
 function SearchBar({ onSearch }) {
   const [searchTerm, setSearchTerm] = useState('');
 
+  // Handle form submission (pressing Enter or clicking Search)
   const handleSubmit = (event) => {
     event.preventDefault();
     onSearch(searchTerm);
   }
 
+  // Handle real-time input changes
   const handleInputChange = (event) => {
     setSearchTerm(event.target.value);
     onSearch(event.target.value);
   };
 
   return (
+    // Form wrapper for seatch input and button
     <form className="max-w-md mx-auto" onSubmit={handleSubmit}>
+      {/* Screen-reader only label for accessibility */}
       <label htmlFor="default-search" className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">
         Search
       </label>
+
+      {/* Container for the input and button */}
       <div className="relative">
+        {/* Magnifying glass icon inside input field */}
         <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
           <svg
             className="w-4 h-4 text-gray-500 dark:text-gray-400"
@@ -36,6 +58,8 @@ function SearchBar({ onSearch }) {
             />
           </svg>
         </div>
+
+        {/* Search input field */}
         <input
           type="search"
           id="default-search"
@@ -47,6 +71,8 @@ function SearchBar({ onSearch }) {
           onChange={handleInputChange}
           required
         />
+
+        {/* Search submit button */}
         <button
           type="submit"
           className="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 

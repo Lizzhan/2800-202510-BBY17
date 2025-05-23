@@ -1,17 +1,23 @@
 // controller/savedRecipe.js
-
 import db from '../db.js';
 
-
-
-
-// Save a recipe for the logged-in user
+/**
+ * Save a recipe for the logged-in user
+ * @route POST /api/saved
+ * @body { number } user_recipe_id - The ID of the recipe to save
+ * @returns { message: string }
+ * 
+ * help from chatgpt (gpt4) was used to complete part of the code
+ * 
+ * @author Kaid Krawchuk 
+ * @author https://chat.openai.com
+ */
 export const saveRecipe = async (req, res) => {
   const { user_recipe_id } = req.body;  // <-- grab user_recipe_id from the request
   const recipeId = parseInt(user_recipe_id, 10); // <-- Parse to integer
   const userId = parseInt(req.session.userId, 10); // <-- Parse to integer
 
-  console.log("Saving recipe... User ID:", userId, "Recipe ID:", recipeId);
+  // console.log("Saving recipe... User ID:", userId, "Recipe ID:", recipeId);
 
   if (!userId) {
     return res.status(401).json({ message: "Not logged in" });
@@ -30,7 +36,12 @@ export const saveRecipe = async (req, res) => {
 };
 
 
-// Unsave (remove) a recipe for the logged-in user
+/**
+ * Unsave (remove) a recipe for the logged-in user
+ * @route DELETE /api/saved
+ * @body { number } user_recipe_id - The ID of the recipe to unsave
+ * @returns { message: string }
+ */
 export const unsaveRecipe = async (req, res) => {
   const { user_recipe_id } = req.body;
   const recipeId = parseInt(user_recipe_id, 10); // <-- Parse to integer
@@ -54,23 +65,41 @@ export const unsaveRecipe = async (req, res) => {
 };
 
 
-// Get all saved recipe IDs for the logged-in user
-export const getSavedRecipes = (req, res) => {
+/**
+ * Get all saved recipes for the logged-in user
+ * @route GET /api/saved
+ * @returns {Array} List of saved recipe objects
+ */
+export const getSavedRecipes = async (req, res) => {
   const userId = req.session.userId;
 
   if (!userId) {
     return res.status(401).json({ message: "Not logged in" });
   }
 
-  const q = "SELECT user_recipe_id FROM `saved recipes` WHERE user_id = ?";
+  try {
+    const results = await new Promise((resolve, reject) => {
+      db.query(
+        `
+        SELECT r.recipe_id, r.recipe_title, r.description
+        FROM saved_recipes s
+        JOIN recipes r ON s.recipe_id = r.recipe_id
+        WHERE s.user_id = ?
+        `,
+        [userId],
+        (err, rows) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(rows);
+          }
+        }
+      );
+    });
 
-  db.query(q, [userId], (err, rows) => {
-    if (err) {
-      console.error("Error fetching saved recipes:", err);
-      return res.status(500).json({ message: "Error fetching saved recipes" });
-    }
-
-    const savedRecipeIds = rows.map(row => row.user_recipe_id);
-    res.status(200).json(savedRecipeIds);
-  });
+    res.status(200).json(results);
+  } catch (error) {
+    console.error("Error fetching saved recipes:", error);
+    res.status(500).json({ message: "Error fetching saved recipes" });
+  }
 };

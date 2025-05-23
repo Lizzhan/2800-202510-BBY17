@@ -1,56 +1,75 @@
-import React from 'react'
+import { React, useState, useEffect } from 'react';
+import axios from 'axios';
+import UserLocation from '../components/UserLocation';
 
-
+/**
+ * User profile page that displays current user's basic info.
+ * Fetches user data from the server using a session cookie.
+ * code made from personal experience
+ * @author Leslie Zhang
+ */
 const UserProfile = () => {
+  // Initial dummy state for fallback before API returns
+  const [inputs, setInputs] = useState({
+    email: 'example@ex.com',
+    username: 'Ichiban',
+  });
+
+  // Fetch user info once on component mount
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        // Request user session data from backend
+        const res = await axios.get('http://localhost:3000/api/auth/me', {
+          withCredentials: true,
+        });
+        setInputs(res.data); // Update state with response
+      } catch (err) {
+        console.log(err); // Log any error
+      }
+    };
+
+    getData(); // Run fetch function
+  }, []);
+
   return (
-    <>
-        {/* Left logo */}
-        {/* <div className="w-16 h-16 bg-kaidCream"></div> */}
-
-        {/* Navigation buttons */}
-        {/* <div className="flex space-x-6 gap-20">
-          <button className="bg-kaidCream px-4 py-2 shadow" style={{ backgroundColor: "#FAA381" }}>Fridge</button>
-          <button className="bg-white px-4 py-2 shadow" style={{ backgroundColor: "#FAA381" }}> Cookbook</button>
-          <button className="bg-white px-4 py-2 shadow" style={{ backgroundColor: "#FAA381" }}>Suggest</button>
-        </div> */}
-
-        {/* Right profile icon */}
-        {/* <div className="w-10 h-10 border-2 border-black rounded-full flex items-center justify-center">
-          {/* Optional user icon (SVG or image) */}
-        {/*</div> */}
-
-      {/* Profile Content */}
-      <div className="flex items-start justify-between w-full max-w-4xl mx-auto mt-10 p-6">
-        {/* Profile Icon */}
-        {/* Left: Circle Icon */}
-        <div className="mt-[3.6rem] flex flex-col items-center">
-            <div className="w-24 h-24 rounded-full border-2 border-kaidBrown"></div>
+    <div className="min-h-screen bg-gray-50 flex justify-center items-center py-10 px-4">
+      <div className="bg-white rounded-2xl shadow-xl p-8 max-w-3xl w-full flex flex-col md:flex-row gap-8">
+        
+        {/* Profile Picture Section */}
+        <div className="flex flex-col items-center">
+          <img
+            src="/remy.webp"
+            alt="User avatar"
+            className="w-32 h-32 rounded-full border-4 border-kaidBrown object-cover"
+          />
+          <p className="mt-4 text-gray-700 font-medium text-lg">
+            Bone Apple Tea, {inputs.username}
+          </p>
         </div>
 
-        {/* Form */}
-        <div className="w-2/3 space-y-4">
+        {/* Profile Details Section */}
+        <div className="flex-1 space-y-4">
+
+          {/* Email Display */}
           <div>
-            <label className="block mb-1 font-medium">Name</label>
-            <input type="text" className="w-full bg-white border-kaidBrown shadow-lg border-2 p-2 rounded" value="John Smith"/>
-          </div>
-          <div>
-            <label className="block mb-1 font-medium">Email</label>
-            <input type="email" className="w-full bg-white border-kaidBrown shadow-lg border-2 p-2 rounded" value="j_smith@recipedia.com"/>
-          </div>
-          <div>
-            <label className="block mb-1 font-medium">Shcool</label>
-            <input type="text" className="w-full bg-white border-kaidBrown shadow-lg border-2 p-2 rounded" value="BCIT"/>
+            <label className="block text-sm font-semibold text-gray-600 mb-1">Email</label>
+            <div className="text-gray-800 bg-gray-100 rounded px-3 py-2">{inputs.email}</div>
           </div>
 
-          {/* Buttons */}
-          <div className="flex justify-between pt-4">
-            <button className="bg-white px-4 py-2 shadow bg-buttonPeach">Edit</button>
-            <button className="bg-white px-4 py-2 shadow bg-buttonPeach">Save</button>
+          {/* Location (Dynamic via Component) */}
+          <div>
+            <label className="block text-sm font-semibold text-gray-600 mb-1">Location</label>
+            <div className="text-gray-800 bg-gray-100 rounded px-3 py-2">
+              <UserLocation /> {/* Component handles location fetching */}
+            </div>
           </div>
+
+          {/* 🛠️ Future fields can go here, like school, bio, etc. */}
         </div>
       </div>
-    </>
-  )
-}
+    </div>
+  );
+};
 
-export default UserProfile
+export default UserProfile;

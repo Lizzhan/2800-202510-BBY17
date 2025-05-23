@@ -1,6 +1,19 @@
-
 import db from '../db.js';
 
+/**
+ * Middleware to check if a recipe is already saved by the current user.
+ * 
+ * - Extracts `user_recipe_id` from the request body and `userId` from the session
+ * - If the user is not logged in, returns a 401 Unauthorized error
+ * - Queries the `saved_recipes` table to see if this recipe is already saved by this user
+ * - If a match is found, returns 409 Conflict to indicate it's already saved
+ * - If no match is found, proceeds to the next middleware or controller
+ * 
+ * Useful in POST routes that add recipes to the user's saved list, to prevent duplicates.
+ * 
+ * @author Kaid Krawchuk
+ * @author https://chat.openai.com
+ */
 export const checkRecipeAlreadySaved = (req, res, next) => {
   const { user_recipe_id } = req.body;
   const recipeId = parseInt(user_recipe_id);
@@ -22,7 +35,7 @@ export const checkRecipeAlreadySaved = (req, res, next) => {
       // Already saved
       return res.status(409).json({ message: "Recipe already saved!" });
     } else {
-      // Not saved yet, continue to controller
+      // Valid recipe, continue
       next();
     }
   });
