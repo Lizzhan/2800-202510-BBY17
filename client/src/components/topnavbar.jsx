@@ -11,9 +11,12 @@ import axios from 'axios'
  * - A centered title that links to the homepage
  * - A home button, logout button, and profile/user icon on the right
  *
+ * original code taken from flowbite tailwind template with modification
  * Navigation and logout functionality is provided via React Router and Axios.
  *
- * @author
+ * @author Lucas Liu
+ * @author Kaid Krawchuk
+ * @author https://flowbite.com
  * 
  * @returns {JSX.Element} A sticky top navigation bar
  */
