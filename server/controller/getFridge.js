@@ -29,6 +29,8 @@ export const getFridgeIngredients = (req, res) => {
  * POST: Add a new ingredient (by name) to the user's fridge or pantry.
  * Looks up the ingredient ID from the ingredients table before inserting into fridge.
  *
+ * ChatGPT(gpt4) was used to complete part of this code
+ * 
  * @author Lucas Liu
  */
 export const addIngredient = (req, res) => {
@@ -56,6 +58,8 @@ export const addIngredient = (req, res) => {
  * POST: Remove an ingredient (by name) from the user's fridge or pantry.
  * Looks up the ingredient ID from the ingredients table before deleting from fridge.
  *
+ * ChatGPT(gpt4) was used to complete part of this code
+ * 
  * @author Lucas Liu
  */
 export const removeIngredient = (req, res) => {

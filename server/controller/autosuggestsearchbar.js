@@ -4,7 +4,7 @@ import db from '../db.js'; // Import database connection
 /**
  * Controller to get all ingredients from the database.
  * 
- * @author
+ * @author Kaid Krawchuk
  * 
  * @route GET /api/ingredients
  * @returns {Array} List of ingredient objects, ordered alphabetically.
