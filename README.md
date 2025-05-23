@@ -12,7 +12,9 @@ Have you ever opened the fridge and stared at a random sort of vegetables, condi
 * Liam Pickrell - 
     I contributed the organization, setup and hosting of our database in MySQL. I also assisted with the setup of front end elements like the individual recipe's pages and the cards the recipes are displayed onto. I finally made the functionality of fetching all data related to recipes in our database and posting it onto the home page and each individual recipe's pages.
 * Kaid Krawchuk - 
-    ***Insert details of what you contributed here***
+    I created and contributed to many of the components we used throughout our app includeing the search bar which suggest ingredients from our database, the primary button used in various locations, the ingredient modal which lets you choose whether an ingredient goes into the fridge or pantry, the clickable recipe card that displays options, the galleries we use to hold the cards on the cookbook and home page, and the 'Pantry' and 'Fridge' containers that hold selectable ingredients. I styled the newest version of our top navbar as well.
+    I also contributed to creating the fridge and cookbook page. I also completed the styling and and color pallet of each page of our app.
+    I created various routes for our app, and worked on functionality to get and post ingredients/recipes from our database.
 * Lucas Liu - 
     I contributed significantly to our application by developing several core pages, including the Home, Cookbook, and Recipe Details pages, along with other essential UI components. I also integrated location services using the OpenCage API, allowing the app to display the user’s current location in real time.
     Additionally, I implemented two key AI-powered features using the Gemini API:
@@ -165,6 +167,11 @@ Content of the project folder:
 
 5.2 - SETUP AND USAGE AS A USER:
 * When a user first navigates to our app, they will be prompted to either login or register as a new user. When they click register, they will need to input a username, email and password. If they already have an existing account, they will login using their username and password. 
+
+
+## 6 - How to use our webapp:
+
+6.1 - How to use Recipedia
 * Once the user is authenticated or registered for the first time, they will arrive at the landing page with a greeting at the top and several featured recipe cards listed below. The user can then scroll through the list of favorited recipes if they wish to find inspiration of recipes to cook. A recipe can be saved by clicking on the heart icon in the recipe card.
 * When a user clicks on any of the recipe cards, a recipe page is loaded and the full details about the ingredients required and steps is populated. The user can save a recipe by clicking on the heart icon next to the recipe's title.
 * Next, the user can navigate to their fridge page using the bottom navbar. The user will click on the plus icon which expands the bottom navbar, then they can click on the left icon labeled fridge. The fridge page is how the app will know what ingredients the user currently has in their fridge.
@@ -178,11 +185,6 @@ Content of the project folder:
 * The user can view their profile details by clicking on the person icon in the top navbar. 
 * The user can click on the FAQ button on the bottom footer-bar to see the details of the site's authors.
 * The user can click on the GitHub icon in the bottom footer-bar to re-route to the GitHub repo the developers used to make Recipedia. 
-
-
-## 6 - How to use our webapp:
-
-6.1 - How to use Recipedia
 
 6.2 - Known Bugs and Limitations
 * The system will only suggest recipes that are exact matches of a list of the ingredients the user contains. 
@@ -227,6 +229,9 @@ Content of the project folder:
 
         James Smith: I used ChatGPT with GPT-4-turbo, to assist with developing the structure of my createRecipe page, as well as to ask advice, and interpret bugs, such as what might be causing them in my code. I also used ChatGPT to comment my my code based on a specified template I sent it.
 
+        Kaid Krawchuk: I used ChatGPT to assist with developing various components and to help learn React. Was also used to help debug and troubleshoot various problems throughout developement. ChatGPT also helped comment sections of my code.
+    
+
     * DeepSeek:
         James Smith: I used DeepSeek to interpret more involved bugs relating to our backend, such as bugs that are occuring due to specific interactions with our SQL database, or between parsing values from front-end into JSON.
 
@@ -248,3 +253,6 @@ Content of the project folder:
 
 * James Smith:
     Email = jsmith536@my.bcit.ca
+
+* Kaid Krawchuk:
+    Email: kkrawchuk5@my.bcit.ca

@@ -12,6 +12,7 @@ import db from '../db.js';
  * Useful in POST routes that add recipes to the user's saved list, to prevent duplicates.
  * 
  * @author Kaid Krawchuk
+ * @author https://chat.openai.com
  */
 export const checkRecipeAlreadySaved = (req, res, next) => {
   const { user_recipe_id } = req.body;

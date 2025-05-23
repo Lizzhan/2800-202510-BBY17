@@ -1,9 +1,6 @@
 // controller/savedRecipe.js
 import db from '../db.js';
 
-
-
-
 /**
  * Save a recipe for the logged-in user
  * @route POST /api/saved
