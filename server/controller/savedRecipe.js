@@ -1,11 +1,15 @@
 // controller/savedRecipe.js
-
 import db from '../db.js';
 
 
 
 
-// Save a recipe for the logged-in user
+/**
+ * Save a recipe for the logged-in user
+ * @route POST /api/saved
+ * @body { number } user_recipe_id - The ID of the recipe to save
+ * @returns { message: string }
+ */
 export const saveRecipe = async (req, res) => {
   const { user_recipe_id } = req.body;  // <-- grab user_recipe_id from the request
   const recipeId = parseInt(user_recipe_id, 10); // <-- Parse to integer
@@ -30,7 +34,12 @@ export const saveRecipe = async (req, res) => {
 };
 
 
-// Unsave (remove) a recipe for the logged-in user
+/**
+ * Unsave (remove) a recipe for the logged-in user
+ * @route DELETE /api/saved
+ * @body { number } user_recipe_id - The ID of the recipe to unsave
+ * @returns { message: string }
+ */
 export const unsaveRecipe = async (req, res) => {
   const { user_recipe_id } = req.body;
   const recipeId = parseInt(user_recipe_id, 10); // <-- Parse to integer
@@ -54,7 +63,11 @@ export const unsaveRecipe = async (req, res) => {
 };
 
 
-
+/**
+ * Get all saved recipes for the logged-in user
+ * @route GET /api/saved
+ * @returns {Array} List of saved recipe objects
+ */
 export const getSavedRecipes = async (req, res) => {
   const userId = req.session.userId;
 

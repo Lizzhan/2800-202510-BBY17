@@ -1,7 +1,7 @@
 import db from '../db.js'
 
 
-// In submitRecipe.js
+// Controller to submit a new recipe
 export const submitRecipe = (req, res) => {
     try {
         const author_id = req.session.userId;
