@@ -6,7 +6,10 @@ import React from "react";
  * Displays a list of items (e.g., selected ingredients) with optional highlighting
  * and a remove button. Items can be selected/deselected, and removed via a callback.
  *
- * @author
+ * help from chatgpt was used to accomplish part of this function 
+ * 
+ * @author Kaid Krawchuk 
+ * @author https://chat.openai.com
  * 
  * Props:
  * @param {string[]} items - Array of selected item names to display.

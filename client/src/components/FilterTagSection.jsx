@@ -12,7 +12,10 @@ import axios from "axios";
  * - onFilterChange (function): Callback triggered when the selected tags change
  * - selectedTags (array): List of currently selected tags
  * 
- * @author
+ * help from chatgpt (GPT4) was used to complete part of the function
+ * 
+ * @author Kaid Krawchuk 
+ * @author https://chat.openai.com
  * 
  * @returns {JSX.Element} A styled section with toggleable tag buttons for filtering
  */
