@@ -166,6 +166,8 @@ Content of the project folder:
 * The instruction npm install or npm i will install dependencies needed and listed on the package.json file. This should be done in both the client and server folder.
 * To run the server, run the command node app.js in the command line. If constant edits are being made and the developer wishes for the server to update as the server changes, run the command node --watch app.js.
 * To run the client side using the developer's localhost, input the command npm run dev.
+* To operate the database using MySQL, the developer needs to configure their database using details found in the dotenv file.
+* Once the database is configured, you can run any script to alter tables using the recipedia as the schema by commanding use recipedia;
 
 5.2 - SETUP AND USAGE AS A USER:
 * When a user first navigates to our app, they will be prompted to either login or register as a new user. When they click register, they will need to input a username, email and password. If they already have an existing account, they will login using their username and password. 
