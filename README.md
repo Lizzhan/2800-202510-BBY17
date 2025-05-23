@@ -229,6 +229,9 @@ Content of the project folder:
 
         James Smith: I used ChatGPT with GPT-4-turbo, to assist with developing the structure of my createRecipe page, as well as to ask advice, and interpret bugs, such as what might be causing them in my code. I also used ChatGPT to comment my my code based on a specified template I sent it.
 
+        Kaid Krawchuk: I used ChatGPT to assist with developing various components and to help learn React. Was also used to help debug and troubleshoot various problems throughout developement. ChatGPT also helped comment sections of my code.
+    
+
     * DeepSeek:
         James Smith: I used DeepSeek to interpret more involved bugs relating to our backend, such as bugs that are occuring due to specific interactions with our SQL database, or between parsing values from front-end into JSON.
 
@@ -250,3 +253,6 @@ Content of the project folder:
 
 * James Smith:
     Email = jsmith536@my.bcit.ca
+
+* Kaid Krawchuk:
+    Email: kkrawchuk5@my.bcit.ca
