@@ -149,7 +149,7 @@ Content of the project folder:
     /package.json       # File containing installation information for server side
 
 
-## 5. Complete setup/installion/usage
+## 5 - Complete setup/installion/usage
 
 5.1 - SETUP AS A DEVELOPER:
 * After downloading files in structure listed below in section 7, the developer should first confirm the contents of each package.json file. 
@@ -232,3 +232,6 @@ Content of the project folder:
 ## 9 - Contact Information
 * Liam Pickrell:
     Email = lpickrell1@my.bcit.ca
+
+* James Smith:
+    Email = jsmith536@my.bcit.ca
