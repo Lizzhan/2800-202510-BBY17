@@ -21,7 +21,9 @@ Have you ever opened the fridge and stared at a random sort of vegetables, condi
     Admin AI Route: Enables administrators to generate and populate the database with new recipes and ingredients using AI.
     User AI Route: Analyzes all ingredients in a user’s fridge to generate a creative and humorous recipe suggestion.
 * Leslie Zhang - 
-    I created the overall project structure, set up the development environment for the team, created the UIs and APIs for user profile, register, login, and session, as well as the routing for each page so our project will be an SPA. I also created the AWS EC2 instances for hosting and deployed the project there. 
+    I created the overall project structure and set up the development environment for the team. I designed the app under the Model-View-Controller ideology. I designed our server structure around the RESTful principle, and separated everything into controller, routes, and middleware. 
+    I also created the UIs and APIs for user profile, register, login, and session. As well as the routing for each page with React Router Dom so our project will be an SPA. 
+    I also created the AWS EC2 instances for hosting and deployed for a secure, robust, and scalable application. 
 * James Smith - 
     I contributed to expanding and tweaking our MySQL database to improve its usefulness in our project, such as creating join tables for recipe and ingredient tracking. This also extended to filling in data for the website's ingredient list, and starting recipes (and associated join tables). I also made the functionality relating to writing new recipes to the database, as well as displaying user-written recipes on their cookbook page. Finally, I also worked on the initial work of pinning down the webapp's visual style, and creating the info-footer at the bottom of the webapp page.
 	
@@ -33,7 +35,7 @@ Have you ever opened the fridge and stared at a random sort of vegetables, condi
 * Tailwind (Frontend library)
 * MySQL (Database)
 * Azure (Hosting the database)
-* Render (Hosting the website)
+* AWS (Hosting the website)
 * ChatGPT 4.0 mini (used to annotate code)
 * Discord: Used for informal communication among team members for quick updates. 
 * Zoom: Used for Weekly Scrum Meetings with our supervisor.
@@ -233,6 +235,7 @@ Content of the project folder:
     
         Lucas Liu: I used ChatGPT to assit with developing various component and some back end fucntionality in our app. It was also used initially to learn about react and how to add component on to a webpage. Additionally Chatgpt was used to help with debugging and intergrate into the app.
 
+        Leslie Zhang: I used GPT-4o for interpreting error messages and suggestion for debugging. I also used it for a guide on hosting on AWS. 
     * DeepSeek:
         James Smith: I used DeepSeek to interpret more involved bugs relating to our backend, such as bugs that are occuring due to specific interactions with our SQL database, or between parsing values from front-end into JSON.
 
@@ -261,3 +264,5 @@ Content of the project folder:
 * Lucas Liu
     Email: qliu50@my.bcit.ca
 
+* Leslie Zhang
+    Email: qzhang117@my.bcit.ca
