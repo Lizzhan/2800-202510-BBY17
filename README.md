@@ -217,6 +217,7 @@ Content of the project folder:
 
 8.2 - AI Usage:
     * ChatGPT:
+        Liam Pickrell: I used ChatGPT 4.0 mini to assist with developing the structure of both the and RecipePage.jsx. I also used ChatGPT 4.0 mini to help comment code on all files I helped write or wrote myself. I also used ChatGPT 4.0 mini to help write the image matching function in getClosestImagePath.js
 
     * DeepSeek:
 
@@ -229,3 +230,5 @@ Content of the project folder:
     
 
 ## 9 - Contact Information
+* Liam Pickrell:
+    Email = lpickrell1@my.bcit.ca
