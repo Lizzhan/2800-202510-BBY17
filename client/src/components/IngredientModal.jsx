@@ -6,12 +6,8 @@ import React from "react";
  * A modern, centered modal for selecting where to add an ingredient.
  * Offers options for Pantry, Fridge, or Cancel, with enhanced styling.
  *
- * @param {string|null} ingredient
- * @param {Function} onClose
- * @param {Function} onAddToPantry
- * @param {Function} onAddToFridge
- *
- * @returns {JSX.Element|null}
+ * @author Kaid Krawchuk
+ * @author https://chat.openai.com
  */
 export default function IngredientModal({ ingredient, onClose, onAddToPantry, onAddToFridge }) {
   if (!ingredient) return null;
@@ -20,7 +16,7 @@ export default function IngredientModal({ ingredient, onClose, onAddToPantry, on
     <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
       <div className="bg-white rounded-xl shadow-2xl p-8 w-[90%] max-w-md text-center">
         <h2 className="text-2xl font-semibold text-gray-800 mb-6">
-          Add <span className="text-black font-bold">"{ingredient}"</span>
+          Add <span className="text- font-bold">"{ingredient}"</span>
         </h2>
 
         <div className="flex flex-col sm:flex-row justify-center gap-4">

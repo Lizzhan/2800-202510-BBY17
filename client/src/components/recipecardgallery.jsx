@@ -21,6 +21,7 @@ import axios from 'axios';
  *
  * @author Kaid Krawchuk
  * @author Lucas Liu
+ * @author https://chat.openai.com/
  * 
  */
 
@@ -31,7 +32,7 @@ export default function RecipeCardGallery() {
   const [allRecipes, setAllRecipes] = useState([]);
 
   // Subset of recipes currently shown (first N for lazy loading)
-  const [visibleRecipes, setVisibleRecipes] = useState([]);
+  const [visibleRecipes, setVisibleRecipes] = useState([]); 
 
   // List of recipes the current user has saved/favourited
   const [savedRecipes, setSavedRecipes] = useState([]);
@@ -114,23 +115,23 @@ export default function RecipeCardGallery() {
     fetchSavedRecipes(); // Initial fetch on component mount
   }, []);
 
-  // ========== SET UP INFINITE SCROLL ==========
+  // // ========== SET UP INFINITE SCROLL ==========
 
-  useEffect(() => {
-    const handleScroll = () => {
-      // Check if the user has scrolled near the bottom of the page
-      const nearBottom = window.innerHeight + window.scrollY >= document.body.offsetHeight - 300;
-      if (nearBottom && hasMore) {
-        loadMore(); // Load more recipes
-      }
-    };
+  // useEffect(() => {
+  //   const handleScroll = () => {
+  //     // Check if the user has scrolled near the bottom of the page
+  //     const nearBottom = window.innerHeight + window.scrollY >= document.body.offsetHeight - 300;
+  //     if (nearBottom && hasMore) {
+  //       loadMore(); // Load more recipes
+  //     }
+  //   };
 
-    // Add scroll event listener
-    window.addEventListener('scroll', handleScroll);
+  //   // Add scroll event listener
+  //   window.addEventListener('scroll', handleScroll);
 
-    // Clean up scroll listener when component unmounts or re-renders
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [visibleRecipes, hasMore]);
+  //   // Clean up scroll listener when component unmounts or re-renders
+  //   return () => window.removeEventListener('scroll', handleScroll);
+  // }, [visibleRecipes, hasMore]);
 
   // ========== LOAD MORE RECIPES (CHUNKED) ==========
 

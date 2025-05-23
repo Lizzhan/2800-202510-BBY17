@@ -10,7 +10,8 @@ import React, { useState } from 'react';
  * Props:
  * - onSearch (function): Callback to receive the search term as the user types or submits
  * 
- * @author
+ * @author Kaid Krawchuk
+ * @author https://chat.openai.com/
  * 
  * @returns {JSX.Element} A styled search form with a magnifying glass icon and submit button
  */
