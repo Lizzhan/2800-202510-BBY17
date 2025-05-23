@@ -60,15 +60,23 @@ export default function RecipePage() {
    * or if there is an error fetching the saved recipe table.
    */
   useEffect(() => {
+    const checkIDIncluded = (arr, id) => {
+      for(let i = 0; i < arr.length; i++){
+        if(arr[i].recipe_id === id) return true;
+      }
+      return false;
+    }
     const fetchSavedStatus = async () => {
       try {
         const res = await axios.get('http://localhost:3000/api/saved-recipes', {
           withCredentials: true,
         });
         const savedIds = res.data;
-        setLiked(savedIds.includes(parseInt(id))); // Check if this recipe is saved
+        setLiked(checkIDIncluded(savedIds, parseInt(id)))
+
       } catch (err) {
         console.error('Error fetching saved recipes:', err);
+        console.log("recipe already saved")
       }
     };
 
