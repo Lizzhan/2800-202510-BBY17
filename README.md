@@ -231,6 +231,7 @@ Content of the project folder:
 
         Kaid Krawchuk: I used ChatGPT to assist with developing various components and to help learn React. Was also used to help debug and troubleshoot various problems throughout developement. ChatGPT also helped comment sections of my code.
     
+        Lucas Liu: I used ChatGPT to assit with developing various component and some back end fucntionality in our app. It was also used initially to learn about react and how to add component on to a webpage. Additionally Chatgpt was used to help with debugging and intergrate into the app.
 
     * DeepSeek:
         James Smith: I used DeepSeek to interpret more involved bugs relating to our backend, such as bugs that are occuring due to specific interactions with our SQL database, or between parsing values from front-end into JSON.
@@ -256,3 +257,7 @@ Content of the project folder:
 
 * Kaid Krawchuk:
     Email: kkrawchuk5@my.bcit.ca
+
+* Lucas Liu
+    Email: qliu50@my.bcit.ca
+
