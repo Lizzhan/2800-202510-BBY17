@@ -225,7 +225,10 @@ Content of the project folder:
     * ChatGPT:
         Liam Pickrell: I used ChatGPT 4.0 mini to assist with developing the structure of both the and RecipePage.jsx. I also used ChatGPT 4.0 mini to help comment code on all files I helped write or wrote myself. I also used ChatGPT 4.0 mini to help write the image matching function in getClosestImagePath.js
 
+        James Smith: I used ChatGPT with GPT-4-turbo, to assist with developing the structure of my createRecipe page, as well as to ask advice, and interpret bugs, such as what might be causing them in my code. I also used ChatGPT to comment my my code based on a specified template I sent it.
+
     * DeepSeek:
+        James Smith: I used DeepSeek to interpret more involved bugs relating to our backend, such as bugs that are occuring due to specific interactions with our SQL database, or between parsing values from front-end into JSON.
 
 8.3 - Other Acknowledgements:
 
