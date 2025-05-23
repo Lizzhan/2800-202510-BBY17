@@ -16,7 +16,7 @@ Have you ever opened the fridge and stared at a random sort of vegetables, condi
 * Lucas Liu - 
     ***Insert details of what you contributed here***
 * Leslie Zhang - 
-    ***Insert details of what you contributed here***
+    I created the overall project structure, set up the development environment for the team, created the UIs and APIs for user profile, register, login, and session, as well as the routing for each page so our project will be an SPA. I also created the AWS EC2 instances for hosting and deployed the project there. 
 * James Smith - 
     I contributed to expanding and tweaking our MySQL database to improve its usefulness in our project, such as creating join tables for recipe and ingredient tracking. This also extended to filling in data for the website's ingredient list, and starting recipes (and associated join tables). I also made the functionality relating to writing new recipes to the database, as well as displaying user-written recipes on their cookbook page. Finally, I also worked on the initial work of pinning down the webapp's visual style, and creating the info-footer at the bottom of the webapp page.
 	
