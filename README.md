@@ -165,6 +165,11 @@ Content of the project folder:
 
 5.2 - SETUP AND USAGE AS A USER:
 * When a user first navigates to our app, they will be prompted to either login or register as a new user. When they click register, they will need to input a username, email and password. If they already have an existing account, they will login using their username and password. 
+
+
+## 6 - How to use our webapp:
+
+6.1 - How to use Recipedia
 * Once the user is authenticated or registered for the first time, they will arrive at the landing page with a greeting at the top and several featured recipe cards listed below. The user can then scroll through the list of favorited recipes if they wish to find inspiration of recipes to cook. A recipe can be saved by clicking on the heart icon in the recipe card.
 * When a user clicks on any of the recipe cards, a recipe page is loaded and the full details about the ingredients required and steps is populated. The user can save a recipe by clicking on the heart icon next to the recipe's title.
 * Next, the user can navigate to their fridge page using the bottom navbar. The user will click on the plus icon which expands the bottom navbar, then they can click on the left icon labeled fridge. The fridge page is how the app will know what ingredients the user currently has in their fridge.
@@ -178,11 +183,6 @@ Content of the project folder:
 * The user can view their profile details by clicking on the person icon in the top navbar. 
 * The user can click on the FAQ button on the bottom footer-bar to see the details of the site's authors.
 * The user can click on the GitHub icon in the bottom footer-bar to re-route to the GitHub repo the developers used to make Recipedia. 
-
-
-## 6 - How to use our webapp:
-
-6.1 - How to use Recipedia
 
 6.2 - Known Bugs and Limitations
 * The system will only suggest recipes that are exact matches of a list of the ingredients the user contains. 
