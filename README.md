@@ -217,6 +217,9 @@ Content of the project folder:
 ## 8 - Outside Acknowledgements:
 
 8.1 - API usage:
+    * OpenCage API: open cage API was used to get user location in realtime.
+
+    * Gemini API: Gemini API was used to generate regular recipe to store in the database and funny recipe to display on the app.
 
 8.2 - AI Usage:
     * ChatGPT:
