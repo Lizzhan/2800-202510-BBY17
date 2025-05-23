@@ -1,7 +1,12 @@
 import db from '../db.js'
 
 
-// Controller to submit a new recipe
+/**
+ * Controller to submit a new recipe 
+ * 
+ * @author James Smith
+ * @author https://chat.openai.com
+ */
 export const submitRecipe = (req, res) => {
     try {
         const author_id = req.session.userId;
