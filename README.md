@@ -12,7 +12,9 @@ Have you ever opened the fridge and stared at a random sort of vegetables, condi
 * Liam Pickrell - 
     I contributed the organization, setup and hosting of our database in MySQL. I also assisted with the setup of front end elements like the individual recipe's pages and the cards the recipes are displayed onto. I finally made the functionality of fetching all data related to recipes in our database and posting it onto the home page and each individual recipe's pages.
 * Kaid Krawchuk - 
-    ***Insert details of what you contributed here***
+    I created and contributed to many of the components we used throughout our app includeing the search bar which suggest ingredients from our database, the primary button used in various locations, the ingredient modal which lets you choose whether an ingredient goes into the fridge or pantry, the clickable recipe card that displays options, the galleries we use to hold the cards on the cookbook and home page, and the 'Pantry' and 'Fridge' containers that hold selectable ingredients. I styled the newest version of our top navbar as well.
+    I also contributed to creating the fridge and cookbook page. I also completed the styling and and color pallet of each page of our app.
+    I created various routes for our app, and worked on functionality to get and post ingredients/recipes from our database.
 * Lucas Liu - 
     ***Insert details of what you contributed here***
 * Leslie Zhang - 

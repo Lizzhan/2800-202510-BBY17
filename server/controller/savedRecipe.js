@@ -9,6 +9,9 @@ import db from '../db.js';
  * @route POST /api/saved
  * @body { number } user_recipe_id - The ID of the recipe to save
  * @returns { message: string }
+ * 
+ * @author Kaid Krawchuk
+ * @author https://chat.openai.com
  */
 export const saveRecipe = async (req, res) => {
   const { user_recipe_id } = req.body;  // <-- grab user_recipe_id from the request
