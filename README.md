@@ -14,7 +14,10 @@ Have you ever opened the fridge and stared at a random sort of vegetables, condi
 * Kaid Krawchuk - 
     ***Insert details of what you contributed here***
 * Lucas Liu - 
-    ***Insert details of what you contributed here***
+    I contributed significantly to our application by developing several core pages, including the Home, Cookbook, and Recipe Details pages, along with other essential UI components. I also integrated location services using the OpenCage API, allowing the app to display the user’s current location in real time.
+    Additionally, I implemented two key AI-powered features using the Gemini API:
+    Admin AI Route: Enables administrators to generate and populate the database with new recipes and ingredients using AI.
+    User AI Route: Analyzes all ingredients in a user’s fridge to generate a creative and humorous recipe suggestion.
 * Leslie Zhang - 
     I created the overall project structure, set up the development environment for the team, created the UIs and APIs for user profile, register, login, and session, as well as the routing for each page so our project will be an SPA. I also created the AWS EC2 instances for hosting and deployed the project there. 
 * James Smith - 
@@ -228,6 +231,10 @@ Content of the project folder:
 
         See: https://www.youtube.com/watch?v=tt5uUMQgzl0 
     
+    *Flowbite:
+        varios tailwind component was taken from flowbite to be used on the webapp.
+
+        see: https://www.flowbite.com
 
 ## 9 - Contact Information
 * Liam Pickrell:
