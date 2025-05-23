@@ -27,6 +27,7 @@
  *
  * @author Lucas Liu
  * @author Kaid Krawchuk
+ * @author https://chat.openai.com
  */
 
 import { useState, useEffect } from 'react';

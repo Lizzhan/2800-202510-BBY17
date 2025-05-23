@@ -10,6 +10,7 @@ import { Link } from 'react-router-dom';
  *
  * @author Lucas Liu
  * @author James Smith
+ * @author Kaid Krawchuk
  * @author https://chat.openai.com
  */
 export default function Cookbook() {

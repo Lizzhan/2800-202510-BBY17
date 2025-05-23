@@ -11,6 +11,7 @@ import RecipeCard from './recipecard';
  *
  * @author Lucas Liu
  * @author Kaid Krawchuk
+ * @author https://chat.openai.com
  */
 export default function SuggestedRecipeGallery({ recipes }) {
   // State to store the list of recipes the user has favorited (saved)
