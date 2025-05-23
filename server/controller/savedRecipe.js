@@ -10,7 +10,9 @@ import db from '../db.js';
  * @body { number } user_recipe_id - The ID of the recipe to save
  * @returns { message: string }
  * 
- * @author Kaid Krawchuk
+ * help from chatgpt (gpt4) was used to complete part of the code
+ * 
+ * @author Kaid Krawchuk 
  * @author https://chat.openai.com
  */
 export const saveRecipe = async (req, res) => {

@@ -16,7 +16,10 @@ Have you ever opened the fridge and stared at a random sort of vegetables, condi
     I also contributed to creating the fridge and cookbook page. I also completed the styling and and color pallet of each page of our app.
     I created various routes for our app, and worked on functionality to get and post ingredients/recipes from our database.
 * Lucas Liu - 
-    ***Insert details of what you contributed here***
+    I contributed significantly to our application by developing several core pages, including the Home, Cookbook, and Recipe Details pages, along with other essential UI components. I also integrated location services using the OpenCage API, allowing the app to display the user’s current location in real time.
+    Additionally, I implemented two key AI-powered features using the Gemini API:
+    Admin AI Route: Enables administrators to generate and populate the database with new recipes and ingredients using AI.
+    User AI Route: Analyzes all ingredients in a user’s fridge to generate a creative and humorous recipe suggestion.
 * Leslie Zhang - 
     I created the overall project structure, set up the development environment for the team, created the UIs and APIs for user profile, register, login, and session, as well as the routing for each page so our project will be an SPA. I also created the AWS EC2 instances for hosting and deployed the project there. 
 * James Smith - 
@@ -151,7 +154,7 @@ Content of the project folder:
     /package.json       # File containing installation information for server side
 
 
-## 5. Complete setup/installion/usage
+## 5 - Complete setup/installion/usage
 
 5.1 - SETUP AS A DEVELOPER:
 * After downloading files in structure listed below in section 7, the developer should first confirm the contents of each package.json file. 
@@ -216,11 +219,18 @@ Content of the project folder:
 ## 8 - Outside Acknowledgements:
 
 8.1 - API usage:
+    * OpenCage API: open cage API was used to get user location in realtime.
+
+    * Gemini API: Gemini API was used to generate regular recipe to store in the database and funny recipe to display on the app.
 
 8.2 - AI Usage:
     * ChatGPT:
+        Liam Pickrell: I used ChatGPT 4.0 mini to assist with developing the structure of both the and RecipePage.jsx. I also used ChatGPT 4.0 mini to help comment code on all files I helped write or wrote myself. I also used ChatGPT 4.0 mini to help write the image matching function in getClosestImagePath.js
+
+        James Smith: I used ChatGPT with GPT-4-turbo, to assist with developing the structure of my createRecipe page, as well as to ask advice, and interpret bugs, such as what might be causing them in my code. I also used ChatGPT to comment my my code based on a specified template I sent it.
 
     * DeepSeek:
+        James Smith: I used DeepSeek to interpret more involved bugs relating to our backend, such as bugs that are occuring due to specific interactions with our SQL database, or between parsing values from front-end into JSON.
 
 8.3 - Other Acknowledgements:
 
@@ -229,5 +239,14 @@ Content of the project folder:
 
         See: https://www.youtube.com/watch?v=tt5uUMQgzl0 
     
+    *Flowbite:
+        varios tailwind component was taken from flowbite to be used on the webapp.
+
+        see: https://www.flowbite.com
 
 ## 9 - Contact Information
+* Liam Pickrell:
+    Email = lpickrell1@my.bcit.ca
+
+* James Smith:
+    Email = jsmith536@my.bcit.ca
